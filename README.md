@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    // 权限请求框架：https://github.com/getActivity/ShapeView
+    // Shape 框架：https://github.com/getActivity/ShapeView
     implementation 'com.github.getActivity:ShapeView:2.0'
 }
 ```
