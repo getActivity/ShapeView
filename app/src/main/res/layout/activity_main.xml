@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.hjq.bar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backButton="false"
+        app:title="https://github.com/getActivity/ShapeView" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="矩形（边框+填充）"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="矩形实线边框内部无填充"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="矩形虚线边框内部无填充"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_dashGap="5dp"
+                app:shape_dashWidth="10dp"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="矩形实线边框-内部填充"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_solidColor="#ff00ffff"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="矩形虚线边框-内部填充"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_dashGap="5dp"
+                app:shape_dashWidth="10dp"
+                app:shape_solidColor="#ff00ffff"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆角矩形"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆角矩形-只有边框"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_radius="5dp"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆角矩形-只有内部填充"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_radius="5dp"
+                app:shape_solidColor="#8000ff00" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆角矩形-有边框有填充"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_radius="5dp"
+                app:shape_solidColor="#8000ff00"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆角矩形-左边圆角为一个半圆弧"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_bottomLeftRadius="20dp"
+                app:shape_solidColor="#8000ff00"
+                app:shape_topLeftRadius="20dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆角矩形-左右两边都是半圆弧"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_radius="20dp"
+                app:shape_solidColor="#8000ff00" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆角矩形-左右两边都是半圆弧-带边框"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_radius="20dp"
+                app:shape_solidColor="#8000ff00"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="渐变效果（以矩形为例）"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="垂直线性渐变"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_angle="-45"
+                app:shape_centerColor="#8000ff00"
+                app:shape_centerX="0.5"
+                app:shape_centerY="0.4"
+                app:shape_endColor="#1000ff00"
+                app:shape_startColor="#ff00ff00"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="水平线性渐变"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_angle="0"
+                app:shape_centerColor="#8000ff00"
+                app:shape_centerX="0.5"
+                app:shape_centerY="0.5"
+                app:shape_endColor="#ff00ff00"
+                app:shape_startColor="#1000ff00"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="对角线线性渐变"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_angle="45"
+                app:shape_centerColor="#8000ff00"
+                app:shape_centerX="0.5"
+                app:shape_centerY="0.5"
+                app:shape_endColor="#1000ff00"
+                app:shape_startColor="#ff00ff00"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="径向渐变"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_angle="0"
+                app:shape_centerX="0.5"
+                app:shape_centerY="0.5"
+                app:shape_endColor="#ff00ff00"
+                app:shape_gradientRadius="20dp"
+                app:shape_gradientType="radial"
+                app:shape_startColor="#0000ff00"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="扫描渐变"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_angle="0"
+                app:shape_centerX="0.5"
+                app:shape_centerY="0.5"
+                app:shape_gradientType="sweep"
+                app:shape_startColor="#ff00ff00"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆（边框+填充+渐变）"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆-边框"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="oval"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆-填充"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="oval"
+                app:shape_solidColor="#800000ff" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆-边框填充"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="oval"
+                app:shape_solidColor="#800000ff"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="线性渐变"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="oval"
+                app:shape_angle="-90"
+                app:shape_centerColor="#80ff0000"
+                app:shape_centerX="0.5"
+                app:shape_centerY="0.8"
+                app:shape_endColor="#ffff0000"
+                app:shape_gradientType="linear"
+                app:shape_startColor="#00ff0000" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="径向渐变"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="oval"
+                app:shape_centerColor="#80ff0000"
+                app:shape_centerX="0.5"
+                app:shape_centerY="0.5"
+                app:shape_endColor="#10ff0000"
+                app:shape_gradientRadius="80dp"
+                app:shape_gradientType="radial"
+                app:shape_startColor="#ffff0000" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="扫描渐变"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="oval"
+                app:shape_centerColor="#80ff0000"
+                app:shape_centerX="0.5"
+                app:shape_centerY="0.6"
+                app:shape_endColor="#20ff0000"
+                app:shape_gradientRadius="20dp"
+                app:shape_gradientType="sweep"
+                app:shape_startColor="#ffff0000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="线（实线+虚线）"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="实线"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="line"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp"/>
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="虚线"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="line"
+                app:shape_dashGap="5dp"
+                app:shape_dashWidth="10dp"
+                app:shape_strokeColor="#ffff0000"
+                app:shape_strokeWidth="1dp"/>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

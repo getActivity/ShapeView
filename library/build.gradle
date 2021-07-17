@@ -1,0 +1,58 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+
+    defaultConfig {
+        minSdkVersion 16
+        versionCode 20
+        versionName "2.0"
+    }
+
+    // 支持 Java JDK 8
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    android.libraryVariants.all { variant ->
+        // aar 输出文件名配置
+        variant.outputs.all { output ->
+            outputFileName = "${rootProject.name}-${android.defaultConfig.versionName}.aar"
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+    implementation 'com.android.support:design:26.0.0'
+    // noinspection GradleDependency
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+}
+
+// 防止编码问题
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
