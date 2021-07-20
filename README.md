@@ -2,6 +2,8 @@
 
 * 项目地址：[Github](https://github.com/getActivity/ShapeView)、[码云](https://gitee.com/getActivity/ShapeView)
 
+* 博客介绍：[震惊，没想到 Shape 也可以这么写](https://www.jianshu.com/p/1288d8873440)
+
 * 点击此处 [下载 Demo](ShapeView.apk) 进行演示或者测试
 
 #### 集成步骤
@@ -34,7 +36,7 @@ android {
 
 dependencies {
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:2.0'
+    implementation 'com.github.getActivity:ShapeView:2.2'
 }
 ```
 

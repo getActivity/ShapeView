@@ -2,8 +2,8 @@ package com.hjq.shape.layout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.view.View;
 
 import com.hjq.shape.IShapeDrawable;
 import com.hjq.shape.R;
@@ -14,7 +14,7 @@ import com.hjq.shape.R;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 ConstraintLayout
  */
-public class ShapeConstraintLayout extends View implements IShapeDrawable<ShapeConstraintLayout> {
+public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDrawable<ShapeConstraintLayout> {
 
     private int mShape;
     private int mShapeWidth;

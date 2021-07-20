@@ -3,7 +3,7 @@ package com.hjq.shape.layout;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.View;
+import android.widget.LinearLayout;
 
 import com.hjq.shape.IShapeDrawable;
 import com.hjq.shape.R;
@@ -14,7 +14,7 @@ import com.hjq.shape.R;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 LinearLayout
  */
-public class ShapeLinearLayout extends View implements IShapeDrawable<ShapeLinearLayout> {
+public class ShapeLinearLayout extends LinearLayout implements IShapeDrawable<ShapeLinearLayout> {
 
     private int mShape;
     private int mShapeWidth;
