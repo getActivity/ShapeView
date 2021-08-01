@@ -19,7 +19,13 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
     private int mShape;
     private int mShapeWidth;
     private int mShapeHeight;
+
     private int mSolidColor;
+    private int mSolidPressedColor;
+    private int mSolidDisabledColor;
+    private int mSolidFocusedColor;
+    private int mSolidSelectedColor;
+
     private int mTopLeftRadius;
     private int mTopRightRadius;
     private int mBottomLeftRadius;
@@ -36,6 +42,11 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
     private int mGradientRadius;
 
     private int mStrokeColor;
+    private int mStrokePressedColor;
+    private int mStrokeDisabledColor;
+    private int mStrokeFocusedColor;
+    private int mStrokeSelectedColor;
+
     private int mStrokeWidth;
     private int mDashWidth;
     private int mDashGap;
@@ -57,6 +68,11 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
         mShapeHeight = typedArray.getDimensionPixelSize(R.styleable.ShapeView_shape_height, DEFAULT_SHAPE_HEIGHT);
 
         mSolidColor = typedArray.getColor(R.styleable.ShapeView_shape_solidColor, DEFAULT_SHAPE_SOLID_COLOR);
+        mSolidPressedColor = typedArray.getColor(R.styleable.ShapeView_shape_solidPressedColor, mSolidColor);
+        mSolidDisabledColor = typedArray.getColor(R.styleable.ShapeView_shape_solidDisabledColor, mSolidColor);
+        mSolidFocusedColor = typedArray.getColor(R.styleable.ShapeView_shape_solidFocusedColor, mSolidColor);
+        mSolidSelectedColor = typedArray.getColor(R.styleable.ShapeView_shape_solidSelectedColor, mSolidColor);
+
         int radius = typedArray.getDimensionPixelSize(R.styleable.ShapeView_shape_radius, DEFAULT_SHAPE_RADIUS);
         mTopLeftRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeView_shape_topLeftRadius, radius);
         mTopRightRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeView_shape_topRightRadius, radius);
@@ -74,6 +90,11 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
         mGradientRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeView_shape_gradientRadius, radius);
 
         mStrokeColor = typedArray.getColor(R.styleable.ShapeView_shape_strokeColor, DEFAULT_SHAPE_STROKE_COLOR);
+        mStrokePressedColor = typedArray.getColor(R.styleable.ShapeView_shape_strokePressedColor, mStrokeColor);
+        mStrokeDisabledColor = typedArray.getColor(R.styleable.ShapeView_shape_strokeDisabledColor, mStrokeColor);
+        mStrokeFocusedColor = typedArray.getColor(R.styleable.ShapeView_shape_strokeFocusedColor, mStrokeColor);
+        mStrokeSelectedColor = typedArray.getColor(R.styleable.ShapeView_shape_strokeSelectedColor, mStrokeColor);
+
         mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.ShapeView_shape_strokeWidth, DEFAULT_SHAPE_STROKE_WIDTH);
         mDashWidth = (int) typedArray.getDimension(R.styleable.ShapeView_shape_dashWidth, DEFAULT_SHAPE_DASH_WIDTH);
         mDashGap = (int) typedArray.getDimension(R.styleable.ShapeView_shape_dashGap, DEFAULT_SHAPE_DASH_GAP);
@@ -81,9 +102,13 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
         typedArray.recycle();
 
         if (getBackground() == null) {
-            into();
+            intoBackground();
         }
     }
+
+    /**
+     * {@link IShapeDrawable}
+     */
 
     @Override
     public ShapeView setShape(int shape) {
@@ -127,6 +152,50 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
     @Override
     public int getSolidColor() {
         return mSolidColor;
+    }
+
+    @Override
+    public ShapeView setSolidPressedColor(int color) {
+        mSolidPressedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidPressedColor() {
+        return mSolidPressedColor;
+    }
+
+    @Override
+    public ShapeView setSolidDisabledColor(int color) {
+        mSolidDisabledColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidDisabledColor() {
+        return mSolidDisabledColor;
+    }
+
+    @Override
+    public ShapeView setSolidFocusedColor(int color) {
+        mSolidFocusedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidFocusedColor() {
+        return mSolidFocusedColor;
+    }
+
+    @Override
+    public ShapeView setSolidSelectedColor(int color) {
+        mSolidSelectedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidSelectedColor() {
+        return mSolidSelectedColor;
     }
 
     @Override
@@ -284,6 +353,50 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
     }
 
     @Override
+    public ShapeView setStrokePressedColor(int color) {
+        mStrokePressedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokePressedColor() {
+        return mStrokePressedColor;
+    }
+
+    @Override
+    public ShapeView setStrokeDisabledColor(int color) {
+        mStrokeDisabledColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeDisabledColor() {
+        return mStrokeDisabledColor;
+    }
+
+    @Override
+    public ShapeView setStrokeFocusedColor(int color) {
+        mStrokeFocusedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeFocusedColor() {
+        return mStrokeFocusedColor;
+    }
+
+    @Override
+    public ShapeView setStrokeSelectedColor(int color) {
+        mStrokeSelectedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeSelectedColor() {
+        return mStrokeSelectedColor;
+    }
+
+    @Override
     public ShapeView setStrokeWidth(int width) {
         mStrokeWidth = width;
         return this;
@@ -317,7 +430,7 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
     }
 
     @Override
-    public void into() {
-        setBackground(build());
+    public void intoBackground() {
+        setBackground(buildDrawable());
     }
 }

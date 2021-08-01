@@ -5,8 +5,8 @@ android {
 
     defaultConfig {
         minSdkVersion 16
-        versionCode 22
-        versionName "2.2"
+        versionCode 30
+        versionName "3.0"
     }
 
     // 支持 Java JDK 8
@@ -21,6 +21,14 @@ android {
             outputFileName = "${rootProject.name}-${android.defaultConfig.versionName}.aar"
         }
     }
+}
+
+afterEvaluate {
+    // 排除 BuildConfig.class 和 R.class
+    generateReleaseBuildConfig.enabled = false
+    generateDebugBuildConfig.enabled = false
+    generateReleaseResValues.enabled = false
+    generateDebugResValues.enabled = false
 }
 
 dependencies {

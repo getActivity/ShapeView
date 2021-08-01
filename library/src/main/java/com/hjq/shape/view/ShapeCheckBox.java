@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 
 import com.hjq.shape.IShapeDrawable;
+import com.hjq.shape.IShapeTextColor;
 import com.hjq.shape.R;
 
 /**
@@ -14,12 +15,20 @@ import com.hjq.shape.R;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 CheckBox
  */
-public class ShapeCheckBox extends AppCompatCheckBox implements IShapeDrawable<ShapeCheckBox> {
+public class ShapeCheckBox extends AppCompatCheckBox implements
+        IShapeDrawable<ShapeCheckBox>, IShapeTextColor<ShapeCheckBox> {
 
     private int mShape;
     private int mShapeWidth;
     private int mShapeHeight;
+
     private int mSolidColor;
+    private int mSolidPressedColor;
+    private int mSolidCheckedColor;
+    private int mSolidDisabledColor;
+    private int mSolidFocusedColor;
+    private int mSolidSelectedColor;
+
     private int mTopLeftRadius;
     private int mTopRightRadius;
     private int mBottomLeftRadius;
@@ -36,16 +45,29 @@ public class ShapeCheckBox extends AppCompatCheckBox implements IShapeDrawable<S
     private int mGradientRadius;
 
     private int mStrokeColor;
+    private int mStrokePressedColor;
+    private int mStrokeCheckedColor;
+    private int mStrokeDisabledColor;
+    private int mStrokeFocusedColor;
+    private int mStrokeSelectedColor;
+
     private int mStrokeWidth;
     private int mDashWidth;
     private int mDashGap;
+
+    private int mTextColor;
+    private int mTextPressedColor;
+    private int mTextCheckedColor;
+    private int mTextDisabledColor;
+    private int mTextFocusedColor;
+    private int mTextSelectedColor;
 
     public ShapeCheckBox(Context context) {
         this(context, null);
     }
 
     public ShapeCheckBox(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, R.attr.checkboxStyle);
     }
 
     public ShapeCheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -57,6 +79,12 @@ public class ShapeCheckBox extends AppCompatCheckBox implements IShapeDrawable<S
         mShapeHeight = typedArray.getDimensionPixelSize(R.styleable.ShapeCheckBox_shape_height, DEFAULT_SHAPE_HEIGHT);
 
         mSolidColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_solidColor, DEFAULT_SHAPE_SOLID_COLOR);
+        mSolidPressedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_solidPressedColor, mSolidColor);
+        mSolidCheckedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_solidCheckedColor, mSolidColor);
+        mSolidDisabledColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_solidDisabledColor, mSolidColor);
+        mSolidFocusedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_solidFocusedColor, mSolidColor);
+        mSolidSelectedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_solidSelectedColor, mSolidColor);
+
         int radius = typedArray.getDimensionPixelSize(R.styleable.ShapeCheckBox_shape_radius, DEFAULT_SHAPE_RADIUS);
         mTopLeftRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeCheckBox_shape_topLeftRadius, radius);
         mTopRightRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeCheckBox_shape_topRightRadius, radius);
@@ -74,16 +102,35 @@ public class ShapeCheckBox extends AppCompatCheckBox implements IShapeDrawable<S
         mGradientRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeCheckBox_shape_gradientRadius, radius);
 
         mStrokeColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_strokeColor, DEFAULT_SHAPE_STROKE_COLOR);
+        mStrokePressedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_strokePressedColor, mStrokeColor);
+        mStrokeCheckedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_strokeCheckedColor, mStrokeColor);
+        mStrokeDisabledColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_strokeDisabledColor, mStrokeColor);
+        mStrokeFocusedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_strokeFocusedColor, mStrokeColor);
+        mStrokeSelectedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_strokeSelectedColor, mStrokeColor);
+
         mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.ShapeCheckBox_shape_strokeWidth, DEFAULT_SHAPE_STROKE_WIDTH);
         mDashWidth = (int) typedArray.getDimension(R.styleable.ShapeCheckBox_shape_dashWidth, DEFAULT_SHAPE_DASH_WIDTH);
         mDashGap = (int) typedArray.getDimension(R.styleable.ShapeCheckBox_shape_dashGap, DEFAULT_SHAPE_DASH_GAP);
 
+        mTextColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_textColor, getTextColors().getDefaultColor());
+        mTextPressedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_textPressedColor, getTextColors().getColorForState(new int[]{android.R.attr.state_pressed}, mTextColor));
+        mTextCheckedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_textCheckedColor, getTextColors().getColorForState(new int[]{android.R.attr.state_checked}, mTextColor));
+        mTextDisabledColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_textDisabledColor, getTextColors().getColorForState(new int[]{-android.R.attr.state_enabled}, mTextColor));
+        mTextFocusedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_textFocusedColor, getTextColors().getColorForState(new int[]{android.R.attr.state_focused}, mTextColor));
+        mTextSelectedColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_textSelectedColor, getTextColors().getColorForState(new int[]{android.R.attr.state_selected}, mTextColor));
+
         typedArray.recycle();
 
         if (getBackground() == null) {
-            into();
+            intoBackground();
         }
+
+        intoTextColor();
     }
+
+    /**
+     * {@link IShapeDrawable}
+     */
 
     @Override
     public ShapeCheckBox setShape(int shape) {
@@ -127,6 +174,61 @@ public class ShapeCheckBox extends AppCompatCheckBox implements IShapeDrawable<S
     @Override
     public int getSolidColor() {
         return mSolidColor;
+    }
+
+    @Override
+    public ShapeCheckBox setSolidPressedColor(int color) {
+        mSolidPressedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidPressedColor() {
+        return mSolidPressedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setSolidCheckedColor(int color) {
+        mSolidCheckedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidCheckedColor() {
+        return mSolidCheckedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setSolidDisabledColor(int color) {
+        mSolidDisabledColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidDisabledColor() {
+        return mSolidDisabledColor;
+    }
+
+    @Override
+    public ShapeCheckBox setSolidFocusedColor(int color) {
+        mSolidFocusedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidFocusedColor() {
+        return mSolidFocusedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setSolidSelectedColor(int color) {
+        mSolidSelectedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidSelectedColor() {
+        return mSolidSelectedColor;
     }
 
     @Override
@@ -284,6 +386,61 @@ public class ShapeCheckBox extends AppCompatCheckBox implements IShapeDrawable<S
     }
 
     @Override
+    public ShapeCheckBox setStrokePressedColor(int color) {
+        mStrokePressedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokePressedColor() {
+        return mStrokePressedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setStrokeCheckedColor(int color) {
+        mStrokeCheckedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeCheckedColor() {
+        return mStrokeCheckedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setStrokeDisabledColor(int color) {
+        mStrokeDisabledColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeDisabledColor() {
+        return mStrokeDisabledColor;
+    }
+
+    @Override
+    public ShapeCheckBox setStrokeFocusedColor(int color) {
+        mStrokeFocusedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeFocusedColor() {
+        return mStrokeFocusedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setStrokeSelectedColor(int color) {
+        mStrokeSelectedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeSelectedColor() {
+        return mStrokeSelectedColor;
+    }
+
+    @Override
     public ShapeCheckBox setStrokeWidth(int width) {
         mStrokeWidth = width;
         return this;
@@ -317,7 +474,88 @@ public class ShapeCheckBox extends AppCompatCheckBox implements IShapeDrawable<S
     }
 
     @Override
-    public void into() {
-        setBackground(build());
+    public void intoBackground() {
+        setBackground(buildDrawable());
+    }
+
+    /**
+     * {@link IShapeTextColor}
+     */
+
+    @Override
+    public void setTextColor(int color) {
+        super.setTextColor(color);
+        mTextColor = color;
+    }
+
+    @Override
+    public ShapeCheckBox setNormalTextColor(int color) {
+        mTextColor = color;
+        return this;
+    }
+
+    @Override
+    public int getNormalTextColor() {
+        return mTextColor;
+    }
+
+    @Override
+    public ShapeCheckBox setTextPressedColor(int color) {
+        mTextPressedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextPressedColor() {
+        return mTextPressedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setTextCheckedColor(int color) {
+        mTextCheckedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextCheckedColor() {
+        return mTextCheckedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setTextDisabledColor(int color) {
+        mTextDisabledColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextDisabledColor() {
+        return mTextDisabledColor;
+    }
+
+    @Override
+    public ShapeCheckBox setTextFocusedColor(int color) {
+        mTextFocusedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextFocusedColor() {
+        return mTextFocusedColor;
+    }
+
+    @Override
+    public ShapeCheckBox setTextSelectedColor(int color) {
+        mTextSelectedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextSelectedColor() {
+        return mTextSelectedColor;
+    }
+
+    @Override
+    public void intoTextColor() {
+        setTextColor(buildColorState());
     }
 }

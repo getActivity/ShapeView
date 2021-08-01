@@ -3,13 +3,14 @@ package com.hjq.shape;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.view.View;
 
 /**
  *    author : Android 轮子哥
  *    github : https://github.com/getActivity/ShapeView
  *    time   : 2021/07/17
- *    desc   : Shape 接口规范
+ *    desc   : Shape Drawable 接口规范
  */
 public interface IShapeDrawable<V extends View> {
 
@@ -46,6 +47,46 @@ public interface IShapeDrawable<V extends View> {
     V setSolidColor(int color);
 
     int getSolidColor();
+
+    default V setSolidPressedColor(int color) {
+        return setSolidColor(color);
+    }
+
+    default int getSolidPressedColor() {
+        return getSolidColor();
+    }
+
+    default V setSolidCheckedColor(int color) {
+        return setSolidColor(color);
+    }
+
+    default int getSolidCheckedColor() {
+        return getSolidColor();
+    }
+
+    default V setSolidDisabledColor(int color) {
+        return setSolidColor(color);
+    }
+
+    default int getSolidDisabledColor() {
+        return getSolidColor();
+    }
+
+    default V setSolidFocusedColor(int color) {
+        return setSolidColor(color);
+    }
+
+    default int getSolidFocusedColor() {
+        return getSolidColor();
+    }
+
+    default V setSolidSelectedColor(int color) {
+        return setSolidColor(color);
+    }
+
+    default int getSolidSelectedColor() {
+        return getSolidColor();
+    }
 
     default V setRadius(int radius) {
         setTopLeftRadius(radius);
@@ -110,6 +151,46 @@ public interface IShapeDrawable<V extends View> {
 
     int getStrokeColor();
 
+    default V setStrokePressedColor(int color) {
+        return setStrokeColor(color);
+    }
+
+    default int getStrokePressedColor() {
+        return getStrokeColor();
+    }
+
+    default V setStrokeCheckedColor(int color) {
+        return setStrokeColor(color);
+    }
+
+    default int getStrokeCheckedColor() {
+        return getStrokeColor();
+    }
+
+    default V setStrokeDisabledColor(int color) {
+        return setStrokeColor(color);
+    }
+
+    default int getStrokeDisabledColor() {
+        return getStrokeColor();
+    }
+
+    default V setStrokeFocusedColor(int color) {
+        return setStrokeColor(color);
+    }
+
+    default int getStrokeFocusedColor() {
+        return getStrokeColor();
+    }
+
+    default V setStrokeSelectedColor(int color) {
+        return setStrokeColor(color);
+    }
+
+    default int getStrokeSelectedColor() {
+        return getStrokeColor();
+    }
+
     V setStrokeWidth(int width);
 
     int getStrokeWidth();
@@ -122,13 +203,42 @@ public interface IShapeDrawable<V extends View> {
 
     int getDashGap();
 
-    default Drawable build() {
+    default Drawable buildDrawable() {
+        if (getSolidColor() != getSolidPressedColor()  || getStrokeColor() != getStrokePressedColor() ||
+                getSolidColor() != getSolidCheckedColor() || getStrokeColor() != getStrokeCheckedColor() ||
+                getSolidColor() != getSolidDisabledColor() || getStrokeColor() != getStrokeDisabledColor() ||
+                getSolidColor() != getSolidFocusedColor() || getStrokeColor() != getStrokeFocusedColor() ||
+                getSolidColor() != getSolidSelectedColor() || getStrokeColor() != getStrokeSelectedColor()) {
+            StateListDrawable drawable = new StateListDrawable();
+            if (getSolidColor() != getSolidPressedColor() || getStrokeColor() != getStrokePressedColor()) {
+                drawable.addState(new int[]{android.R.attr.state_pressed}, createDrawable(getSolidPressedColor(), getStrokePressedColor()));
+            }
+            if (getSolidColor() != getSolidCheckedColor() || getStrokeColor() != getStrokeCheckedColor()) {
+                drawable.addState(new int[]{android.R.attr.state_checked}, createDrawable(getSolidCheckedColor(), getStrokeCheckedColor()));
+            }
+            if (getSolidColor() != getSolidDisabledColor() || getStrokeColor() != getStrokeDisabledColor()) {
+                drawable.addState(new int[]{-android.R.attr.state_enabled}, createDrawable(getSolidDisabledColor(), getStrokeDisabledColor()));
+            }
+            if (getSolidColor() != getSolidFocusedColor() || getStrokeColor() != getStrokeFocusedColor()) {
+                drawable.addState(new int[]{android.R.attr.state_focused}, createDrawable(getSolidFocusedColor(), getStrokeFocusedColor()));
+            }
+            if (getSolidColor() != getSolidSelectedColor() || getStrokeColor() != getStrokeSelectedColor()) {
+                drawable.addState(new int[]{android.R.attr.state_selected}, createDrawable(getSolidSelectedColor(), getStrokeSelectedColor()));
+            }
+            drawable.addState(new int[]{}, createDrawable(getSolidColor(), getStrokeColor()));
+            return drawable;
+        }
+
+        return createDrawable(getSolidColor(), getStrokeColor());
+    }
+
+    default Drawable createDrawable(int solidColor, int strokeColor) {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(getShape());
         drawable.setSize(getShapeWidth(), getShapeHeight());
         drawable.setCornerRadii(new float[]{getTopLeftRadius(), getTopLeftRadius(), getTopRightRadius(), getTopRightRadius(),
                 getBottomRightRadius(), getBottomRightRadius(), getBottomLeftRadius(), getBottomLeftRadius()});
-        drawable.setColor(getSolidColor());
+        drawable.setColor(solidColor);
 
         int startColor = getStartColor();
         int centerColor = getCenterColor();
@@ -179,9 +289,9 @@ public interface IShapeDrawable<V extends View> {
 
         drawable.setGradientType(getGradientType());
         drawable.setGradientRadius(getGradientRadius());
-        drawable.setStroke(getStrokeWidth(), getStrokeColor(), getDashWidth(), getDashGap());
+        drawable.setStroke(getStrokeWidth(), strokeColor, getDashWidth(), getDashGap());
         return drawable;
     }
 
-    void into();
+    void intoBackground();
 }

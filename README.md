@@ -36,7 +36,7 @@ android {
 
 dependencies {
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:2.2'
+    implementation 'com.github.getActivity:ShapeView:3.0'
 }
 ```
 
@@ -72,8 +72,19 @@ android.enableJetifier = true
     <!-- Shape 高度 -->
     <attr name="shape_height" format="dimension" />
 
-    <!-- 填充色 -->
+    <!-- 填充色（默认状态） -->
     <attr name="shape_solidColor" format="color|reference" />
+    <!-- 填充色（按下状态） -->
+    <attr name="shape_solidPressedColor" format="color|reference" />
+    <!-- 填充色（选中状态） -->
+    <attr name="shape_solidCheckedColor" format="color|reference" />
+    <!-- 填充色（禁用状态） -->
+    <attr name="shape_solidDisabledColor" format="color|reference" />
+    <!-- 填充色（焦点状态） -->
+    <attr name="shape_solidFocusedColor" format="color|reference" />
+    <!-- 填充色（选择状态） -->
+    <attr name="shape_solidSelectedColor" format="color|reference" />
+
     <!-- 圆角大小 -->
     <attr name="shape_radius" format="dimension" />
     <!-- 左上角的圆角大小 -->
@@ -111,8 +122,19 @@ android.enableJetifier = true
     <!-- 渐变色半径（仅用于径向渐变） -->
     <attr name="shape_gradientRadius" format="float|fraction|dimension" />
 
-    <!-- 边框颜色 -->
+    <!-- 边框色（默认状态） -->
     <attr name="shape_strokeColor" format="color|reference" />
+    <!-- 边框色（按下状态） -->
+    <attr name="shape_strokePressedColor" format="color|reference" />
+    <!-- 边框色（选中状态） -->
+    <attr name="shape_strokeCheckedColor" format="color|reference" />
+    <!-- 边框色（禁用状态） -->
+    <attr name="shape_strokeDisabledColor" format="color|reference" />
+    <!-- 边框色（焦点状态） -->
+    <attr name="shape_strokeFocusedColor" format="color|reference" />
+    <!-- 边框色（选择状态） -->
+    <attr name="shape_strokeSelectedColor" format="color|reference" />
+
     <!-- 边框宽度 -->
     <attr name="shape_strokeWidth" format="dimension" />
     <!-- 边框虚线宽度（为 0 就是实线，大于 0 就是虚线） -->
@@ -120,10 +142,90 @@ android.enableJetifier = true
     <!-- 边框虚线间隔（虚线与虚线之间的间隔） -->
     <attr name="shape_dashGap" format="dimension" />
 
+    <!-- 文本色（默认状态） -->
+    <attr name="shape_textColor" format="color|reference" />
+    <!-- 文本色（按下状态） -->
+    <attr name="shape_textPressedColor" format="color|reference" />
+    <!-- 文本色（选中状态） -->
+    <attr name="shape_textCheckedColor" format="color|reference" />
+    <!-- 文本色（禁用状态） -->
+    <attr name="shape_textDisabledColor" format="color|reference" />
+    <!-- 文本色（焦点状态） -->
+    <attr name="shape_textFocusedColor" format="color|reference" />
+    <!-- 文本色（选择状态） -->
+    <attr name="shape_textSelectedColor" format="color|reference" />
+
 </resources>
 ```
 
 #### 使用案例
+
+![](picture/0.jpg)
+
+```xml
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="填充色按压效果"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="20dp"
+    app:shape_solidColor="#5A8DDF"
+    app:shape_solidPressedColor="#AA5A8DDF" />
+
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:enabled="false"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="填充色禁用效果"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="20dp"
+    app:shape_solidColor="#5A8DDF"
+    app:shape_solidDisabledColor="#BBBBBB" />
+
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="边框色按压效果"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="20dp"
+    app:shape_solidPressedColor="#5A8DDF"
+    app:shape_strokeColor="#5A8DDF"
+    app:shape_strokeWidth="1dp"
+    app:shape_textColor="#5A8DDF"
+    app:shape_textPressedColor="@android:color/white" />
+
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:enabled="false"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="边框色禁用效果"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="20dp"
+    app:shape_strokeColor="#5A8DDF"
+    app:shape_strokeDisabledColor="#BBBBBB"
+    app:shape_strokeWidth="1dp" />
+```
 
 ![](picture/1.jpg)
 
@@ -518,6 +620,8 @@ android.enableJetifier = true
 * 无学习成本：控件属性和原生 Shape 命名保持一致，无需额外学习
 
 * 覆盖范围广：几乎涵盖所有常见的 View 控件，并且控件名称无任何记忆成本
+
+* 支持状态选择器：不仅支持设置背景色的状态选择器，还支持设置文本颜色的状态选择器
 
 #### 作者的其他开源项目
 

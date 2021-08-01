@@ -17,8 +17,19 @@
     <!-- Shape 高度 -->
     <attr name="shape_height" format="dimension" />
 
-    <!-- 填充色 -->
+    <!-- 填充色（默认状态） -->
     <attr name="shape_solidColor" format="color|reference" />
+    <!-- 填充色（按下状态） -->
+    <attr name="shape_solidPressedColor" format="color|reference" />
+    <!-- 填充色（选中状态） -->
+    <attr name="shape_solidCheckedColor" format="color|reference" />
+    <!-- 填充色（禁用状态） -->
+    <attr name="shape_solidDisabledColor" format="color|reference" />
+    <!-- 填充色（焦点状态） -->
+    <attr name="shape_solidFocusedColor" format="color|reference" />
+    <!-- 填充色（选择状态） -->
+    <attr name="shape_solidSelectedColor" format="color|reference" />
+
     <!-- 圆角大小 -->
     <attr name="shape_radius" format="dimension" />
     <!-- 左上角的圆角大小 -->
@@ -56,8 +67,19 @@
     <!-- 渐变色半径（仅用于径向渐变） -->
     <attr name="shape_gradientRadius" format="float|fraction|dimension" />
 
-    <!-- 边框颜色 -->
+    <!-- 边框色（默认状态） -->
     <attr name="shape_strokeColor" format="color|reference" />
+    <!-- 边框色（按下状态） -->
+    <attr name="shape_strokePressedColor" format="color|reference" />
+    <!-- 边框色（选中状态） -->
+    <attr name="shape_strokeCheckedColor" format="color|reference" />
+    <!-- 边框色（禁用状态） -->
+    <attr name="shape_strokeDisabledColor" format="color|reference" />
+    <!-- 边框色（焦点状态） -->
+    <attr name="shape_strokeFocusedColor" format="color|reference" />
+    <!-- 边框色（选择状态） -->
+    <attr name="shape_strokeSelectedColor" format="color|reference" />
+
     <!-- 边框宽度 -->
     <attr name="shape_strokeWidth" format="dimension" />
     <!-- 边框虚线宽度（为 0 就是实线，大于 0 就是虚线） -->
@@ -65,36 +87,28 @@
     <!-- 边框虚线间隔（虚线与虚线之间的间隔） -->
     <attr name="shape_dashGap" format="dimension" />
 
-    <declare-styleable name="ShapeView">
-        <attr name="shape" />
-        <attr name="shape_width" />
-        <attr name="shape_height" />
-        <attr name="shape_solidColor" />
-        <attr name="shape_radius" />
-        <attr name="shape_topLeftRadius" />
-        <attr name="shape_topRightRadius" />
-        <attr name="shape_bottomLeftRadius" />
-        <attr name="shape_bottomRightRadius" />
-        <attr name="shape_startColor" />
-        <attr name="shape_centerColor" />
-        <attr name="shape_endColor" />
-        <attr name="shape_useLevel" />
-        <attr name="shape_angle" />
-        <attr name="shape_gradientType" />
-        <attr name="shape_centerX" />
-        <attr name="shape_centerY" />
-        <attr name="shape_gradientRadius" />
-        <attr name="shape_strokeColor" />
-        <attr name="shape_strokeWidth" />
-        <attr name="shape_dashWidth" />
-        <attr name="shape_dashGap" />
-    </declare-styleable>
+    <!-- 文本色（默认状态） -->
+    <attr name="shape_textColor" format="color|reference" />
+    <!-- 文本色（按下状态） -->
+    <attr name="shape_textPressedColor" format="color|reference" />
+    <!-- 文本色（选中状态） -->
+    <attr name="shape_textCheckedColor" format="color|reference" />
+    <!-- 文本色（禁用状态） -->
+    <attr name="shape_textDisabledColor" format="color|reference" />
+    <!-- 文本色（焦点状态） -->
+    <attr name="shape_textFocusedColor" format="color|reference" />
+    <!-- 文本色（选择状态） -->
+    <attr name="shape_textSelectedColor" format="color|reference" />
 
     <declare-styleable name="ShapeTextView">
         <attr name="shape" />
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -110,9 +124,19 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_textColor" />
+        <attr name="shape_textPressedColor" />
+        <attr name="shape_textDisabledColor" />
+        <attr name="shape_textFocusedColor" />
+        <attr name="shape_textSelectedColor" />
     </declare-styleable>
 
     <declare-styleable name="ShapeButton">
@@ -120,6 +144,10 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -135,34 +163,19 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
-    </declare-styleable>
 
-    <declare-styleable name="ShapeImageView">
-        <attr name="shape" />
-        <attr name="shape_width" />
-        <attr name="shape_height" />
-        <attr name="shape_solidColor" />
-        <attr name="shape_radius" />
-        <attr name="shape_topLeftRadius" />
-        <attr name="shape_topRightRadius" />
-        <attr name="shape_bottomLeftRadius" />
-        <attr name="shape_bottomRightRadius" />
-        <attr name="shape_startColor" />
-        <attr name="shape_centerColor" />
-        <attr name="shape_endColor" />
-        <attr name="shape_useLevel" />
-        <attr name="shape_angle" />
-        <attr name="shape_gradientType" />
-        <attr name="shape_centerX" />
-        <attr name="shape_centerY" />
-        <attr name="shape_gradientRadius" />
-        <attr name="shape_strokeColor" />
-        <attr name="shape_strokeWidth" />
-        <attr name="shape_dashWidth" />
-        <attr name="shape_dashGap" />
+        <attr name="shape_textColor" />
+        <attr name="shape_textPressedColor" />
+        <attr name="shape_textDisabledColor" />
+        <attr name="shape_textFocusedColor" />
+        <attr name="shape_textSelectedColor" />
     </declare-styleable>
 
     <declare-styleable name="ShapeRadioButton">
@@ -170,6 +183,11 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidCheckedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -185,9 +203,21 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeCheckedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_textColor" />
+        <attr name="shape_textPressedColor" />
+        <attr name="shape_textCheckedColor" />
+        <attr name="shape_textDisabledColor" />
+        <attr name="shape_textFocusedColor" />
+        <attr name="shape_textSelectedColor" />
     </declare-styleable>
 
     <declare-styleable name="ShapeCheckBox">
@@ -195,6 +225,11 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidCheckedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -210,9 +245,21 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeCheckedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_textColor" />
+        <attr name="shape_textPressedColor" />
+        <attr name="shape_textCheckedColor" />
+        <attr name="shape_textDisabledColor" />
+        <attr name="shape_textFocusedColor" />
+        <attr name="shape_textSelectedColor" />
     </declare-styleable>
 
     <declare-styleable name="ShapeEditText">
@@ -220,6 +267,10 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -235,6 +286,82 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
+        <attr name="shape_strokeWidth" />
+        <attr name="shape_dashWidth" />
+        <attr name="shape_dashGap" />
+
+        <attr name="shape_textColor" />
+        <attr name="shape_textPressedColor" />
+        <attr name="shape_textDisabledColor" />
+        <attr name="shape_textFocusedColor" />
+        <attr name="shape_textSelectedColor" />
+    </declare-styleable>
+
+    <declare-styleable name="ShapeImageView">
+        <attr name="shape" />
+        <attr name="shape_width" />
+        <attr name="shape_height" />
+        <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
+        <attr name="shape_radius" />
+        <attr name="shape_topLeftRadius" />
+        <attr name="shape_topRightRadius" />
+        <attr name="shape_bottomLeftRadius" />
+        <attr name="shape_bottomRightRadius" />
+        <attr name="shape_startColor" />
+        <attr name="shape_centerColor" />
+        <attr name="shape_endColor" />
+        <attr name="shape_useLevel" />
+        <attr name="shape_angle" />
+        <attr name="shape_gradientType" />
+        <attr name="shape_centerX" />
+        <attr name="shape_centerY" />
+        <attr name="shape_gradientRadius" />
+        <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
+        <attr name="shape_strokeWidth" />
+        <attr name="shape_dashWidth" />
+        <attr name="shape_dashGap" />
+    </declare-styleable>
+
+    <declare-styleable name="ShapeView">
+        <attr name="shape" />
+        <attr name="shape_width" />
+        <attr name="shape_height" />
+        <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
+        <attr name="shape_radius" />
+        <attr name="shape_topLeftRadius" />
+        <attr name="shape_topRightRadius" />
+        <attr name="shape_bottomLeftRadius" />
+        <attr name="shape_bottomRightRadius" />
+        <attr name="shape_startColor" />
+        <attr name="shape_centerColor" />
+        <attr name="shape_endColor" />
+        <attr name="shape_useLevel" />
+        <attr name="shape_angle" />
+        <attr name="shape_gradientType" />
+        <attr name="shape_centerX" />
+        <attr name="shape_centerY" />
+        <attr name="shape_gradientRadius" />
+        <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
@@ -245,6 +372,10 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -260,6 +391,10 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
@@ -270,6 +405,10 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -285,6 +424,10 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
@@ -295,6 +438,10 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -310,6 +457,10 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
@@ -320,6 +471,10 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -335,6 +490,10 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
@@ -345,6 +504,10 @@
         <attr name="shape_width" />
         <attr name="shape_height" />
         <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
         <attr name="shape_radius" />
         <attr name="shape_topLeftRadius" />
         <attr name="shape_topRightRadius" />
@@ -360,6 +523,10 @@
         <attr name="shape_centerY" />
         <attr name="shape_gradientRadius" />
         <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />

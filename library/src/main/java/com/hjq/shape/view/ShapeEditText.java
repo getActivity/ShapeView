@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 
 import com.hjq.shape.IShapeDrawable;
+import com.hjq.shape.IShapeTextColor;
 import com.hjq.shape.R;
 
 /**
@@ -14,12 +15,19 @@ import com.hjq.shape.R;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 EditText
  */
-public class ShapeEditText extends AppCompatEditText implements IShapeDrawable<ShapeEditText> {
+public class ShapeEditText extends AppCompatEditText implements
+        IShapeDrawable<ShapeEditText>, IShapeTextColor<ShapeEditText> {
 
     private int mShape;
     private int mShapeWidth;
     private int mShapeHeight;
+
     private int mSolidColor;
+    private int mSolidPressedColor;
+    private int mSolidDisabledColor;
+    private int mSolidFocusedColor;
+    private int mSolidSelectedColor;
+
     private int mTopLeftRadius;
     private int mTopRightRadius;
     private int mBottomLeftRadius;
@@ -36,16 +44,27 @@ public class ShapeEditText extends AppCompatEditText implements IShapeDrawable<S
     private int mGradientRadius;
 
     private int mStrokeColor;
+    private int mStrokePressedColor;
+    private int mStrokeDisabledColor;
+    private int mStrokeFocusedColor;
+    private int mStrokeSelectedColor;
+
     private int mStrokeWidth;
     private int mDashWidth;
     private int mDashGap;
+
+    private int mTextColor;
+    private int mTextPressedColor;
+    private int mTextDisabledColor;
+    private int mTextFocusedColor;
+    private int mTextSelectedColor;
 
     public ShapeEditText(Context context) {
         this(context, null);
     }
 
     public ShapeEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, R.attr.editTextStyle);
     }
 
     public ShapeEditText(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -57,6 +76,11 @@ public class ShapeEditText extends AppCompatEditText implements IShapeDrawable<S
         mShapeHeight = typedArray.getDimensionPixelSize(R.styleable.ShapeEditText_shape_height, DEFAULT_SHAPE_HEIGHT);
 
         mSolidColor = typedArray.getColor(R.styleable.ShapeEditText_shape_solidColor, DEFAULT_SHAPE_SOLID_COLOR);
+        mSolidPressedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_solidPressedColor, mSolidColor);
+        mSolidDisabledColor = typedArray.getColor(R.styleable.ShapeEditText_shape_solidDisabledColor, mSolidColor);
+        mSolidFocusedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_solidFocusedColor, mSolidColor);
+        mSolidSelectedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_solidSelectedColor, mSolidColor);
+
         int radius = typedArray.getDimensionPixelSize(R.styleable.ShapeEditText_shape_radius, DEFAULT_SHAPE_RADIUS);
         mTopLeftRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeEditText_shape_topLeftRadius, radius);
         mTopRightRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeEditText_shape_topRightRadius, radius);
@@ -74,16 +98,33 @@ public class ShapeEditText extends AppCompatEditText implements IShapeDrawable<S
         mGradientRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeEditText_shape_gradientRadius, radius);
 
         mStrokeColor = typedArray.getColor(R.styleable.ShapeEditText_shape_strokeColor, DEFAULT_SHAPE_STROKE_COLOR);
+        mStrokePressedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_strokePressedColor, mStrokeColor);
+        mStrokeDisabledColor = typedArray.getColor(R.styleable.ShapeEditText_shape_strokeDisabledColor, mStrokeColor);
+        mStrokeFocusedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_strokeFocusedColor, mStrokeColor);
+        mStrokeSelectedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_strokeSelectedColor, mStrokeColor);
+
         mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.ShapeEditText_shape_strokeWidth, DEFAULT_SHAPE_STROKE_WIDTH);
         mDashWidth = (int) typedArray.getDimension(R.styleable.ShapeEditText_shape_dashWidth, DEFAULT_SHAPE_DASH_WIDTH);
         mDashGap = (int) typedArray.getDimension(R.styleable.ShapeEditText_shape_dashGap, DEFAULT_SHAPE_DASH_GAP);
 
+        mTextColor = typedArray.getColor(R.styleable.ShapeEditText_shape_textColor, getTextColors().getDefaultColor());
+        mTextPressedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_textPressedColor, getTextColors().getColorForState(new int[]{android.R.attr.state_pressed}, mTextColor));
+        mTextDisabledColor = typedArray.getColor(R.styleable.ShapeEditText_shape_textDisabledColor, getTextColors().getColorForState(new int[]{-android.R.attr.state_enabled}, mTextColor));
+        mTextFocusedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_textFocusedColor, getTextColors().getColorForState(new int[]{android.R.attr.state_focused}, mTextColor));
+        mTextSelectedColor = typedArray.getColor(R.styleable.ShapeEditText_shape_textSelectedColor, getTextColors().getColorForState(new int[]{android.R.attr.state_selected}, mTextColor));
+
         typedArray.recycle();
 
         if (getBackground() == null) {
-            into();
+            intoBackground();
         }
+
+        intoTextColor();
     }
+
+    /**
+     * {@link IShapeDrawable}
+     */
 
     @Override
     public ShapeEditText setShape(int shape) {
@@ -127,6 +168,50 @@ public class ShapeEditText extends AppCompatEditText implements IShapeDrawable<S
     @Override
     public int getSolidColor() {
         return mSolidColor;
+    }
+
+    @Override
+    public ShapeEditText setSolidPressedColor(int color) {
+        mSolidPressedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidPressedColor() {
+        return mSolidPressedColor;
+    }
+
+    @Override
+    public ShapeEditText setSolidDisabledColor(int color) {
+        mSolidDisabledColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidDisabledColor() {
+        return mSolidDisabledColor;
+    }
+
+    @Override
+    public ShapeEditText setSolidFocusedColor(int color) {
+        mSolidFocusedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidFocusedColor() {
+        return mSolidFocusedColor;
+    }
+
+    @Override
+    public ShapeEditText setSolidSelectedColor(int color) {
+        mSolidSelectedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getSolidSelectedColor() {
+        return mSolidSelectedColor;
     }
 
     @Override
@@ -284,6 +369,50 @@ public class ShapeEditText extends AppCompatEditText implements IShapeDrawable<S
     }
 
     @Override
+    public ShapeEditText setStrokePressedColor(int color) {
+        mStrokePressedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokePressedColor() {
+        return mStrokePressedColor;
+    }
+
+    @Override
+    public ShapeEditText setStrokeDisabledColor(int color) {
+        mStrokeDisabledColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeDisabledColor() {
+        return mStrokeDisabledColor;
+    }
+
+    @Override
+    public ShapeEditText setStrokeFocusedColor(int color) {
+        mStrokeFocusedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeFocusedColor() {
+        return mStrokeFocusedColor;
+    }
+
+    @Override
+    public ShapeEditText setStrokeSelectedColor(int color) {
+        mStrokeSelectedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getStrokeSelectedColor() {
+        return mStrokeSelectedColor;
+    }
+
+    @Override
     public ShapeEditText setStrokeWidth(int width) {
         mStrokeWidth = width;
         return this;
@@ -317,7 +446,77 @@ public class ShapeEditText extends AppCompatEditText implements IShapeDrawable<S
     }
 
     @Override
-    public void into() {
-        setBackground(build());
+    public void intoBackground() {
+        setBackground(buildDrawable());
+    }
+
+    /**
+     * {@link IShapeTextColor}
+     */
+
+    @Override
+    public void setTextColor(int color) {
+        super.setTextColor(color);
+        mTextColor = color;
+    }
+
+    @Override
+    public ShapeEditText setNormalTextColor(int color) {
+        mTextColor = color;
+        return this;
+    }
+
+    @Override
+    public int getNormalTextColor() {
+        return mTextColor;
+    }
+
+    @Override
+    public ShapeEditText setTextPressedColor(int color) {
+        mTextPressedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextPressedColor() {
+        return mTextPressedColor;
+    }
+
+    @Override
+    public ShapeEditText setTextDisabledColor(int color) {
+        mTextDisabledColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextDisabledColor() {
+        return mTextDisabledColor;
+    }
+
+    @Override
+    public ShapeEditText setTextFocusedColor(int color) {
+        mTextFocusedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextFocusedColor() {
+        return mTextFocusedColor;
+    }
+
+    @Override
+    public ShapeEditText setTextSelectedColor(int color) {
+        mTextSelectedColor = color;
+        return this;
+    }
+
+    @Override
+    public int getTextSelectedColor() {
+        return mTextSelectedColor;
+    }
+
+    @Override
+    public void intoTextColor() {
+        setTextColor(buildColorState());
     }
 }
