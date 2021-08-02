@@ -115,10 +115,7 @@ public class ShapeTextView extends AppCompatTextView implements
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
-
+        intoBackground();
         intoTextColor();
     }
 

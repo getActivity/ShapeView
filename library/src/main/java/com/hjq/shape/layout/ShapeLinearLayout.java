@@ -101,9 +101,7 @@ public class ShapeLinearLayout extends LinearLayout implements IShapeDrawable<Sh
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
+        intoBackground();
     }
 
     /**

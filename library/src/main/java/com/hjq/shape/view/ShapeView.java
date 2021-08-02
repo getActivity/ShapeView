@@ -101,9 +101,7 @@ public class ShapeView extends View implements IShapeDrawable<ShapeView> {
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
+        intoBackground();
     }
 
     /**

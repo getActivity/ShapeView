@@ -101,9 +101,7 @@ public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDra
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
+        intoBackground();
     }
 
     /**

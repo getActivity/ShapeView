@@ -121,10 +121,7 @@ public class ShapeRadioButton extends AppCompatRadioButton implements
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
-
+        intoBackground();
         intoTextColor();
     }
 

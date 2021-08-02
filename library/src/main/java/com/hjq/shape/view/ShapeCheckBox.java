@@ -121,10 +121,7 @@ public class ShapeCheckBox extends AppCompatCheckBox implements
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
-
+        intoBackground();
         intoTextColor();
     }
 

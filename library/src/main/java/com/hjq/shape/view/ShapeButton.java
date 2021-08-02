@@ -65,7 +65,7 @@ public class ShapeButton extends AppCompatButton implements
     }
 
     public ShapeButton(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.buttonStyle);
+        this(context, attrs, 0);
     }
 
     public ShapeButton(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -116,10 +116,7 @@ public class ShapeButton extends AppCompatButton implements
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
-
+        intoBackground();
         intoTextColor();
     }
 

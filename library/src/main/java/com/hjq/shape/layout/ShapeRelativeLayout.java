@@ -101,9 +101,7 @@ public class ShapeRelativeLayout extends RelativeLayout implements IShapeDrawabl
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
+        intoBackground();
     }
 
     /**

@@ -101,9 +101,7 @@ public class ShapeFrameLayout extends FrameLayout implements IShapeDrawable<Shap
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
+        intoBackground();
     }
 
     /**

@@ -36,7 +36,7 @@ android {
 
 dependencies {
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:3.0'
+    implementation 'com.github.getActivity:ShapeView:3.2'
 }
 ```
 

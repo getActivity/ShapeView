@@ -101,9 +101,7 @@ public class ShapeRecyclerView extends RecyclerView implements IShapeDrawable<Sh
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
+        intoBackground();
     }
 
     /**

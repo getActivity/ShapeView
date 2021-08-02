@@ -101,9 +101,7 @@ public class ShapeImageView extends AppCompatImageView implements IShapeDrawable
 
         typedArray.recycle();
 
-        if (getBackground() == null) {
-            intoBackground();
-        }
+        intoBackground();
     }
 
     /**
