@@ -35,7 +35,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <com.hjq.shape.view.ShapeTextView
+            <com.hjq.shape.view.ShapeButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -50,7 +50,7 @@
                 app:shape_solidColor="#5A8DDF"
                 app:shape_solidPressedColor="#AA5A8DDF" />
 
-            <com.hjq.shape.view.ShapeTextView
+            <com.hjq.shape.view.ShapeButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -65,7 +65,7 @@
                 app:shape_solidColor="#5A8DDF"
                 app:shape_solidDisabledColor="#BBBBBB" />
 
-            <com.hjq.shape.view.ShapeTextView
+            <com.hjq.shape.view.ShapeButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -82,7 +82,7 @@
                 app:shape_textColor="#5A8DDF"
                 app:shape_textPressedColor="@android:color/white" />
 
-            <com.hjq.shape.view.ShapeTextView
+            <com.hjq.shape.view.ShapeButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -90,13 +90,14 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="边框色禁用效果"
-                android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:shape="rectangle"
                 app:shape_radius="20dp"
                 app:shape_strokeColor="#5A8DDF"
                 app:shape_strokeDisabledColor="#BBBBBB"
-                app:shape_strokeWidth="1dp" />
+                app:shape_strokeWidth="1dp"
+                app:shape_textColor="@android:color/black"
+                app:shape_textDisabledColor="#BBBBBB" />
 
             <TextView
                 android:layout_width="match_parent"

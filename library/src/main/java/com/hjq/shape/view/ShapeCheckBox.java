@@ -98,7 +98,7 @@ public class ShapeCheckBox extends AppCompatCheckBox implements
         mAngle = (int) typedArray.getFloat(R.styleable.ShapeCheckBox_shape_angle, DEFAULT_SHAPE_ANGLE);
         mGradientType = typedArray.getInt(R.styleable.ShapeCheckBox_shape_gradientType, DEFAULT_SHAPE_GRADIENT_TYPE);
         mCenterX = typedArray.getFloat(R.styleable.ShapeCheckBox_shape_centerX, DEFAULT_SHAPE_CENTER_X);
-        mCenterY = typedArray.getFloat(R.styleable.ShapeCheckBox_shape_centerX, DEFAULT_SHAPE_CENTER_Y);
+        mCenterY = typedArray.getFloat(R.styleable.ShapeCheckBox_shape_centerY, DEFAULT_SHAPE_CENTER_Y);
         mGradientRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeCheckBox_shape_gradientRadius, radius);
 
         mStrokeColor = typedArray.getColor(R.styleable.ShapeCheckBox_shape_strokeColor, DEFAULT_SHAPE_STROKE_COLOR);

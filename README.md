@@ -36,7 +36,7 @@ android {
 
 dependencies {
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:3.2'
+    implementation 'com.github.getActivity:ShapeView:3.3'
 }
 ```
 
@@ -163,7 +163,7 @@ android.enableJetifier = true
 ![](picture/0.jpg)
 
 ```xml
-<com.hjq.shape.view.ShapeTextView
+<com.hjq.shape.view.ShapeButton
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -178,7 +178,7 @@ android.enableJetifier = true
     app:shape_solidColor="#5A8DDF"
     app:shape_solidPressedColor="#AA5A8DDF" />
 
-<com.hjq.shape.view.ShapeTextView
+<com.hjq.shape.view.ShapeButton
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -193,7 +193,7 @@ android.enableJetifier = true
     app:shape_solidColor="#5A8DDF"
     app:shape_solidDisabledColor="#BBBBBB" />
 
-<com.hjq.shape.view.ShapeTextView
+<com.hjq.shape.view.ShapeButton
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -210,7 +210,7 @@ android.enableJetifier = true
     app:shape_textColor="#5A8DDF"
     app:shape_textPressedColor="@android:color/white" />
 
-<com.hjq.shape.view.ShapeTextView
+<com.hjq.shape.view.ShapeButton
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -218,13 +218,14 @@ android.enableJetifier = true
     android:gravity="center"
     android:padding="10dp"
     android:text="边框色禁用效果"
-    android:textColor="@android:color/black"
     android:textSize="14sp"
     app:shape="rectangle"
     app:shape_radius="20dp"
     app:shape_strokeColor="#5A8DDF"
     app:shape_strokeDisabledColor="#BBBBBB"
-    app:shape_strokeWidth="1dp" />
+    app:shape_strokeWidth="1dp"
+    app:shape_textColor="@android:color/black"
+    app:shape_textDisabledColor="#BBBBBB" />
 ```
 
 ![](picture/1.jpg)
