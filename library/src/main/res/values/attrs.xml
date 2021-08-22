@@ -9,8 +9,8 @@
         <enum name="oval" value="1" />
         <!-- 线条 -->
         <enum name="line" value="2" />
-        <!-- 圆环（不支持动态设置，请自定义 xml 来完成需求） -->
-        <!--<enum name="ring" value="3" />-->
+        <!-- 圆环 -->
+        <enum name="ring" value="3" />
     </attr>
     <!-- Shape 宽度 -->
     <attr name="shape_width" format="dimension" />
@@ -87,6 +87,24 @@
     <!-- 边框虚线间隔（虚线与虚线之间的间隔） -->
     <attr name="shape_dashGap" format="dimension" />
 
+    <!-- 内环的半径（仅在 shape="ring" 生效） -->
+    <attr name="shape_innerRadius" format="dimension" />
+    <!-- 内环的半径比率（仅在 shape="ring" 生效），计算公式：整个圆环 / innerRadiusRatio = innerRadius -->
+    <attr name="shape_innerRadiusRatio" format="float" />
+    <!-- 外环的厚度（仅在 shape="ring" 生效） -->
+    <attr name="shape_thickness" format="dimension" />
+    <!-- 外环的厚度比率（仅在 shape="ring" 生效），计算公式：整个圆环 / thicknessRatio = thickness -->
+    <attr name="shape_thicknessRatio" format="float" />
+
+    <!-- 阴影大小 -->
+    <attr name="shape_shadowSize" format="dimension" />
+    <!-- 阴影颜色 -->
+    <attr name="shape_shadowColor" format="color" />
+    <!-- 阴影水平偏移 -->
+    <attr name="shape_shadowOffsetX" format="dimension" />
+    <!-- 阴影垂直偏移 -->
+    <attr name="shape_shadowOffsetY" format="dimension" />
+
     <!-- 文本色（默认状态） -->
     <attr name="shape_textColor" format="color|reference" />
     <!-- 文本色（按下状态） -->
@@ -99,6 +117,20 @@
     <attr name="shape_textFocusedColor" format="color|reference" />
     <!-- 文本色（选择状态） -->
     <attr name="shape_textSelectedColor" format="color|reference" />
+
+    <!-- 文本渐变色起始颜色 -->
+    <attr name="shape_textStartColor" format="color" />
+    <!-- 文本渐变色中间颜色（可不设置） -->
+    <attr name="shape_textCenterColor" format="color" />
+    <!-- 文本渐变色结束颜色 -->
+    <attr name="shape_textEndColor" format="color" />
+    <!-- 文本渐变方向（默认类型是水平渐变） -->
+    <attr name="shape_textGradientOrientation">
+        <!-- 水平渐变 -->
+        <enum name="horizontal" value="0" />
+        <!-- 垂直渐变 -->
+        <enum name="vertical" value="1" />
+    </attr>
 
     <declare-styleable name="ShapeTextView">
         <attr name="shape" />
@@ -132,11 +164,26 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
         <attr name="shape_textDisabledColor" />
         <attr name="shape_textFocusedColor" />
         <attr name="shape_textSelectedColor" />
+
+        <attr name="shape_textStartColor" />
+        <attr name="shape_textCenterColor" />
+        <attr name="shape_textEndColor" />
+        <attr name="shape_textGradientOrientation" />
     </declare-styleable>
 
     <declare-styleable name="ShapeButton">
@@ -171,11 +218,26 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
         <attr name="shape_textDisabledColor" />
         <attr name="shape_textFocusedColor" />
         <attr name="shape_textSelectedColor" />
+
+        <attr name="shape_textStartColor" />
+        <attr name="shape_textCenterColor" />
+        <attr name="shape_textEndColor" />
+        <attr name="shape_textGradientOrientation" />
     </declare-styleable>
 
     <declare-styleable name="ShapeRadioButton">
@@ -212,12 +274,27 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
         <attr name="shape_textCheckedColor" />
         <attr name="shape_textDisabledColor" />
         <attr name="shape_textFocusedColor" />
         <attr name="shape_textSelectedColor" />
+
+        <attr name="shape_textStartColor" />
+        <attr name="shape_textCenterColor" />
+        <attr name="shape_textEndColor" />
+        <attr name="shape_textGradientOrientation" />
     </declare-styleable>
 
     <declare-styleable name="ShapeCheckBox">
@@ -254,12 +331,27 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
         <attr name="shape_textCheckedColor" />
         <attr name="shape_textDisabledColor" />
         <attr name="shape_textFocusedColor" />
         <attr name="shape_textSelectedColor" />
+
+        <attr name="shape_textStartColor" />
+        <attr name="shape_textCenterColor" />
+        <attr name="shape_textEndColor" />
+        <attr name="shape_textGradientOrientation" />
     </declare-styleable>
 
     <declare-styleable name="ShapeEditText">
@@ -294,11 +386,26 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
         <attr name="shape_textDisabledColor" />
         <attr name="shape_textFocusedColor" />
         <attr name="shape_textSelectedColor" />
+
+        <attr name="shape_textStartColor" />
+        <attr name="shape_textCenterColor" />
+        <attr name="shape_textEndColor" />
+        <attr name="shape_textGradientOrientation" />
     </declare-styleable>
 
     <declare-styleable name="ShapeImageView">
@@ -332,6 +439,16 @@
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
     </declare-styleable>
 
     <declare-styleable name="ShapeView">
@@ -365,6 +482,16 @@
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
     </declare-styleable>
 
     <declare-styleable name="ShapeLinearLayout">
@@ -398,6 +525,16 @@
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
     </declare-styleable>
 
     <declare-styleable name="ShapeFrameLayout">
@@ -431,6 +568,16 @@
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
     </declare-styleable>
 
     <declare-styleable name="ShapeRelativeLayout">
@@ -464,6 +611,16 @@
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
     </declare-styleable>
 
     <declare-styleable name="ShapeConstraintLayout">
@@ -497,6 +654,16 @@
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
     </declare-styleable>
 
     <declare-styleable name="ShapeRecyclerView">
@@ -530,6 +697,16 @@
         <attr name="shape_strokeWidth" />
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
+
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
     </declare-styleable>
 
 </resources>

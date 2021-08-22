@@ -2,11 +2,13 @@ package com.hjq.shape.layout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.view.View;
 
-import com.hjq.shape.IShapeDrawable;
 import com.hjq.shape.R;
+import com.hjq.shape.core.IShapeDrawable;
 
 /**
  *    author : Android 轮子哥
@@ -16,7 +18,7 @@ import com.hjq.shape.R;
  */
 public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDrawable<ShapeConstraintLayout> {
 
-    private int mShape;
+    private int mShapeType;
     private int mShapeWidth;
     private int mShapeHeight;
 
@@ -51,6 +53,16 @@ public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDra
     private int mDashWidth;
     private int mDashGap;
 
+    private int mInnerRadius;
+    private float mInnerRadiusRatio;
+    private int mThickness;
+    private float mThicknessRatio;
+
+    private int mShadowSize;
+    private int mShadowColor;
+    private int mShadowOffsetX;
+    private int mShadowOffsetY;
+
     public ShapeConstraintLayout(Context context) {
         this(context, null);
     }
@@ -63,7 +75,7 @@ public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDra
         super(context, attrs, defStyleAttr);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeConstraintLayout);
-        mShape = typedArray.getInt(R.styleable.ShapeConstraintLayout_shape, DEFAULT_SHAPE);
+        mShapeType = typedArray.getInt(R.styleable.ShapeConstraintLayout_shape, DEFAULT_SHAPE_TYPE);
         mShapeWidth = typedArray.getDimensionPixelSize(R.styleable.ShapeConstraintLayout_shape_width, DEFAULT_SHAPE_WIDTH);
         mShapeHeight = typedArray.getDimensionPixelSize(R.styleable.ShapeConstraintLayout_shape_height, DEFAULT_SHAPE_HEIGHT);
 
@@ -79,9 +91,9 @@ public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDra
         mBottomLeftRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeConstraintLayout_shape_bottomLeftRadius, radius);
         mBottomRightRadius = typedArray.getDimensionPixelSize(R.styleable.ShapeConstraintLayout_shape_bottomRightRadius, radius);
 
-        mStartColor = typedArray.getColor(R.styleable.ShapeConstraintLayout_shape_startColor, DEFAULT_SHAPE_START_COLOR);
-        mCenterColor = typedArray.getColor(R.styleable.ShapeConstraintLayout_shape_centerColor, DEFAULT_SHAPE_CENTER_COLOR);
-        mEndColor = typedArray.getColor(R.styleable.ShapeConstraintLayout_shape_endColor, DEFAULT_SHAPE_END_COLOR);
+        mStartColor = typedArray.getColor(R.styleable.ShapeConstraintLayout_shape_startColor, mSolidColor);
+        mCenterColor = typedArray.getColor(R.styleable.ShapeConstraintLayout_shape_centerColor, mSolidColor);
+        mEndColor = typedArray.getColor(R.styleable.ShapeConstraintLayout_shape_endColor, mSolidColor);
         mUseLevel = typedArray.getBoolean(R.styleable.ShapeConstraintLayout_shape_useLevel, DEFAULT_SHAPE_USE_LEVEL);
         mAngle = (int) typedArray.getFloat(R.styleable.ShapeConstraintLayout_shape_angle, DEFAULT_SHAPE_ANGLE);
         mGradientType = typedArray.getInt(R.styleable.ShapeConstraintLayout_shape_gradientType, DEFAULT_SHAPE_GRADIENT_TYPE);
@@ -96,8 +108,18 @@ public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDra
         mStrokeSelectedColor = typedArray.getColor(R.styleable.ShapeConstraintLayout_shape_strokeSelectedColor, mStrokeColor);
 
         mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.ShapeConstraintLayout_shape_strokeWidth, DEFAULT_SHAPE_STROKE_WIDTH);
-        mDashWidth = (int) typedArray.getDimension(R.styleable.ShapeConstraintLayout_shape_dashWidth, DEFAULT_SHAPE_DASH_WIDTH);
-        mDashGap = (int) typedArray.getDimension(R.styleable.ShapeConstraintLayout_shape_dashGap, DEFAULT_SHAPE_DASH_GAP);
+        mDashWidth = typedArray.getDimensionPixelSize(R.styleable.ShapeConstraintLayout_shape_dashWidth, DEFAULT_SHAPE_DASH_WIDTH);
+        mDashGap = typedArray.getDimensionPixelSize(R.styleable.ShapeConstraintLayout_shape_dashGap, DEFAULT_SHAPE_DASH_GAP);
+
+        mInnerRadius = typedArray.getDimensionPixelOffset(R.styleable.ShapeConstraintLayout_shape_innerRadius, DEFAULT_SHAPE_INNER_RADIUS);
+        mInnerRadiusRatio = typedArray.getFloat(R.styleable.ShapeConstraintLayout_shape_innerRadiusRatio, DEFAULT_SHAPE_INNER_RADIUS_RATIO);
+        mThickness = typedArray.getDimensionPixelOffset(R.styleable.ShapeConstraintLayout_shape_thickness, DEFAULT_SHAPE_THICKNESS);
+        mThicknessRatio = typedArray.getFloat(R.styleable.ShapeConstraintLayout_shape_thicknessRatio, DEFAULT_SHAPE_THICKNESS_RATIO);
+
+        mShadowSize = typedArray.getDimensionPixelSize(R.styleable.ShapeConstraintLayout_shape_shadowSize, DEFAULT_SHAPE_SHADOW_SIZE);
+        mShadowColor = typedArray.getColor(R.styleable.ShapeConstraintLayout_shape_shadowColor, DEFAULT_SHAPE_SHADOW_COLOR);
+        mShadowOffsetX = typedArray.getDimensionPixelOffset(R.styleable.ShapeConstraintLayout_shape_shadowOffsetX, DEFAULT_SHAPE_SHADOW_OFFSET_X);
+        mShadowOffsetY = typedArray.getDimensionPixelOffset(R.styleable.ShapeConstraintLayout_shape_shadowOffsetY, DEFAULT_SHAPE_SHADOW_OFFSET_Y);
 
         typedArray.recycle();
 
@@ -109,14 +131,14 @@ public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDra
      */
 
     @Override
-    public ShapeConstraintLayout setShape(int shape) {
-        mShape = shape;
+    public ShapeConstraintLayout setShapeType(int type) {
+        mShapeType = type;
         return this;
     }
 
     @Override
-    public int getShape() {
-        return mShape;
+    public int getShapeType() {
+        return mShapeType;
     }
 
     @Override
@@ -428,7 +450,103 @@ public class ShapeConstraintLayout extends ConstraintLayout implements IShapeDra
     }
 
     @Override
+    public ShapeConstraintLayout setInnerRadius(int radius) {
+        mInnerRadius = radius;
+        return this;
+    }
+
+    @Override
+    public int getInnerRadius() {
+        return mInnerRadius;
+    }
+
+    @Override
+    public ShapeConstraintLayout setInnerRadiusRatio(float ratio) {
+        mInnerRadiusRatio = ratio;
+        return this;
+    }
+
+    @Override
+    public float getInnerRadiusRatio() {
+        return mInnerRadiusRatio;
+    }
+
+    @Override
+    public ShapeConstraintLayout setThickness(int size) {
+        mThickness = size;
+        return this;
+    }
+
+    @Override
+    public int getThickness() {
+        return mThickness;
+    }
+
+    @Override
+    public ShapeConstraintLayout setThicknessRatio(float ratio) {
+        mThicknessRatio = ratio;
+        return this;
+    }
+
+    @Override
+    public float getThicknessRatio() {
+        return mThicknessRatio;
+    }
+
+    @Override
+    public ShapeConstraintLayout setShadowSize(int size) {
+        mShadowSize = size;
+        return this;
+    }
+
+    @Override
+    public int getShadowSize() {
+        return mShadowSize;
+    }
+
+    @Override
+    public ShapeConstraintLayout setShadowColor(int color) {
+        mShadowColor = color;
+        return this;
+    }
+
+    @Override
+    public int getShadowColor() {
+        return mShadowColor;
+    }
+
+    @Override
+    public ShapeConstraintLayout setShadowOffsetX(int offsetX) {
+        mShadowOffsetX = offsetX;
+        return this;
+    }
+
+    @Override
+    public int getShadowOffsetX() {
+        return mShadowOffsetX;
+    }
+
+    @Override
+    public ShapeConstraintLayout setShadowOffsetY(int offsetY) {
+        mShadowOffsetY = offsetY;
+        return this;
+    }
+
+    @Override
+    public int getShadowOffsetY() {
+        return mShadowOffsetY;
+    }
+
+    @Override
     public void intoBackground() {
-        setBackground(buildDrawable());
+        Drawable drawable = buildBackgroundDrawable();
+        if (drawable == null) {
+            return;
+        }
+        if (isShadowEnable()) {
+            // 需要关闭硬件加速，否则阴影无法生效
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+        setBackground(drawable);
     }
 }
