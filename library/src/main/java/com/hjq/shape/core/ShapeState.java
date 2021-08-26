@@ -16,7 +16,7 @@ public class ShapeState extends Drawable.ConstantState {
     public int mShapeType = ShapeType.RECTANGLE;
     public int mGradient = ShapeGradientType.LINEAR_GRADIENT;
     public ShapeGradientOrientation mOrientation;
-    public int[] mColors;
+    public int[] mGradientColors;
     public int[] mTempColors; // no need to copy
     public float[] mTempPositions; // no need to copy
     public float[] mPositions;
@@ -49,7 +49,7 @@ public class ShapeState extends Drawable.ConstantState {
 
     public ShapeState(ShapeGradientOrientation orientation, int[] colors) {
         mOrientation = orientation;
-        setColors(colors);
+        setGradientColor(colors);
     }
 
     public ShapeState(ShapeState state) {
@@ -57,8 +57,8 @@ public class ShapeState extends Drawable.ConstantState {
         mShapeType = state.mShapeType;
         mGradient = state.mGradient;
         mOrientation = state.mOrientation;
-        if (state.mColors != null) {
-            mColors = state.mColors.clone();
+        if (state.mGradientColors != null) {
+            mGradientColors = state.mGradientColors.clone();
         }
         if (state.mPositions != null) {
             mPositions = state.mPositions.clone();
@@ -124,16 +124,16 @@ public class ShapeState extends Drawable.ConstantState {
         mCenterY = y;
     }
 
-    public void setColors(int[] colors) {
+    public void setGradientColor(int[] colors) {
         mHasSolidColor = false;
-        mColors = colors;
+        mGradientColors = colors;
         computeOpacity();
     }
 
     public void setSolidColor(int argb) {
         mHasSolidColor = true;
         mSolidColor = argb;
-        mColors = null;
+        mGradientColors = null;
         computeOpacity();
     }
 
@@ -158,8 +158,8 @@ public class ShapeState extends Drawable.ConstantState {
             return;
         }
 
-        if (mColors != null) {
-            for (int color : mColors) {
+        if (mGradientColors != null) {
+            for (int color : mGradientColors) {
                 if (!isOpaque(color)) {
                     mOpaque = false;
                     return;

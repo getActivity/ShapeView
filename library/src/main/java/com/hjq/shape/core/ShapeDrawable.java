@@ -274,7 +274,7 @@ public class ShapeDrawable extends Drawable {
      * 设置渐变颜色
      */
     public void setColors(int[] colors) {
-        mShapeState.setColors(colors);
+        mShapeState.setGradientColor(colors);
         mRectIsDirty = true;
         invalidateSelf();
     }
@@ -641,7 +641,7 @@ public class ShapeDrawable extends Drawable {
             mRect.set(bounds.left + inset + mShapeState.mShadowSize, bounds.top + inset + mShapeState.mShadowSize,
                       bounds.right - inset - mShapeState.mShadowSize, bounds.bottom - inset - mShapeState.mShadowSize);
 
-            final int[] colors = st.mColors;
+            final int[] colors = st.mGradientColors;
             if (colors != null) {
                 RectF r = mRect;
                 float x0, x1, y0, y1;
@@ -765,7 +765,7 @@ public class ShapeDrawable extends Drawable {
     private void initializeWithState(ShapeState state) {
         if (state.mHasSolidColor) {
             mFillPaint.setColor(state.mSolidColor);
-        } else if (state.mColors == null) {
+        } else if (state.mGradientColors == null) {
             // If we don't have a solid color and we don't have a gradient,
             // the app is stroking the shape, set the color to the default
             // value of state.mSolidColor

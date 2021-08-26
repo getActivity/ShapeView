@@ -54,6 +54,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="渐变色按压效果"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_endColor="#ED58FF"
+                app:shape_radius="20dp"
+                app:shape_solidPressedColor="#5A8DDF"
+                app:shape_startColor="#49DAFA" />
+
+            <com.hjq.shape.view.ShapeButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:enabled="false"
                 android:gravity="center"
                 android:padding="10dp"
@@ -98,6 +114,22 @@
                 app:shape_strokeWidth="1dp"
                 app:shape_textColor="@android:color/black"
                 app:shape_textDisabledColor="#BBBBBB" />
+
+            <com.hjq.shape.view.ShapeButton
+                android:id="@+id/btn_main_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="点我动态改变颜色"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_radius="20dp"
+                app:shape_solidColor="#5A8DDF"
+                app:shape_strokeColor="#000000"
+                app:shape_strokeWidth="1dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -591,39 +623,39 @@
                 android:textSize="14sp"
                 app:shape="ring"
                 app:shape_innerRadiusRatio="4"
-                app:shape_thicknessRatio="4"
-                app:shape_solidColor="#80ff0000" />
-
-            <com.hjq.shape.view.ShapeTextView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="圆环边框"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                app:shape="ring"
-                app:shape_innerRadiusRatio="4"
-                app:shape_thicknessRatio="4"
-                app:shape_strokeWidth="2dp"
-                app:shape_strokeColor="#ffff00ff" />
-
-            <com.hjq.shape.view.ShapeTextView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="圆环边框"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                app:shape="ring"
-                app:shape_innerRadiusRatio="4"
-                app:shape_thicknessRatio="4"
                 app:shape_solidColor="#80ff0000"
+                app:shape_thicknessRatio="4" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆环边框"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="ring"
+                app:shape_innerRadiusRatio="4"
+                app:shape_strokeColor="#ffff00ff"
                 app:shape_strokeWidth="2dp"
-                app:shape_strokeColor="#ffff00ff" />
+                app:shape_thicknessRatio="4" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="圆环边框"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="ring"
+                app:shape_innerRadiusRatio="4"
+                app:shape_solidColor="#80ff0000"
+                app:shape_strokeColor="#ffff00ff"
+                app:shape_strokeWidth="2dp"
+                app:shape_thicknessRatio="4" />
 
             <com.hjq.shape.view.ShapeTextView
                 android:layout_width="200dp"
@@ -635,13 +667,13 @@
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:shape="ring"
-                app:shape_innerRadiusRatio="4"
-                app:shape_thicknessRatio="4"
                 app:shape_angle="45"
                 app:shape_centerColor="#80ff0000"
                 app:shape_endColor="#ffff0000"
+                app:shape_gradientType="linear"
+                app:shape_innerRadiusRatio="4"
                 app:shape_startColor="#00ff0000"
-                app:shape_gradientType="linear" />
+                app:shape_thicknessRatio="4" />
 
             <com.hjq.shape.view.ShapeTextView
                 android:layout_width="200dp"
@@ -653,12 +685,12 @@
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:shape="ring"
-                app:shape_innerRadiusRatio="4"
-                app:shape_thicknessRatio="4"
                 app:shape_centerColor="#80ff0000"
                 app:shape_endColor="#00ff0000"
+                app:shape_gradientType="sweep"
+                app:shape_innerRadiusRatio="4"
                 app:shape_startColor="#ffff0000"
-                app:shape_gradientType="sweep" />
+                app:shape_thicknessRatio="4" />
 
             <TextView
                 android:layout_width="match_parent"

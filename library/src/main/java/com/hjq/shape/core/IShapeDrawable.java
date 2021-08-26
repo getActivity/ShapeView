@@ -188,6 +188,10 @@ public interface IShapeDrawable<V extends View> {
 
     int getDashGap();
 
+    default boolean isDashLineEnable() {
+        return getDashGap() > 0;
+    }
+
     V setInnerRadius(int radius);
 
     int getInnerRadius();
@@ -229,12 +233,22 @@ public interface IShapeDrawable<V extends View> {
             return null;
         }
 
-        if (isGradientColor() || getSolidColor() == getSolidPressedColor() && getStrokeColor() == getStrokePressedColor() &&
+        ShapeDrawable defaultDrawable = createShapeDrawable(getSolidColor(), getStrokeColor());
+        // 判断是否设置了渐变色
+        if (isGradientColor()) {
+            if (getCenterColor() == getSolidColor()) {
+                defaultDrawable.setColors(new int[]{getStartColor(), getEndColor()});
+            } else {
+                defaultDrawable.setColors(new int[]{getStartColor(), getCenterColor(), getEndColor()});
+            }
+        }
+
+        if (getSolidColor() == getSolidPressedColor() && getStrokeColor() == getStrokePressedColor() &&
                 getSolidColor() == getSolidCheckedColor() && getStrokeColor() == getStrokeCheckedColor() &&
                 getSolidColor() == getSolidDisabledColor() && getStrokeColor() == getStrokeDisabledColor() &&
                 getSolidColor() == getSolidFocusedColor() && getStrokeColor() == getStrokeFocusedColor() &&
                 getSolidColor() == getSolidSelectedColor() && getStrokeColor() == getStrokeSelectedColor()) {
-            return createShapeDrawable(getSolidColor(), getStrokeColor());
+            return defaultDrawable;
         }
 
         StateListDrawable drawable = new StateListDrawable();
@@ -253,30 +267,19 @@ public interface IShapeDrawable<V extends View> {
         if (getSolidColor() != getSolidSelectedColor() || getStrokeColor() != getStrokeSelectedColor()) {
             drawable.addState(new int[]{android.R.attr.state_selected}, createShapeDrawable(getSolidSelectedColor(), getStrokeSelectedColor()));
         }
-        drawable.addState(new int[]{}, createShapeDrawable(getSolidColor(), getStrokeColor()));
+
+        drawable.addState(new int[]{}, defaultDrawable);
         return drawable;
     }
 
-    default Drawable createShapeDrawable(int solidColor, int strokeColor) {
+    default ShapeDrawable createShapeDrawable(int solidColor, int strokeColor) {
         ShapeDrawable drawable = new ShapeDrawable();
         drawable.setShape(getShapeType());
         drawable.setSize(getShapeWidth(), getShapeHeight());
         drawable.setCornerRadii(new float[]{getTopLeftRadius(), getTopLeftRadius(), getTopRightRadius(), getTopRightRadius(),
                 getBottomRightRadius(), getBottomRightRadius(), getBottomLeftRadius(), getBottomLeftRadius()});
 
-        int startColor = getStartColor();
-        int centerColor = getCenterColor();
-        int endColor = getEndColor();
-        if (isGradientColor()) {
-            if (centerColor == solidColor) {
-                drawable.setColors(new int[]{startColor, endColor});
-            } else {
-                drawable.setColors(new int[]{startColor, centerColor, endColor});
-            }
-        } else {
-            drawable.setColor(solidColor);
-        }
-
+        drawable.setColor(solidColor);
         drawable.setGradientCenter(getCenterX(), getCenterY());
         drawable.setUseLevel(isUseLevel());
         drawable.setGradientAngle(getAngle());

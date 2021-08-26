@@ -8,8 +8,8 @@ android {
         minSdkVersion 16
         // noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
-        versionCode 50
-        versionName "5.0"
+        versionCode 52
+        versionName "5.2"
     }
 
     // 支持 Java JDK 8
@@ -39,6 +39,13 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+        }
+    }
+
+    applicationVariants.all { variant ->
+        // apk 输出文件名配置
+        variant.outputs.all { output ->
+            outputFileName = rootProject.getName() + '.apk'
         }
     }
 }

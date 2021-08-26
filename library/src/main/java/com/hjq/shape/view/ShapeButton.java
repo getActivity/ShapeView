@@ -204,7 +204,22 @@ public class ShapeButton extends AppCompatButton implements
 
     @Override
     public ShapeButton setSolidColor(int color) {
+        if (mSolidPressedColor == mSolidColor) {
+            mSolidPressedColor = color;
+        }
+        if (mSolidDisabledColor == mSolidColor) {
+            mSolidDisabledColor = color;
+        }
+        if (mSolidFocusedColor == mSolidColor) {
+            mSolidFocusedColor = color;
+        }
+        if (mSolidSelectedColor == mSolidColor) {
+            mSolidSelectedColor = color;
+        }
         mSolidColor = color;
+        mStartColor = color;
+        mCenterColor = color;
+        mEndColor = color;
         return this;
     }
 
@@ -402,6 +417,18 @@ public class ShapeButton extends AppCompatButton implements
 
     @Override
     public ShapeButton setStrokeColor(int color) {
+        if (mStrokePressedColor == mStrokeColor) {
+            mStrokePressedColor = color;
+        }
+        if (mStrokeDisabledColor == mStrokeColor) {
+            mStrokeDisabledColor = color;
+        }
+        if (mStrokeFocusedColor == mStrokeColor) {
+            mStrokeFocusedColor = color;
+        }
+        if (mStrokeSelectedColor == mStrokeColor) {
+            mStrokeSelectedColor = color;
+        }
         mStrokeColor = color;
         return this;
     }
@@ -589,8 +616,8 @@ public class ShapeButton extends AppCompatButton implements
         if (drawable == null) {
             return;
         }
-        if (isShadowEnable()) {
-            // 需要关闭硬件加速，否则阴影无法生效
+        if (isDashLineEnable() || isShadowEnable()) {
+            // 需要关闭硬件加速，否则虚线或者阴影在某些手机上面无法生效
             setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         setBackground(drawable);
