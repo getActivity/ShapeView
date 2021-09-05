@@ -11,7 +11,7 @@
     <com.hjq.bar.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:backButton="false"
+        app:leftIcon="@null"
         app:title="https://github.com/getActivity/ShapeView" />
 
     <android.support.v4.widget.NestedScrollView
@@ -123,11 +123,10 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="点我动态改变颜色"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="14sp"
                 app:shape="rectangle"
                 app:shape_radius="20dp"
-                app:shape_solidColor="#5A8DDF"
                 app:shape_strokeColor="#000000"
                 app:shape_strokeWidth="1dp" />
 
@@ -228,6 +227,43 @@
                 app:shape_textEndColor="#ED58FF"
                 app:shape_textGradientOrientation="vertical"
                 app:shape_textStartColor="#49DAFA" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Check 控件图标状态"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.hjq.shape.view.ShapeCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="我是自定义按钮样式的 CheckBox"
+                android:textSize="14sp"
+                app:shape_buttonCheckedDrawable="@drawable/checkbox_checked_ic"
+                app:shape_buttonDisabledDrawable="@drawable/checkbox_disable_ic"
+                app:shape_buttonDrawable="@drawable/checkbox_normal_ic" />
+
+            <com.hjq.shape.view.ShapeRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="我是自定义按钮样式的 RadioButton"
+                android:textSize="14sp"
+                app:shape_buttonCheckedDrawable="@drawable/radiobutton_checked_ic"
+                app:shape_buttonDisabledDrawable="@drawable/radiobutton_disable_ic"
+                app:shape_buttonDrawable="@drawable/radiobutton_normal_ic" />
 
             <TextView
                 android:layout_width="match_parent"

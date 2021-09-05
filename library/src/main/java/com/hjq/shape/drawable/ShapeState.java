@@ -1,4 +1,4 @@
-package com.hjq.shape.core;
+package com.hjq.shape.drawable;
 
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -14,8 +14,8 @@ public class ShapeState extends Drawable.ConstantState {
 
     public int mChangingConfigurations;
     public int mShapeType = ShapeType.RECTANGLE;
-    public int mGradient = ShapeGradientType.LINEAR_GRADIENT;
-    public ShapeGradientOrientation mOrientation;
+    public int mGradientType = ShapeGradientType.LINEAR_GRADIENT;
+    public ShapeGradientOrientation mGradientOrientation = ShapeGradientOrientation.TOP_BOTTOM;
     public int[] mGradientColors;
     public int[] mTempColors; // no need to copy
     public float[] mTempPositions; // no need to copy
@@ -47,16 +47,13 @@ public class ShapeState extends Drawable.ConstantState {
     public int mShadowOffsetX;
     public int mShadowOffsetY;
 
-    public ShapeState(ShapeGradientOrientation orientation, int[] colors) {
-        mOrientation = orientation;
-        setGradientColor(colors);
-    }
+    public ShapeState() {}
 
     public ShapeState(ShapeState state) {
         mChangingConfigurations = state.mChangingConfigurations;
         mShapeType = state.mShapeType;
-        mGradient = state.mGradient;
-        mOrientation = state.mOrientation;
+        mGradientType = state.mGradientType;
+        mGradientOrientation = state.mGradientOrientation;
         if (state.mGradientColors != null) {
             mGradientColors = state.mGradientColors.clone();
         }
@@ -110,13 +107,13 @@ public class ShapeState extends Drawable.ConstantState {
         return mChangingConfigurations;
     }
 
-    public void setShapeType(int type) {
-        mShapeType = type;
+    public void setShape(int shape) {
+        mShapeType = shape;
         computeOpacity();
     }
 
-    public void setGradientType(int gradient) {
-        mGradient = gradient;
+    public void setGradientType(int gradientType) {
+        mGradientType = gradientType;
     }
 
     public void setGradientCenter(float x, float y) {

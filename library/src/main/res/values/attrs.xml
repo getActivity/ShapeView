@@ -34,7 +34,7 @@
     <attr name="shape_radius" format="dimension" />
     <!-- 左上角的圆角大小 -->
     <attr name="shape_topLeftRadius" format="dimension" />
-    <!-- 右下角的圆角大小 -->
+    <!-- 右上角的圆角大小 -->
     <attr name="shape_topRightRadius" format="dimension" />
     <!-- 左下角的圆角大小 -->
     <attr name="shape_bottomLeftRadius" format="dimension" />
@@ -131,6 +131,19 @@
         <!-- 垂直渐变 -->
         <enum name="vertical" value="1" />
     </attr>
+
+    <!-- CheckBox 或者 RadioButton 图标（默认状态） -->
+    <attr name="shape_buttonDrawable" format="reference" />
+    <!-- CheckBox 或者 RadioButton 图标（按下状态） -->
+    <attr name="shape_buttonPressedDrawable" format="reference" />
+    <!-- CheckBox 或者 RadioButton 图标（选中状态） -->
+    <attr name="shape_buttonCheckedDrawable" format="reference" />
+    <!-- CheckBox 或者 RadioButton 图标（禁用状态） -->
+    <attr name="shape_buttonDisabledDrawable" format="reference" />
+    <!-- CheckBox 或者 RadioButton 图标（焦点状态） -->
+    <attr name="shape_buttonFocusedDrawable" format="reference" />
+    <!-- CheckBox 或者 RadioButton 图标（选择状态） -->
+    <attr name="shape_buttonSelectedDrawable" format="reference" />
 
     <declare-styleable name="ShapeTextView">
         <attr name="shape" />
@@ -295,6 +308,13 @@
         <attr name="shape_textCenterColor" />
         <attr name="shape_textEndColor" />
         <attr name="shape_textGradientOrientation" />
+
+        <attr name="shape_buttonDrawable" />
+        <attr name="shape_buttonPressedDrawable" />
+        <attr name="shape_buttonCheckedDrawable" />
+        <attr name="shape_buttonDisabledDrawable" />
+        <attr name="shape_buttonFocusedDrawable" />
+        <attr name="shape_buttonSelectedDrawable" />
     </declare-styleable>
 
     <declare-styleable name="ShapeCheckBox">
@@ -352,6 +372,13 @@
         <attr name="shape_textCenterColor" />
         <attr name="shape_textEndColor" />
         <attr name="shape_textGradientOrientation" />
+
+        <attr name="shape_buttonDrawable" />
+        <attr name="shape_buttonPressedDrawable" />
+        <attr name="shape_buttonCheckedDrawable" />
+        <attr name="shape_buttonDisabledDrawable" />
+        <attr name="shape_buttonFocusedDrawable" />
+        <attr name="shape_buttonSelectedDrawable" />
     </declare-styleable>
 
     <declare-styleable name="ShapeEditText">

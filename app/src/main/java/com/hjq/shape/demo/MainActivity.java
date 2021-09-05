@@ -17,9 +17,15 @@ public class MainActivity extends AppCompatActivity {
         shapeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shapeButton.setSolidColor(0xFF000000)
+
+                shapeButton.getShapeDrawableBuilder()
+                        .setSolidColor(0xFF000000)
                         .setStrokeColor(0xFF5A8DDF)
                         .intoBackground();
+
+                shapeButton.getTextColorBuilder()
+                        .setTextColor(0xFFFFFFFF)
+                        .intoTextColor();
 
                 shapeButton.setText("颜色已经改变啦");
             }

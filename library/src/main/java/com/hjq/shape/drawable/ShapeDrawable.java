@@ -1,4 +1,4 @@
-package com.hjq.shape.core;
+package com.hjq.shape.drawable;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
@@ -16,6 +16,7 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.view.View;
 
 /**
  *    author : Android 轮子哥
@@ -44,20 +45,23 @@ public class ShapeDrawable extends Drawable {
     private boolean mPathIsDirty = true;
 
     public ShapeDrawable() {
-        this(new ShapeState(ShapeGradientOrientation.TOP_BOTTOM, null));
+        this(new ShapeState());
     }
     
-    public ShapeDrawable(ShapeGradientOrientation orientation, int[] colors) {
-        this(new ShapeState(orientation, colors));
-    }
-
     public ShapeDrawable(ShapeState state) {
         mShapeState = state;
         initializeWithState(state);
         mRectIsDirty = true;
         mMutated = false;
     }
-    
+
+    /**
+     * 获取 Shape 状态对象
+     */
+    public ShapeState getShapeState() {
+        return mShapeState;
+    }
+
     @Override
     public boolean getPadding(Rect padding) {
         if (mPadding != null) {
@@ -68,68 +72,22 @@ public class ShapeDrawable extends Drawable {
         }
     }
 
-    public void setPadding(Rect padding) {
+    public ShapeDrawable setPadding(Rect padding) {
         mPadding = padding;
+        return this;
     }
 
     /**
-     * 为 4 个角中的每一个指定半径。 对于每个角，该数组包含 2 个值， [X_radius, Y_radius] 。 角的顺序是左上角、右上角、右下角、左下角。 仅当形状为RECTANGLE类型时才使用此属性
-     * 注意：更改此属性将影响从资源加载的可绘制对象的所有实例。 建议在更改此属性之前调用mutate()
+     * 设置 Shape 形状
      *
-     * @param radii         每个角的 4 对 X 和 Y 半径，以像素为单位。 此数组的长度必须 >= 8
+     * @param shape         Shape 形状类型
      */
-    public void setCornerRadii(float[] radii) {
-        mShapeState.setCornerRadii(radii);
+    public ShapeDrawable setShape(int shape) {
+        mRingPath = null;
         mPathIsDirty = true;
+        mShapeState.setShape(shape);
         invalidateSelf();
-    }
-    
-    /**
-     * 指定渐变角的半径。 如果这 > 0，则可绘制对象将绘制在圆角矩形中，而不是矩形中。 仅当形状为RECTANGLE类型时才使用此属性。
-     * 注意：更改此属性将影响从资源加载的可绘制对象的所有实例。 建议在更改此属性之前调用mutate() 。
-     *
-     * @param radius       矩形角的半径（以像素为单位）
-     */
-    public void setCornerRadius(float radius) {
-        mShapeState.setCornerRadius(radius);
-        mPathIsDirty = true;
-        invalidateSelf();
-    }
-
-    /**
-     * 设置边框属性
-     *
-     * @param width       边框宽度
-     * @param color       边框颜色
-     */
-    public void setStroke(int width, int color) {
-        setStroke(width, color, 0, 0);
-    }
-
-    /**
-     * 设置边框属性
-     *
-     * @param width             边框宽度
-     * @param color             边框宽度
-     * @param dashWidth         边框虚线宽度（为 0 就是实线，大于 0 就是虚线）
-     * @param dashGap           边框虚线间隔（虚线与虚线之间的间隔）
-     */
-    public void setStroke(int width, int color, float dashWidth, float dashGap) {
-        mShapeState.setStroke(width, color, dashWidth, dashGap);
-
-        if (mStrokePaint == null)  {
-            mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mStrokePaint.setStyle(Paint.Style.STROKE);
-        }
-        mStrokePaint.setStrokeWidth(width);
-        mStrokePaint.setColor(color);
-        
-        DashPathEffect e = null;
-        if (dashWidth > 0) {
-            e = new DashPathEffect(new float[] { dashWidth, dashGap }, 0);
-        }
-        mStrokePaint.setPathEffect(e);
-        invalidateSelf();
+        return this;
     }
 
     /**
@@ -138,49 +96,137 @@ public class ShapeDrawable extends Drawable {
      * @param width         Shape 宽度
      * @param height        Shape 高度
      */
-    public void setSize(int width, int height) {
+    public ShapeDrawable setSize(int width, int height) {
         mShapeState.setSize(width, height);
         mPathIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
-     * 设置 Shape 形状
+     * 指定渐变角的半径。 如果这 > 0，则可绘制对象将绘制在圆角矩形中，而不是矩形中。 仅当形状为RECTANGLE类型时才使用此属性。
+     * 注意：更改此属性将影响从资源加载的可绘制对象的所有实例。 建议在更改此属性之前调用mutate() 。
      *
-     * @param shape         Shape 形状类型
+     * @param radius       矩形角的半径（以像素为单位）
      */
-    public void setShape(int shape) {
-        mRingPath = null;
+    public ShapeDrawable setRadius(float radius) {
+        mShapeState.setCornerRadius(radius);
         mPathIsDirty = true;
-        mShapeState.setShapeType(shape);
         invalidateSelf();
+        return this;
+    }
+
+    public ShapeDrawable setRadius(float topLeftRadius, float topRightRadius, float bottomLeftRadius, float bottomRightRadius) {
+        if (topLeftRadius == topRightRadius && topLeftRadius == bottomLeftRadius && topLeftRadius == bottomRightRadius) {
+            return setRadius(topLeftRadius);
+        }
+        // 为 4 个角中的每一个指定半径，对于每个角，该数组包含 2 个值 [X_radius, Y_radius]，角的顺序是左上角、右上角、右下角、左下角
+        mShapeState.setCornerRadii(new float[] {
+                topLeftRadius, topLeftRadius, topRightRadius, topRightRadius,
+                bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius});
+        mPathIsDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置填充颜色
+     */
+    public ShapeDrawable setSolidColor(int color) {
+        mShapeState.setSolidColor(color);
+        mFillPaint.setColor(color);
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置边框颜色
+     */
+    public ShapeDrawable setStrokeColor(int color) {
+        setStroke(color, mShapeState.mStrokeWidth, mShapeState.mStrokeDashWidth, mShapeState.mStrokeDashGap);
+        return this;
+    }
+
+    /**
+     * 设置边框宽度
+     */
+    public ShapeDrawable setStrokeWidth(int width) {
+        setStroke(mShapeState.mStrokeColor, width, mShapeState.mStrokeDashWidth, mShapeState.mStrokeDashGap);
+        return this;
+    }
+
+    /**
+     * 设置边框虚线宽度（为 0 就是实线，大于 0 就是虚线）
+     */
+    public ShapeDrawable setDashWidth(float dashWidth) {
+        setStroke(mShapeState.mStrokeColor, mShapeState.mStrokeWidth, dashWidth, mShapeState.mStrokeDashGap);
+        return this;
+    }
+
+    /**
+     * 设置虚线间隔（虚线与虚线之间的间隔）
+     */
+    public ShapeDrawable setDashGap(float dashGap) {
+        setStroke(mShapeState.mStrokeColor, mShapeState.mStrokeWidth, mShapeState.mStrokeDashWidth, dashGap);
+        return this;
+    }
+
+    /**
+     * 初始化边框属性
+     */
+    public ShapeDrawable setStroke(int width, int color, float dashWidth, float dashGap) {
+        mShapeState.setStroke(width, color, dashWidth, dashGap);
+
+        if (mStrokePaint == null) {
+            mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mStrokePaint.setStyle(Paint.Style.STROKE);
+        }
+        mStrokePaint.setStrokeWidth(width);
+        mStrokePaint.setColor(color);
+
+        mStrokePaint.setPathEffect(dashWidth > 0 ? new DashPathEffect(new float[] {dashWidth, dashGap}, 0) : null);
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置渐变颜色
+     */
+    public ShapeDrawable setGradientColors(int[] colors) {
+        mShapeState.setGradientColor(colors);
+        mRectIsDirty = true;
+        invalidateSelf();
+        return this;
     }
 
     /**
      * 设置 Shape 渐变类型
      */
-    public void setGradientType(int type) {
+    public ShapeDrawable setGradientType(int type) {
         mShapeState.setGradientType(type);
         mRectIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 设置渐变中心位置
      */
-    public void setGradientCenter(float x, float y) {
+    public ShapeDrawable setGradientCenter(float x, float y) {
         mShapeState.setGradientCenter(x, y);
         mRectIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 设置渐变半径大小
      */
-    public void setGradientRadius(float radius) {
+    public ShapeDrawable setGradientRadius(float radius) {
         mShapeState.setGradientRadius(radius);
         mRectIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
@@ -196,21 +242,17 @@ public class ShapeDrawable extends Drawable {
      * @see #setLevel(int) 
      * @see #getLevel() 
      */
-    public void setUseLevel(boolean useLevel) {
+    public ShapeDrawable setUseLevel(boolean useLevel) {
         mShapeState.mUseLevel = useLevel;
         mRectIsDirty = true;
         invalidateSelf();
+        return this;
     }
     
-    private int modulateAlpha(int alpha) {
-        int scale = mAlpha + (mAlpha >> 7);
-        return alpha * scale >> 8;
-    }
-
     /**
      * 设置渐变角度
      */
-    public void setGradientAngle(int angle) {
+    public ShapeDrawable setGradientAngle(int angle) {
         angle %= 360;
         // angle 必须为 45 的整数倍
         if (angle % 45 == 0) {
@@ -243,112 +285,108 @@ public class ShapeDrawable extends Drawable {
                     break;
             }
         }
-    }
-
-    /**
-     * 获取渐变方向
-     */
-    public ShapeGradientOrientation getGradientOrientation() {
-        return mShapeState.mOrientation;
+        return this;
     }
 
     /**
      * 设置渐变方向
      */
-    public void setGradientOrientation(ShapeGradientOrientation orientation) {
-        mShapeState.mOrientation = orientation;
+    public ShapeDrawable setGradientOrientation(ShapeGradientOrientation orientation) {
+        mShapeState.mGradientOrientation = orientation;
         mRectIsDirty = true;
         invalidateSelf();
-    }
-
-    /**
-     * 设置填充颜色
-     */
-    public void setColor(int argb) {
-        mShapeState.setSolidColor(argb);
-        mFillPaint.setColor(argb);
-        invalidateSelf();
-    }
-
-    /**
-     * 设置渐变颜色
-     */
-    public void setColors(int[] colors) {
-        mShapeState.setGradientColor(colors);
-        mRectIsDirty = true;
-        invalidateSelf();
+        return this;
     }
 
     /**
      * 设置内环的半径
      */
-    public void setInnerRadius(int radius) {
+    public ShapeDrawable setInnerRadius(int radius) {
         mShapeState.mInnerRadius = radius;
         mRectIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 设置内环的半径比率
      */
-    public void setInnerRadiusRatio(float radiusRatio) {
+    public ShapeDrawable setInnerRadiusRatio(float radiusRatio) {
         mShapeState.mInnerRadiusRatio = radiusRatio;
         mRectIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 设置外环的厚度
      */
-    public void setThickness(int size) {
+    public ShapeDrawable setThickness(int size) {
         mShapeState.mThickness = size;
         mRectIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 设置外环的厚度比率
      */
-    public void setThicknessRatio(float radiusRatio) {
+    public ShapeDrawable setThicknessRatio(float radiusRatio) {
         mShapeState.mThicknessRatio = radiusRatio;
         mRectIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 设置阴影颜色
      */
-    public void setShadowColor(int color) {
+    public ShapeDrawable setShadowColor(int color) {
         mShapeState.setShadowColor(color);
         mPathIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 设置阴影大小
      */
-    public void setShadowSize(int size) {
+    public ShapeDrawable setShadowSize(int size) {
         mShapeState.setShadowSize(size);
         mPathIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 设置阴影水平偏移
      */
-    public void setShadowOffsetX(int offsetX) {
+    public ShapeDrawable setShadowOffsetX(int offsetX) {
         mShapeState.setShadowOffsetX(offsetX);
         mPathIsDirty = true;
         invalidateSelf();
+        return this;
     }
 
     /**
      * 阴影垂直偏移
      */
-    public void setShadowOffsetY(int offsetY) {
+    public ShapeDrawable setShadowOffsetY(int offsetY) {
         mShapeState.setShadowOffsetY(offsetY);
         mPathIsDirty = true;
         invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 将当前 Drawable 应用到 View 背景
+     */
+    public void intoBackground(View view) {
+        if (mShapeState.mStrokeDashGap > 0 || mShapeState.mShadowSize > 0) {
+            // 需要关闭硬件加速，否则虚线或者阴影在某些手机上面无法生效
+            view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+        view.setBackground(this);
     }
 
     @SuppressLint("WrongConstant")
@@ -508,6 +546,11 @@ public class ShapeDrawable extends Drawable {
             }
         }
     }
+
+    private int modulateAlpha(int alpha) {
+        int scale = mAlpha + (mAlpha >> 7);
+        return alpha * scale >> 8;
+    }
     
     @Override
     public int getChangingConfigurations() {
@@ -646,9 +689,9 @@ public class ShapeDrawable extends Drawable {
                 RectF r = mRect;
                 float x0, x1, y0, y1;
 
-                if (st.mGradient == ShapeGradientType.LINEAR_GRADIENT) {
+                if (st.mGradientType == ShapeGradientType.LINEAR_GRADIENT) {
                     final float level = st.mUseLevel ? (float) getLevel() / 10000.0f : 1.0f;                    
-                    switch (st.mOrientation) {
+                    switch (st.mGradientOrientation) {
                     case TOP_BOTTOM:
                         x0 = r.left;            y0 = r.top;
                         x1 = x0;                y1 = level * r.bottom;
@@ -685,7 +728,7 @@ public class ShapeDrawable extends Drawable {
 
                     mFillPaint.setShader(new LinearGradient(x0, y0, x1, y1,
                             colors, st.mPositions, Shader.TileMode.CLAMP));
-                } else if (st.mGradient == ShapeGradientType.RADIAL_GRADIENT) {
+                } else if (st.mGradientType == ShapeGradientType.RADIAL_GRADIENT) {
                     x0 = r.left + (r.right - r.left) * st.mCenterX;
                     y0 = r.top + (r.bottom - r.top) * st.mCenterY;
 
@@ -694,7 +737,7 @@ public class ShapeDrawable extends Drawable {
                     mFillPaint.setShader(new RadialGradient(x0, y0,
                             level * st.mGradientRadius, colors, null,
                             Shader.TileMode.CLAMP));
-                } else if (st.mGradient == ShapeGradientType.SWEEP_GRADIENT) {
+                } else if (st.mGradientType == ShapeGradientType.SWEEP_GRADIENT) {
                     x0 = r.left + (r.right - r.left) * st.mCenterX;
                     y0 = r.top + (r.bottom - r.top) * st.mCenterY;
 
@@ -776,16 +819,7 @@ public class ShapeDrawable extends Drawable {
         }
         mPadding = state.mPadding;
         if (state.mStrokeWidth >= 0) {
-            mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mStrokePaint.setStyle(Paint.Style.STROKE);
-            mStrokePaint.setStrokeWidth(state.mStrokeWidth);
-            mStrokePaint.setColor(state.mStrokeColor);
-
-            if (state.mStrokeDashWidth != 0.0f) {
-                DashPathEffect e = new DashPathEffect(
-                        new float[] { state.mStrokeDashWidth, state.mStrokeDashGap }, 0);
-                mStrokePaint.setPathEffect(e);
-            }
+            setStroke(state.mStrokeWidth, state.mStrokeColor, state.mStrokeDashWidth, state.mStrokeDashGap);
         }
     }
 }

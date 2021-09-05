@@ -1,4 +1,4 @@
-package com.hjq.shape.core;
+package com.hjq.shape.drawable;
 
 /**
  *    author : Android 轮子哥
