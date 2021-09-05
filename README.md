@@ -235,7 +235,7 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
 #### [常见疑问解答](HelpDoc.md)
 
-#### [使用案例文档]((UseDemo.md))
+#### [使用案例文档](UseDemo.md)
 
 #### 框架亮点
 
