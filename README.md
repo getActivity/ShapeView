@@ -4,7 +4,9 @@
 
 * 博客介绍：[震惊，没想到 Shape 也可以这么写](https://www.jianshu.com/p/1288d8873440)
 
-* 点击此处 [下载 Demo](ShapeView.apk) 进行演示或者测试
+* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](ShapeView.apk)
+
+![](picture/demo_code.png)
 
 #### 集成步骤
 
@@ -36,7 +38,7 @@ android {
 
 dependencies {
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:6.0'
+    implementation 'com.github.getActivity:ShapeView:6.2'
 }
 ```
 
@@ -64,10 +66,12 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
         shapeButton.getShapeDrawableBuilder()
                 .setSolidColor(0xFF000000)
                 .setStrokeColor(0xFF5A8DDF)
+                // 最后需要调用一下 into 方法才能生效
                 .intoBackground();
 
         shapeButton.getTextColorBuilder()
                 .setTextColor(0xFFFFFFFF)
+                // 最后需要调用一下 into 方法才能生效
                 .intoTextColor();
 
         shapeButton.setText("颜色已经改变啦");

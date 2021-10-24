@@ -736,4 +736,47 @@
         <attr name="shape_shadowOffsetY" />
     </declare-styleable>
 
+    <declare-styleable name="ShapeRadioGroup">
+        <attr name="shape" />
+        <attr name="shape_width" />
+        <attr name="shape_height" />
+        <attr name="shape_solidColor" />
+        <attr name="shape_solidPressedColor" />
+        <attr name="shape_solidDisabledColor" />
+        <attr name="shape_solidFocusedColor" />
+        <attr name="shape_solidSelectedColor" />
+        <attr name="shape_radius" />
+        <attr name="shape_topLeftRadius" />
+        <attr name="shape_topRightRadius" />
+        <attr name="shape_bottomLeftRadius" />
+        <attr name="shape_bottomRightRadius" />
+        <attr name="shape_startColor" />
+        <attr name="shape_centerColor" />
+        <attr name="shape_endColor" />
+        <attr name="shape_useLevel" />
+        <attr name="shape_angle" />
+        <attr name="shape_gradientType" />
+        <attr name="shape_centerX" />
+        <attr name="shape_centerY" />
+        <attr name="shape_gradientRadius" />
+        <attr name="shape_strokeColor" />
+        <attr name="shape_strokePressedColor" />
+        <attr name="shape_strokeDisabledColor" />
+        <attr name="shape_strokeFocusedColor" />
+        <attr name="shape_strokeSelectedColor" />
+        <attr name="shape_strokeWidth" />
+        <attr name="shape_dashWidth" />
+        <attr name="shape_dashGap" />
+
+        <attr name="shape_innerRadiusRatio" />
+        <attr name="shape_innerRadius" />
+        <attr name="shape_thicknessRatio" />
+        <attr name="shape_thickness" />
+
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+    </declare-styleable>
+
 </resources>

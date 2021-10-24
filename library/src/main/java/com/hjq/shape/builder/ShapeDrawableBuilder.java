@@ -4,6 +4,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.hjq.shape.drawable.ShapeDrawable;
@@ -18,6 +19,8 @@ import com.hjq.shape.styleable.IShapeDrawableStyleable;
  *    desc   : ShapeDrawable 构建类
  */
 public final class ShapeDrawableBuilder {
+
+    private static final int NO_COLOR = Color.TRANSPARENT;
 
     private final View mView;
 
@@ -37,7 +40,7 @@ public final class ShapeDrawableBuilder {
     private float mBottomLeftRadius;
     private float mBottomRightRadius;
 
-    private int[] mGradientColor;
+    private int[] mGradientColors;
     private boolean mUseLevel;
     private int mAngle;
     private int mGradientType;
@@ -72,21 +75,21 @@ public final class ShapeDrawableBuilder {
         mShapeWidth = typedArray.getDimensionPixelSize(styleable.getShapeWidthStyleable(), -1);
         mShapeHeight = typedArray.getDimensionPixelSize(styleable.getShapeHeightStyleable(), -1);
 
-        mSolidColor = typedArray.getColor(styleable.getSolidColorStyleable(), Color.TRANSPARENT);
+        mSolidColor = typedArray.getColor(styleable.getSolidColorStyleable(), NO_COLOR);
         if (typedArray.hasValue(styleable.getSolidPressedColorStyleable())) {
-            mSolidPressedColor = typedArray.getColor(styleable.getSolidPressedColorStyleable(), Color.TRANSPARENT);
+            mSolidPressedColor = typedArray.getColor(styleable.getSolidPressedColorStyleable(), NO_COLOR);
         }
         if (styleable.getSolidCheckedColorStyleable() > 0 && typedArray.hasValue(styleable.getSolidCheckedColorStyleable())) {
-            mSolidCheckedColor = typedArray.getColor(styleable.getSolidCheckedColorStyleable(), Color.TRANSPARENT);
+            mSolidCheckedColor = typedArray.getColor(styleable.getSolidCheckedColorStyleable(), NO_COLOR);
         }
         if (typedArray.hasValue(styleable.getSolidDisabledColorStyleable())) {
-            mSolidDisabledColor = typedArray.getColor(styleable.getSolidDisabledColorStyleable(), Color.TRANSPARENT);
+            mSolidDisabledColor = typedArray.getColor(styleable.getSolidDisabledColorStyleable(), NO_COLOR);
         }
         if (typedArray.hasValue(styleable.getSolidFocusedColorStyleable())) {
-            mSolidFocusedColor = typedArray.getColor(styleable.getSolidFocusedColorStyleable(), Color.TRANSPARENT);
+            mSolidFocusedColor = typedArray.getColor(styleable.getSolidFocusedColorStyleable(), NO_COLOR);
         }
         if (typedArray.hasValue(styleable.getSolidSelectedColorStyleable())) {
-            mSolidSelectedColor = typedArray.getColor(styleable.getSolidSelectedColorStyleable(), Color.TRANSPARENT);
+            mSolidSelectedColor = typedArray.getColor(styleable.getSolidSelectedColorStyleable(), NO_COLOR);
         }
 
         int radius = typedArray.getDimensionPixelSize(styleable.getRadiusStyleable(), 0);
@@ -97,12 +100,12 @@ public final class ShapeDrawableBuilder {
 
         if (typedArray.hasValue(styleable.getStartColorStyleable()) && typedArray.hasValue(styleable.getEndColorStyleable())) {
             if (typedArray.hasValue(styleable.getCenterColorStyleable())) {
-                mGradientColor = new int[] {typedArray.getColor(styleable.getStartColorStyleable(), Color.TRANSPARENT),
-                        typedArray.getColor(styleable.getCenterColorStyleable(), Color.TRANSPARENT),
-                        typedArray.getColor(styleable.getEndColorStyleable(), Color.TRANSPARENT)};
+                mGradientColors = new int[] {typedArray.getColor(styleable.getStartColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getCenterColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getEndColorStyleable(), NO_COLOR)};
             } else {
-                mGradientColor = new int[] {typedArray.getColor(styleable.getStartColorStyleable(), Color.TRANSPARENT),
-                        typedArray.getColor(styleable.getEndColorStyleable(), Color.TRANSPARENT)};
+                mGradientColors = new int[] {typedArray.getColor(styleable.getStartColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getEndColorStyleable(), NO_COLOR)};
             }
         }
 
@@ -113,21 +116,21 @@ public final class ShapeDrawableBuilder {
         mCenterY = typedArray.getFloat(styleable.getCenterYStyleable(), 0.5f);
         mGradientRadius = typedArray.getDimensionPixelSize(styleable.getGradientRadiusStyleable(), radius);
 
-        mStrokeColor = typedArray.getColor(styleable.getStrokeColorStyleable(), Color.TRANSPARENT);
+        mStrokeColor = typedArray.getColor(styleable.getStrokeColorStyleable(), NO_COLOR);
         if (typedArray.hasValue(styleable.getStrokePressedColorStyleable())) {
-            mStrokePressedColor = typedArray.getColor(styleable.getStrokePressedColorStyleable(), Color.TRANSPARENT);
+            mStrokePressedColor = typedArray.getColor(styleable.getStrokePressedColorStyleable(), NO_COLOR);
         }
         if (styleable.getStrokeCheckedColorStyleable() > 0 && typedArray.hasValue(styleable.getStrokeCheckedColorStyleable())) {
-            mStrokeCheckedColor = typedArray.getColor(styleable.getStrokeCheckedColorStyleable(), Color.TRANSPARENT);
+            mStrokeCheckedColor = typedArray.getColor(styleable.getStrokeCheckedColorStyleable(), NO_COLOR);
         }
         if (typedArray.hasValue(styleable.getStrokeDisabledColorStyleable())) {
-            mStrokeDisabledColor = typedArray.getColor(styleable.getStrokeDisabledColorStyleable(), Color.TRANSPARENT);
+            mStrokeDisabledColor = typedArray.getColor(styleable.getStrokeDisabledColorStyleable(), NO_COLOR);
         }
         if (typedArray.hasValue(styleable.getStrokeFocusedColorStyleable())) {
-            mStrokeFocusedColor = typedArray.getColor(styleable.getStrokeFocusedColorStyleable(), Color.TRANSPARENT);
+            mStrokeFocusedColor = typedArray.getColor(styleable.getStrokeFocusedColorStyleable(), NO_COLOR);
         }
         if (typedArray.hasValue(styleable.getStrokeSelectedColorStyleable())) {
-            mStrokeSelectedColor = typedArray.getColor(styleable.getStrokeSelectedColorStyleable(), Color.TRANSPARENT);
+            mStrokeSelectedColor = typedArray.getColor(styleable.getStrokeSelectedColorStyleable(), NO_COLOR);
         }
 
         mStrokeWidth = typedArray.getDimensionPixelSize(styleable.getStrokeWidthStyleable(), 0);
@@ -174,7 +177,7 @@ public final class ShapeDrawableBuilder {
 
     public ShapeDrawableBuilder setSolidColor(int color) {
         mSolidColor = color;
-        clearGradientColor();
+        clearGradientColors();
         return this;
     }
 
@@ -187,6 +190,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getSolidPressedColor() {
         return mSolidPressedColor;
     }
@@ -196,6 +200,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getSolidCheckedColor() {
         return mSolidCheckedColor;
     }
@@ -205,6 +210,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getSolidDisabledColor() {
         return mSolidDisabledColor;
     }
@@ -214,6 +220,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getSolidFocusedColor() {
         return mSolidFocusedColor;
     }
@@ -223,6 +230,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getSolidSelectedColor() {
         return mSolidSelectedColor;
     }
@@ -255,22 +263,31 @@ public final class ShapeDrawableBuilder {
         return mBottomRightRadius;
     }
 
-    public ShapeDrawableBuilder setGradientColor(int[] color) {
-        mGradientColor = color;
+    public ShapeDrawableBuilder setGradientColors(int startColor, int endColor) {
+        return setGradientColors(new int[]{startColor, endColor});
+    }
+
+    public ShapeDrawableBuilder setGradientColors(int startColor, int centerColor, int endColor) {
+        return setGradientColors(new int[]{startColor, centerColor, endColor});
+    }
+
+    public ShapeDrawableBuilder setGradientColors(int[] colors) {
+        mGradientColors = colors;
         return this;
     }
 
-    public int[] getGradientColor() {
-        return mGradientColor;
+    @Nullable
+    public int[] getGradientColors() {
+        return mGradientColors;
     }
 
-    public boolean isGradientColor() {
-        return mGradientColor != null &&
-                mGradientColor.length > 0;
+    public boolean isGradientColors() {
+        return mGradientColors != null &&
+                mGradientColors.length > 0;
     }
 
-    public void clearGradientColor() {
-        mGradientColor = null;
+    public void clearGradientColors() {
+        mGradientColors = null;
     }
 
     public ShapeDrawableBuilder setUseLevel(boolean useLevel) {
@@ -341,6 +358,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getStrokePressedColor() {
         return mStrokePressedColor;
     }
@@ -350,6 +368,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getStrokeCheckedColor() {
         return mStrokeCheckedColor;
     }
@@ -359,6 +378,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getStrokeDisabledColor() {
         return mStrokeDisabledColor;
     }
@@ -368,6 +388,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getStrokeFocusedColor() {
         return mStrokeFocusedColor;
     }
@@ -377,6 +398,7 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getStrokeSelectedColor() {
         return mStrokeSelectedColor;
     }
@@ -489,14 +511,14 @@ public final class ShapeDrawableBuilder {
     }
 
     public Drawable buildBackgroundDrawable() {
-        if (!isGradientColor() && mSolidColor == Color.TRANSPARENT && mStrokeColor == Color.TRANSPARENT) {
+        if (!isGradientColors() && mSolidColor == NO_COLOR && mStrokeColor == NO_COLOR) {
             return null;
         }
 
         ShapeDrawable defaultDrawable = createShapeDrawable(mSolidColor, mStrokeColor);
         // 判断是否设置了渐变色
-        if (isGradientColor()) {
-            defaultDrawable.setGradientColors(mGradientColor);
+        if (isGradientColors()) {
+            defaultDrawable.setGradientColors(mGradientColors);
         }
 
         if (mSolidPressedColor != null && mStrokePressedColor != null &&
@@ -546,7 +568,7 @@ public final class ShapeDrawableBuilder {
                 .setSize(mShapeWidth, mShapeHeight)
                 .setRadius(mTopLeftRadius, mTopRightRadius, mBottomLeftRadius, mBottomRightRadius)
                 .setSolidColor(solidColor)
-                .setUseLevel(isUseLevel())
+                .setUseLevel(mUseLevel)
                 .setStroke(mStrokeWidth, strokeColor, mDashWidth, mDashGap);
 
         drawable.setGradientAngle(mAngle)

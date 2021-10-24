@@ -116,7 +116,7 @@
     android:textSize="14sp"
     app:shape="rectangle"
     app:shape_radius="10dp"
-    app:shape_shadowColor="#AA5A8DDF"
+    app:shape_shadowColor="#5A8DDF"
     app:shape_shadowSize="10dp"
     app:shape_solidColor="#FFFFFF" />
 

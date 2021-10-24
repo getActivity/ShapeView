@@ -2,6 +2,7 @@ package com.hjq.shape.builder;
 
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ public final class TextColorBuilder {
     private Integer mTextFocusedColor;
     private Integer mTextSelectedColor;
 
-    private int[] mTextGradientColor;
+    private int[] mTextGradientColors;
     private int mTextGradientOrientation;
 
     public TextColorBuilder(TextView textView, TypedArray typedArray, ITextColorStyleable styleable) {
@@ -49,11 +50,11 @@ public final class TextColorBuilder {
 
         if (typedArray.hasValue(styleable.getTextStartColorStyleable()) && typedArray.hasValue(styleable.getTextEndColorStyleable())) {
             if (typedArray.hasValue(styleable.getTextCenterColorStyleable())) {
-                mTextGradientColor = new int[] {typedArray.getColor(styleable.getTextStartColorStyleable(), mTextColor),
+                mTextGradientColors = new int[] {typedArray.getColor(styleable.getTextStartColorStyleable(), mTextColor),
                         typedArray.getColor(styleable.getTextCenterColorStyleable(), mTextColor),
                         typedArray.getColor(styleable.getTextEndColorStyleable(), mTextColor)};
             } else {
-                mTextGradientColor = new int[] {typedArray.getColor(styleable.getTextStartColorStyleable(), mTextColor),
+                mTextGradientColors = new int[] {typedArray.getColor(styleable.getTextStartColorStyleable(), mTextColor),
                         typedArray.getColor(styleable.getTextEndColorStyleable(), mTextColor)};
             }
         }
@@ -62,13 +63,13 @@ public final class TextColorBuilder {
                 LinearGradientFontSpan.GRADIENT_ORIENTATION_HORIZONTAL);
     }
 
-    public TextColorBuilder setTextColor(Integer color) {
+    public TextColorBuilder setTextColor(int color) {
         mTextColor = color;
-        clearTextGradientColor();
+        clearTextGradientColors();
         return this;
     }
 
-    public Integer getTextColor() {
+    public int getTextColor() {
         return mTextColor;
     }
 
@@ -77,6 +78,7 @@ public final class TextColorBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getTextPressedColor() {
         return mTextPressedColor;
     }
@@ -86,6 +88,7 @@ public final class TextColorBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getTextCheckedColor() {
         return mTextCheckedColor;
     }
@@ -95,6 +98,7 @@ public final class TextColorBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getTextDisabledColor() {
         return mTextDisabledColor;
     }
@@ -104,6 +108,7 @@ public final class TextColorBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getTextFocusedColor() {
         return mTextFocusedColor;
     }
@@ -113,17 +118,35 @@ public final class TextColorBuilder {
         return this;
     }
 
+    @Nullable
     public Integer getTextSelectedColor() {
         return mTextSelectedColor;
     }
 
-    public TextColorBuilder setTextGradientColor(int[] color) {
-        mTextGradientColor = color;
+    public TextColorBuilder setTextGradientColors(int startColor, int endColor) {
+        return setTextGradientColors(new int[]{startColor, endColor});
+    }
+
+    public TextColorBuilder setTextGradientColors(int startColor, int centerColor, int endColor) {
+        return setTextGradientColors(new int[]{startColor, centerColor, endColor});
+    }
+
+    public TextColorBuilder setTextGradientColors(int[] colors) {
+        mTextGradientColors = colors;
         return this;
     }
 
-    public int[] getTextGradientColor() {
-        return mTextGradientColor;
+    @Nullable
+    public int[] getTextGradientColors() {
+        return mTextGradientColors;
+    }
+
+    public boolean isTextGradientColors() {
+        return mTextGradientColors != null && mTextGradientColors.length > 0;
+    }
+
+    public void clearTextGradientColors() {
+        mTextGradientColors = null;
     }
 
     public TextColorBuilder setTextGradientOrientation(int orientation) {
@@ -131,20 +154,12 @@ public final class TextColorBuilder {
         return this;
     }
 
-    public Integer getTextGradientOrientation() {
+    public int getTextGradientOrientation() {
         return mTextGradientOrientation;
     }
 
-    public boolean isTextGradientColor() {
-        return mTextGradientColor != null && mTextGradientColor.length > 0;
-    }
-
-    public void clearTextGradientColor() {
-        mTextGradientColor = null;
-    }
-
     public SpannableStringBuilder buildLinearGradientSpannable(CharSequence text) {
-        return LinearGradientFontSpan.buildLinearGradientSpannable(text, mTextGradientColor, null, mTextGradientOrientation);
+        return LinearGradientFontSpan.buildLinearGradientSpannable(text, mTextGradientColors, null, mTextGradientOrientation);
     }
 
     public ColorStateList buildColorState() {
@@ -207,7 +222,7 @@ public final class TextColorBuilder {
     }
 
     public void intoTextColor() {
-        if (isTextGradientColor()) {
+        if (isTextGradientColors()) {
             mTextView.setText(buildLinearGradientSpannable(mTextView.getText()));
             return;
         }

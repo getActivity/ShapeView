@@ -92,6 +92,7 @@
                 android:textSize="14sp"
                 app:shape="rectangle"
                 app:shape_radius="20dp"
+                app:shape_solidColor="@android:color/transparent"
                 app:shape_solidPressedColor="#5A8DDF"
                 app:shape_strokeColor="#5A8DDF"
                 app:shape_strokeWidth="1dp"

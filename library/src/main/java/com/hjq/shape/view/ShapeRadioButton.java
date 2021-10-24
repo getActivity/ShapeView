@@ -45,7 +45,7 @@ public class ShapeRadioButton extends AppCompatRadioButton {
 
         mShapeDrawableBuilder.intoBackground();
 
-        if (mTextColorBuilder.isTextGradientColor()) {
+        if (mTextColorBuilder.isTextGradientColors()) {
             setText(getText());
         } else {
             mTextColorBuilder.intoTextColor();
@@ -61,12 +61,12 @@ public class ShapeRadioButton extends AppCompatRadioButton {
             return;
         }
         mTextColorBuilder.setTextColor(color);
-        mTextColorBuilder.clearTextGradientColor();
+        mTextColorBuilder.clearTextGradientColors();
     }
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-        if (mTextColorBuilder != null && mTextColorBuilder.isTextGradientColor()) {
+        if (mTextColorBuilder != null && mTextColorBuilder.isTextGradientColors()) {
             super.setText(mTextColorBuilder.buildLinearGradientSpannable(text), type);
         } else {
             super.setText(text, type);

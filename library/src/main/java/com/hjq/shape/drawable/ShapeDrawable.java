@@ -16,11 +16,12 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.graphics.ColorUtils;
 import android.view.View;
 
 /**
  *    author : Android 轮子哥
- *    github : https://github.com/getActivity/ToastUtils
+ *    github : https://github.com/getActivity/ShapeView
  *    time   : 2021/08/14
  *    desc   : 在 {@link android.graphics.drawable.GradientDrawable} 的基础上改造
  */
@@ -31,13 +32,14 @@ public class ShapeDrawable extends Drawable {
     private final Paint mFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Rect mPadding;
     private Paint mStrokePaint;   // optional, set by the caller
+    private Paint mShadowPaint;
     private ColorFilter mColorFilter;   // optional, set by the caller
     private int mAlpha = 0xFF;  // modified by the caller
     private boolean mDither;
 
     private final Path mPath = new Path();
     private final RectF mRect = new RectF();
-    
+
     private Paint mLayerPaint;    // internal, used if we use saveLayer()
     private boolean mRectIsDirty;   // internal state
     private boolean mMutated;
@@ -407,6 +409,7 @@ public class ShapeDrawable extends Drawable {
 
         final boolean haveStroke = currStrokeAlpha > 0 && mStrokePaint != null &&
                 mStrokePaint.getStrokeWidth() > 0;
+        final boolean haveShadow = mShapeState.mShadowSize > 0;
         final boolean haveFill = currFillAlpha > 0;
         final ShapeState st = mShapeState;
         /*  we need a layer iff we're drawing both a fill and stroke, and the
@@ -424,20 +427,6 @@ public class ShapeDrawable extends Drawable {
             stroking, then we need to apply the alpha AFTER we've drawn
             both the fill and the stroke.
         */
-
-        if (mShapeState.mShadowSize > 0) {
-            if (haveStroke) {
-                mStrokePaint.setShadowLayer(mShapeState.mShadowSize, mShapeState.mShadowOffsetX, mShapeState.mShadowOffsetY, mShapeState.mShadowColor);
-            } else {
-                mFillPaint.setShadowLayer(mShapeState.mShadowSize, mShapeState.mShadowOffsetX, mShapeState.mShadowOffsetY, mShapeState.mShadowColor);
-            }
-        } else {
-            if (haveStroke) {
-                mStrokePaint.clearShadowLayer();
-            } else {
-                mFillPaint.clearShadowLayer();
-            }
-        }
 
         if (useLayer) {
             if (mLayerPaint == null) {
@@ -479,6 +468,34 @@ public class ShapeDrawable extends Drawable {
             }
         }
 
+        if (haveShadow) {
+            if (mShadowPaint == null) {
+                mShadowPaint = new Paint();
+                mShadowPaint.setColor(Color.TRANSPARENT);
+                mShadowPaint.setStyle(Paint.Style.STROKE);
+            }
+
+            if (haveStroke) {
+                mShadowPaint.setStrokeWidth(mStrokePaint.getStrokeWidth());
+            } else {
+                mShadowPaint.setStrokeWidth(mShapeState.mShadowSize / 4f);
+            }
+
+            int shadowColor = mShapeState.mShadowColor;
+            // 如果阴影颜色是非透明的，则需要设置一点透明度进去，否则会显示不出来
+            if (ColorUtils.setAlphaComponent(mShapeState.mShadowColor, 255) == mShapeState.mShadowColor) {
+                shadowColor = ColorUtils.setAlphaComponent(mShapeState.mShadowColor, 254);
+            }
+
+            mShadowPaint.setShadowLayer(mShapeState.mShadowSize, mShapeState.mShadowOffsetX,
+                    mShapeState.mShadowOffsetY, shadowColor);
+
+        } else {
+            if (mShadowPaint != null) {
+                mShadowPaint.clearShadowLayer();
+            }
+        }
+
         switch (st.mShapeType) {
             case ShapeType.RECTANGLE:
                 if (st.mRadiusArray != null) {
@@ -486,6 +503,9 @@ public class ShapeDrawable extends Drawable {
                         mPath.reset();
                         mPath.addRoundRect(mRect, st.mRadiusArray, Path.Direction.CW);
                         mPathIsDirty = mRectIsDirty = false;
+                    }
+                    if (haveShadow) {
+                        canvas.drawPath(mPath, mShadowPaint);
                     }
                     canvas.drawPath(mPath, mFillPaint);
                     if (haveStroke) {
@@ -502,11 +522,17 @@ public class ShapeDrawable extends Drawable {
                     if (rad > r) {
                         rad = r;
                     }
+                    if (haveShadow) {
+                        canvas.drawRoundRect(mRect, rad, rad, mShadowPaint);
+                    }
                     canvas.drawRoundRect(mRect, rad, rad, mFillPaint);
                     if (haveStroke) {
                         canvas.drawRoundRect(mRect, rad, rad, mStrokePaint);
                     }
                 } else {
+                    if (haveShadow) {
+                        canvas.drawRect(mRect, mShadowPaint);
+                    }
                     if (mFillPaint.getColor() != 0 || mColorFilter != null ||
                             mFillPaint.getShader() != null) {
                         canvas.drawRect(mRect, mFillPaint);
@@ -517,6 +543,9 @@ public class ShapeDrawable extends Drawable {
                 }
                 break;
             case ShapeType.OVAL:
+                if (haveShadow) {
+                    canvas.drawOval(mRect, mShadowPaint);
+                }
                 canvas.drawOval(mRect, mFillPaint);
                 if (haveStroke) {
                     canvas.drawOval(mRect, mStrokePaint);
@@ -525,15 +554,23 @@ public class ShapeDrawable extends Drawable {
             case ShapeType.LINE: {
                 RectF r = mRect;
                 float y = r.centerY();
+                if (haveShadow) {
+                    canvas.drawLine(r.left, y, r.right, y, mShadowPaint);
+                }
                 canvas.drawLine(r.left, y, r.right, y, mStrokePaint);
                 break;
             }
             case ShapeType.RING:
                 Path path = buildRing(st);
+                if (haveShadow) {
+                    canvas.drawPath(path, mShadowPaint);
+                }
                 canvas.drawPath(path, mFillPaint);
                 if (haveStroke) {
                     canvas.drawPath(path, mStrokePaint);
                 }
+                break;
+            default:
                 break;
         }
 
