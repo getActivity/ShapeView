@@ -80,18 +80,33 @@ public final class ShapeLinearLayoutStyleable implements IShapeDrawableStyleable
     }
 
     @Override
-    public int getStartColorStyleable() {
+    public int getSolidStartColorStyleable() {
         return R.styleable.ShapeLinearLayout_shape_startColor;
     }
 
     @Override
-    public int getCenterColorStyleable() {
+    public int getSolidCenterColorStyleable() {
         return R.styleable.ShapeLinearLayout_shape_centerColor;
     }
 
     @Override
-    public int getEndColorStyleable() {
+    public int getSolidEndColorStyleable() {
         return R.styleable.ShapeLinearLayout_shape_endColor;
+    }
+
+    @Override
+    public int getStrokeStartColorStyleable() {
+        return R.styleable.ShapeLinearLayout_shape_strokeStartColor;
+    }
+
+    @Override
+    public int getStrokeCenterColorStyleable() {
+        return R.styleable.ShapeLinearLayout_shape_strokeCenterColor;
+    }
+
+    @Override
+    public int getStrokeEndColorStyleable() {
+        return R.styleable.ShapeLinearLayout_shape_strokeEndColor;
     }
 
     @Override

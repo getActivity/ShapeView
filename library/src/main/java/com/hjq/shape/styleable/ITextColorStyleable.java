@@ -29,4 +29,8 @@ public interface ITextColorStyleable {
     int getTextEndColorStyleable();
 
     int getTextGradientOrientationStyleable();
+
+    int getTextStrokeColorStyleable();
+
+    int getTextStrokeSizeStyleable();
 }

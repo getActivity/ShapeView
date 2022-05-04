@@ -38,11 +38,17 @@ public interface IShapeDrawableStyleable {
 
     int getBottomRightRadiusStyleable();
 
-    int getStartColorStyleable();
+    int getSolidStartColorStyleable();
 
-    int getCenterColorStyleable();
+    int getSolidCenterColorStyleable();
 
-    int getEndColorStyleable();
+    int getSolidEndColorStyleable();
+
+    int getStrokeStartColorStyleable();
+
+    int getStrokeCenterColorStyleable();
+
+    int getStrokeEndColorStyleable();
 
     int getUseLevelStyleable();
 

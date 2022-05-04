@@ -80,18 +80,33 @@ public final class ShapeButtonStyleable implements IShapeDrawableStyleable, ITex
     }
 
     @Override
-    public int getStartColorStyleable() {
+    public int getSolidStartColorStyleable() {
         return R.styleable.ShapeButton_shape_startColor;
     }
 
     @Override
-    public int getCenterColorStyleable() {
+    public int getSolidCenterColorStyleable() {
         return R.styleable.ShapeButton_shape_centerColor;
     }
 
     @Override
-    public int getEndColorStyleable() {
+    public int getSolidEndColorStyleable() {
         return R.styleable.ShapeButton_shape_endColor;
+    }
+
+    @Override
+    public int getStrokeStartColorStyleable() {
+        return R.styleable.ShapeButton_shape_strokeStartColor;
+    }
+
+    @Override
+    public int getStrokeCenterColorStyleable() {
+        return R.styleable.ShapeButton_shape_strokeCenterColor;
+    }
+
+    @Override
+    public int getStrokeEndColorStyleable() {
+        return R.styleable.ShapeButton_shape_strokeEndColor;
     }
 
     @Override
@@ -251,5 +266,15 @@ public final class ShapeButtonStyleable implements IShapeDrawableStyleable, ITex
     @Override
     public int getTextGradientOrientationStyleable() {
         return R.styleable.ShapeButton_shape_textGradientOrientation;
+    }
+
+    @Override
+    public int getTextStrokeColorStyleable() {
+        return R.styleable.ShapeButton_shape_textStrokeColor;
+    }
+
+    @Override
+    public int getTextStrokeSizeStyleable() {
+        return R.styleable.ShapeButton_shape_textStrokeSize;
     }
 }

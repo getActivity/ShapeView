@@ -80,18 +80,33 @@ public final class ShapeRecyclerViewStyleable implements IShapeDrawableStyleable
     }
 
     @Override
-    public int getStartColorStyleable() {
+    public int getSolidStartColorStyleable() {
         return R.styleable.ShapeRecyclerView_shape_startColor;
     }
 
     @Override
-    public int getCenterColorStyleable() {
+    public int getSolidCenterColorStyleable() {
         return R.styleable.ShapeRecyclerView_shape_centerColor;
     }
 
     @Override
-    public int getEndColorStyleable() {
+    public int getSolidEndColorStyleable() {
         return R.styleable.ShapeRecyclerView_shape_endColor;
+    }
+
+    @Override
+    public int getStrokeStartColorStyleable() {
+        return R.styleable.ShapeRecyclerView_shape_strokeStartColor;
+    }
+
+    @Override
+    public int getStrokeCenterColorStyleable() {
+        return R.styleable.ShapeRecyclerView_shape_strokeCenterColor;
+    }
+
+    @Override
+    public int getStrokeEndColorStyleable() {
+        return R.styleable.ShapeRecyclerView_shape_strokeEndColor;
     }
 
     @Override

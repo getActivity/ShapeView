@@ -5,8 +5,8 @@ android {
 
     defaultConfig {
         minSdkVersion 16
-        versionCode 62
-        versionName "6.2"
+        versionCode 80
+        versionName "8.0"
     }
 
     // 支持 Java JDK 8

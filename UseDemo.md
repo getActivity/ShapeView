@@ -22,22 +22,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:clickable="true"
-    android:gravity="center"
-    android:padding="10dp"
-    android:text="渐变色按压效果"
-    android:textColor="@android:color/white"
-    android:textSize="14sp"
-    app:shape="rectangle"
-    app:shape_endColor="#ED58FF"
-    app:shape_radius="20dp"
-    app:shape_solidPressedColor="#5A8DDF"
-    app:shape_startColor="#49DAFA" />
-
-<com.hjq.shape.view.ShapeButton
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
     android:enabled="false"
     android:gravity="center"
     android:padding="10dp"
@@ -60,6 +44,7 @@
     android:textSize="14sp"
     app:shape="rectangle"
     app:shape_radius="20dp"
+    app:shape_solidColor="@android:color/transparent"
     app:shape_solidPressedColor="#5A8DDF"
     app:shape_strokeColor="#5A8DDF"
     app:shape_strokeWidth="1dp"
@@ -82,6 +67,94 @@
     app:shape_strokeWidth="1dp"
     app:shape_textColor="@android:color/black"
     app:shape_textDisabledColor="#BBBBBB" />
+
+<com.hjq.shape.view.ShapeButton
+    android:id="@+id/btn_main_test"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="点我动态改变颜色"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="20dp"
+    app:shape_strokeColor="#000000"
+    app:shape_strokeWidth="1dp" />
+
+<com.hjq.shape.view.ShapeButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="透明填充色按压效果"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="20dp"
+    app:shape_solidPressedColor="#AA5A8DDF"
+    app:shape_strokePressedColor="#000000"
+    app:shape_strokeWidth="1dp" />
+```
+
+![](picture/shape_gradient.jpg)
+
+```xml
+<com.hjq.shape.view.ShapeButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="填充色渐变效果"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_endColor="#ED58FF"
+    app:shape_radius="20dp"
+    app:shape_solidPressedColor="#5A8DDF"
+    app:shape_startColor="#49DAFA" />
+
+<com.hjq.shape.view.ShapeButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="边框色渐变效果"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="20dp"
+    app:shape_strokeEndColor="#f08833"
+    app:shape_strokePressedColor="@android:color/black"
+    app:shape_strokeStartColor="#fefa54"
+    app:shape_strokeWidth="2dp" />
+
+<com.hjq.shape.view.ShapeButton
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="组合渐变效果"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_endColor="#ED58FF"
+    app:shape_radius="20dp"
+    app:shape_solidPressedColor="#5A8DDF"
+    app:shape_startColor="#49DAFA"
+    app:shape_strokeEndColor="#f08833"
+    app:shape_strokePressedColor="@android:color/black"
+    app:shape_strokeStartColor="#fefa54"
+    app:shape_strokeWidth="2dp" />
 ```
 
 ![](picture/shape_shadow_background.jpg)
@@ -116,7 +189,7 @@
     android:textSize="14sp"
     app:shape="rectangle"
     app:shape_radius="10dp"
-    app:shape_shadowColor="#5A8DDF"
+    app:shape_shadowColor="#AA5A8DDF"
     app:shape_shadowSize="10dp"
     app:shape_solidColor="#FFFFFF" />
 
@@ -128,7 +201,7 @@
     android:gravity="center"
     android:paddingTop="30dp"
     android:paddingBottom="30dp"
-    android:text="阴影偏移效果"
+    android:text="阴影偏移效果（右下）"
     android:textColor="@android:color/black"
     android:textSize="14sp"
     app:shape="rectangle"
@@ -138,6 +211,82 @@
     app:shape_shadowOffsetY="5dp"
     app:shape_shadowSize="10dp"
     app:shape_solidColor="#FFFFFF" />
+
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:gravity="center"
+    android:paddingTop="30dp"
+    android:paddingBottom="30dp"
+    android:text="阴影偏移效果（左上）"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="10dp"
+    app:shape_shadowColor="#50000000"
+    app:shape_shadowOffsetX="-5dp"
+    app:shape_shadowOffsetY="-5dp"
+    app:shape_shadowSize="10dp"
+    app:shape_solidColor="#FFFFFF" />
+
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:gravity="center"
+    android:paddingTop="30dp"
+    android:paddingBottom="30dp"
+    android:text="阴影偏移效果（不规则圆角）"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_bottomLeftRadius="15dp"
+    app:shape_bottomRightRadius="20dp"
+    app:shape_shadowColor="#50000000"
+    app:shape_shadowOffsetX="-5dp"
+    app:shape_shadowOffsetY="-5dp"
+    app:shape_shadowSize="10dp"
+    app:shape_solidColor="#FFFFFF"
+    app:shape_topLeftRadius="5dp"
+    app:shape_topRightRadius="10dp" />
+
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:gravity="center"
+    android:paddingTop="30dp"
+    android:paddingBottom="30dp"
+    android:text="边框和阴影效果"
+    android:textColor="@android:color/black"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_radius="10dp"
+    app:shape_shadowColor="#FF0000"
+    app:shape_shadowSize="10dp"
+    app:shape_solidColor="#FFFFFF"
+    app:shape_strokeColor="#000000"
+    app:shape_strokeWidth="1dp" />
+
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:gravity="center"
+    android:paddingTop="30dp"
+    android:paddingBottom="30dp"
+    android:text="渐变色和阴影效果"
+    android:textColor="@android:color/white"
+    android:textSize="14sp"
+    app:shape="rectangle"
+    app:shape_endColor="#f08833"
+    app:shape_radius="10dp"
+    app:shape_shadowColor="#99000000"
+    app:shape_shadowSize="10dp"
+    app:shape_startColor="#fefa54" />
 ```
 
 ![](picture/shape_select_text_gradient.jpg)
@@ -150,7 +299,7 @@
     android:gravity="center"
     android:padding="10dp"
     android:text="文本水平渐变效果"
-    android:textSize="14sp"
+    android:textSize="18sp"
     app:shape_textEndColor="#ED58FF"
     app:shape_textGradientOrientation="horizontal"
     app:shape_textStartColor="#49DAFA" />
@@ -162,10 +311,24 @@
     android:gravity="center"
     android:padding="10dp"
     android:text="文本垂直渐变效果"
-    android:textSize="14sp"
+    android:textSize="18sp"
     app:shape_textEndColor="#ED58FF"
     app:shape_textGradientOrientation="vertical"
     app:shape_textStartColor="#49DAFA" />
+
+<com.hjq.shape.view.ShapeTextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="文本边框颜色效果"
+    android:textSize="18sp"
+    app:shape_textEndColor="#f08833"
+    app:shape_textGradientOrientation="horizontal"
+    app:shape_textStartColor="#fefa54"
+    app:shape_textStrokeColor="#000000"
+    app:shape_textStrokeSize="2sp" />
 ```
 
 ![](picture/shape_select_compound_button.jpg)

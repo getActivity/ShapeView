@@ -18,17 +18,17 @@
     <attr name="shape_height" format="dimension" />
 
     <!-- 填充色（默认状态） -->
-    <attr name="shape_solidColor" format="color|reference" />
+    <attr name="shape_solidColor" format="color" />
     <!-- 填充色（按下状态） -->
-    <attr name="shape_solidPressedColor" format="color|reference" />
+    <attr name="shape_solidPressedColor" format="color" />
     <!-- 填充色（选中状态） -->
-    <attr name="shape_solidCheckedColor" format="color|reference" />
+    <attr name="shape_solidCheckedColor" format="color" />
     <!-- 填充色（禁用状态） -->
-    <attr name="shape_solidDisabledColor" format="color|reference" />
+    <attr name="shape_solidDisabledColor" format="color" />
     <!-- 填充色（焦点状态） -->
-    <attr name="shape_solidFocusedColor" format="color|reference" />
+    <attr name="shape_solidFocusedColor" format="color" />
     <!-- 填充色（选择状态） -->
-    <attr name="shape_solidSelectedColor" format="color|reference" />
+    <attr name="shape_solidSelectedColor" format="color" />
 
     <!-- 圆角大小 -->
     <attr name="shape_radius" format="dimension" />
@@ -47,6 +47,14 @@
     <attr name="shape_centerColor" format="color" />
     <!-- 渐变色结束颜色 -->
     <attr name="shape_endColor" format="color" />
+
+    <!-- 边框渐变色起始颜色 -->
+    <attr name="shape_strokeStartColor" format="color" />
+    <!-- 边框渐变色中间颜色（可不设置） -->
+    <attr name="shape_strokeCenterColor" format="color" />
+    <!-- 边框渐变色结束颜色 -->
+    <attr name="shape_strokeEndColor" format="color" />
+
     <!-- 是否将用于缩放渐变 -->
     <attr name="shape_useLevel" format="boolean" />
     <!-- 渐变角度（仅用于线性渐变。必须是 0-315 范围内的值，并且是 45 的倍数） -->
@@ -68,17 +76,17 @@
     <attr name="shape_gradientRadius" format="float|fraction|dimension" />
 
     <!-- 边框色（默认状态） -->
-    <attr name="shape_strokeColor" format="color|reference" />
+    <attr name="shape_strokeColor" format="color" />
     <!-- 边框色（按下状态） -->
-    <attr name="shape_strokePressedColor" format="color|reference" />
+    <attr name="shape_strokePressedColor" format="color" />
     <!-- 边框色（选中状态） -->
-    <attr name="shape_strokeCheckedColor" format="color|reference" />
+    <attr name="shape_strokeCheckedColor" format="color" />
     <!-- 边框色（禁用状态） -->
-    <attr name="shape_strokeDisabledColor" format="color|reference" />
+    <attr name="shape_strokeDisabledColor" format="color" />
     <!-- 边框色（焦点状态） -->
-    <attr name="shape_strokeFocusedColor" format="color|reference" />
+    <attr name="shape_strokeFocusedColor" format="color" />
     <!-- 边框色（选择状态） -->
-    <attr name="shape_strokeSelectedColor" format="color|reference" />
+    <attr name="shape_strokeSelectedColor" format="color" />
 
     <!-- 边框宽度 -->
     <attr name="shape_strokeWidth" format="dimension" />
@@ -106,17 +114,17 @@
     <attr name="shape_shadowOffsetY" format="dimension" />
 
     <!-- 文本色（默认状态） -->
-    <attr name="shape_textColor" format="color|reference" />
+    <attr name="shape_textColor" format="color" />
     <!-- 文本色（按下状态） -->
-    <attr name="shape_textPressedColor" format="color|reference" />
+    <attr name="shape_textPressedColor" format="color" />
     <!-- 文本色（选中状态） -->
-    <attr name="shape_textCheckedColor" format="color|reference" />
+    <attr name="shape_textCheckedColor" format="color" />
     <!-- 文本色（禁用状态） -->
-    <attr name="shape_textDisabledColor" format="color|reference" />
+    <attr name="shape_textDisabledColor" format="color" />
     <!-- 文本色（焦点状态） -->
-    <attr name="shape_textFocusedColor" format="color|reference" />
+    <attr name="shape_textFocusedColor" format="color" />
     <!-- 文本色（选择状态） -->
-    <attr name="shape_textSelectedColor" format="color|reference" />
+    <attr name="shape_textSelectedColor" format="color" />
 
     <!-- 文本渐变色起始颜色 -->
     <attr name="shape_textStartColor" format="color" />
@@ -131,6 +139,11 @@
         <!-- 垂直渐变 -->
         <enum name="vertical" value="1" />
     </attr>
+
+    <!-- 文本边框颜色 -->
+    <attr name="shape_textStrokeColor" format="color" />
+    <!-- 文本边框大小 -->
+    <attr name="shape_textStrokeSize" format="dimension" />
 
     <!-- CheckBox 或者 RadioButton 图标（默认状态） -->
     <attr name="shape_buttonDrawable" format="reference" />
@@ -162,6 +175,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -197,6 +213,9 @@
         <attr name="shape_textCenterColor" />
         <attr name="shape_textEndColor" />
         <attr name="shape_textGradientOrientation" />
+
+        <attr name="shape_textStrokeColor" />
+        <attr name="shape_textStrokeSize" />
     </declare-styleable>
 
     <declare-styleable name="ShapeButton">
@@ -216,6 +235,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -251,6 +273,9 @@
         <attr name="shape_textCenterColor" />
         <attr name="shape_textEndColor" />
         <attr name="shape_textGradientOrientation" />
+
+        <attr name="shape_textStrokeColor" />
+        <attr name="shape_textStrokeSize" />
     </declare-styleable>
 
     <declare-styleable name="ShapeRadioButton">
@@ -271,6 +296,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -308,6 +336,9 @@
         <attr name="shape_textCenterColor" />
         <attr name="shape_textEndColor" />
         <attr name="shape_textGradientOrientation" />
+
+        <attr name="shape_textStrokeColor" />
+        <attr name="shape_textStrokeSize" />
 
         <attr name="shape_buttonDrawable" />
         <attr name="shape_buttonPressedDrawable" />
@@ -335,6 +366,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -373,6 +407,9 @@
         <attr name="shape_textEndColor" />
         <attr name="shape_textGradientOrientation" />
 
+        <attr name="shape_textStrokeColor" />
+        <attr name="shape_textStrokeSize" />
+
         <attr name="shape_buttonDrawable" />
         <attr name="shape_buttonPressedDrawable" />
         <attr name="shape_buttonCheckedDrawable" />
@@ -398,6 +435,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -433,6 +473,9 @@
         <attr name="shape_textCenterColor" />
         <attr name="shape_textEndColor" />
         <attr name="shape_textGradientOrientation" />
+
+        <attr name="shape_textStrokeColor" />
+        <attr name="shape_textStrokeSize" />
     </declare-styleable>
 
     <declare-styleable name="ShapeImageView">
@@ -452,6 +495,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -495,6 +541,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -538,6 +587,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -581,6 +633,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -624,6 +679,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -667,6 +725,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -710,6 +771,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />
@@ -753,6 +817,9 @@
         <attr name="shape_startColor" />
         <attr name="shape_centerColor" />
         <attr name="shape_endColor" />
+        <attr name="shape_strokeStartColor" />
+        <attr name="shape_strokeCenterColor" />
+        <attr name="shape_strokeEndColor" />
         <attr name="shape_useLevel" />
         <attr name="shape_angle" />
         <attr name="shape_gradientType" />

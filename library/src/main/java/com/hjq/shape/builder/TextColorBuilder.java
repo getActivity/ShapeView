@@ -2,11 +2,15 @@ package com.hjq.shape.builder;
 
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.widget.TextView;
 
-import com.hjq.shape.other.LinearGradientFontSpan;
+import com.hjq.shape.span.LinearGradientFontSpan;
+import com.hjq.shape.span.MultiFontSpan;
+import com.hjq.shape.span.StrokeFontSpan;
 import com.hjq.shape.styleable.ITextColorStyleable;
 
 /**
@@ -28,6 +32,9 @@ public final class TextColorBuilder {
 
     private int[] mTextGradientColors;
     private int mTextGradientOrientation;
+
+    private int mTextStrokeColor;
+    private int mTextStrokeSize;
 
     public TextColorBuilder(TextView textView, TypedArray typedArray, ITextColorStyleable styleable) {
         mTextView = textView;
@@ -61,6 +68,14 @@ public final class TextColorBuilder {
 
         mTextGradientOrientation = typedArray.getColor(styleable.getTextGradientOrientationStyleable(),
                 LinearGradientFontSpan.GRADIENT_ORIENTATION_HORIZONTAL);
+
+        if (typedArray.hasValue(styleable.getTextStrokeColorStyleable())) {
+            mTextStrokeColor = typedArray.getColor(styleable.getTextStrokeColorStyleable(), 0);
+        }
+
+        if (typedArray.hasValue(styleable.getTextStrokeSizeStyleable())) {
+            mTextStrokeSize = typedArray.getDimensionPixelSize(styleable.getTextStrokeSizeStyleable(), 0);
+        }
     }
 
     public TextColorBuilder setTextColor(int color) {
@@ -158,8 +173,60 @@ public final class TextColorBuilder {
         return mTextGradientOrientation;
     }
 
-    public SpannableStringBuilder buildLinearGradientSpannable(CharSequence text) {
-        return LinearGradientFontSpan.buildLinearGradientSpannable(text, mTextGradientColors, null, mTextGradientOrientation);
+    public TextColorBuilder setTextStrokeColor(int color) {
+        mTextStrokeColor = color;
+        return this;
+    }
+
+    public TextColorBuilder setTextStrokeSize(int size) {
+        mTextStrokeSize = size;
+        return this;
+    }
+
+    public int getTextStrokeColor() {
+        return mTextStrokeColor;
+    }
+
+    public int getTextStrokeSize() {
+        return mTextStrokeSize;
+    }
+
+    public boolean isTextStrokeColor() {
+        return mTextStrokeColor != Color.TRANSPARENT && mTextStrokeSize > 0;
+    }
+
+    public void clearTextStrokeColor() {
+        mTextStrokeColor = Color.TRANSPARENT;
+        mTextStrokeSize = 0;
+    }
+
+    public SpannableStringBuilder buildTextSpannable(CharSequence text) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(text);
+
+        LinearGradientFontSpan linearGradientFontSpan = null;
+        StrokeFontSpan strokeFontSpan = null;
+
+        if (isTextGradientColors()) {
+            linearGradientFontSpan = new LinearGradientFontSpan()
+                    .setTextGradientColor(mTextGradientColors)
+                    .setTextGradientOrientation(mTextGradientOrientation)
+                    .setTextGradientPositions(null);
+        }
+        if (isTextStrokeColor()) {
+            strokeFontSpan = new StrokeFontSpan()
+                    .setTextStrokeColor(mTextStrokeColor)
+                    .setTextStrokeSize(mTextStrokeSize);
+        }
+
+        if (linearGradientFontSpan != null && strokeFontSpan != null) {
+            MultiFontSpan multiFontSpan = new MultiFontSpan(strokeFontSpan, linearGradientFontSpan);
+            builder.setSpan(multiFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else if (linearGradientFontSpan != null) {
+            builder.setSpan(linearGradientFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else if (strokeFontSpan != null) {
+            builder.setSpan(strokeFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return builder;
     }
 
     public ColorStateList buildColorState() {
@@ -222,8 +289,8 @@ public final class TextColorBuilder {
     }
 
     public void intoTextColor() {
-        if (isTextGradientColors()) {
-            mTextView.setText(buildLinearGradientSpannable(mTextView.getText()));
+        if (isTextGradientColors() || isTextStrokeColor()) {
+            mTextView.setText(buildTextSpannable(mTextView.getText()));
             return;
         }
         mTextView.setTextColor(buildColorState());

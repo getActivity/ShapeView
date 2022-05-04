@@ -16,6 +16,7 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
 import android.view.View;
 
@@ -31,7 +32,7 @@ public class ShapeDrawable extends Drawable {
     
     private final Paint mFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Rect mPadding;
-    private Paint mStrokePaint;   // optional, set by the caller
+    private final Paint mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);   // optional, set by the caller
     private Paint mShadowPaint;
     private ColorFilter mColorFilter;   // optional, set by the caller
     private int mAlpha = 0xFF;  // modified by the caller
@@ -39,6 +40,9 @@ public class ShapeDrawable extends Drawable {
 
     private final Path mPath = new Path();
     private final RectF mRect = new RectF();
+
+    private final RectF mShadowRect = new RectF();
+    private final Path mShadowPath = new Path();
 
     private Paint mLayerPaint;    // internal, used if we use saveLayer()
     private boolean mRectIsDirty;   // internal state
@@ -55,6 +59,8 @@ public class ShapeDrawable extends Drawable {
         initializeWithState(state);
         mRectIsDirty = true;
         mMutated = false;
+
+        mStrokePaint.setStyle(Paint.Style.STROKE);
     }
 
     /**
@@ -65,17 +71,18 @@ public class ShapeDrawable extends Drawable {
     }
 
     @Override
-    public boolean getPadding(Rect padding) {
+    public boolean getPadding(@NonNull Rect padding) {
         if (mPadding != null) {
             padding.set(mPadding);
             return true;
-        } else {
-            return super.getPadding(padding);
         }
+        return super.getPadding(padding);
     }
 
     public ShapeDrawable setPadding(Rect padding) {
         mPadding = padding;
+        mPathIsDirty = true;
+        invalidateSelf();
         return this;
     }
 
@@ -86,8 +93,8 @@ public class ShapeDrawable extends Drawable {
      */
     public ShapeDrawable setShape(int shape) {
         mRingPath = null;
-        mPathIsDirty = true;
         mShapeState.setShape(shape);
+        mPathIsDirty = true;
         invalidateSelf();
         return this;
     }
@@ -134,9 +141,24 @@ public class ShapeDrawable extends Drawable {
     /**
      * 设置填充颜色
      */
-    public ShapeDrawable setSolidColor(int color) {
-        mShapeState.setSolidColor(color);
-        mFillPaint.setColor(color);
+
+    public ShapeDrawable setSolidColor(int startColor, int endColor) {
+        return setSolidColor(new int[] {startColor, endColor});
+    }
+
+    public ShapeDrawable setSolidColor(int startColor, int centerColor, int endColor) {
+        return setSolidColor(new int[] {startColor, centerColor, endColor});
+    }
+
+    public ShapeDrawable setSolidColor(int... colors) {
+        mShapeState.setSolidColor(colors);
+        if (colors == null) {
+            mFillPaint.setColor(0);
+        } else if (colors.length == 1) {
+            mFillPaint.setColor(colors[0]);
+            mFillPaint.clearShadowLayer();
+        }
+        mRectIsDirty = true;
         invalidateSelf();
         return this;
     }
@@ -144,8 +166,25 @@ public class ShapeDrawable extends Drawable {
     /**
      * 设置边框颜色
      */
-    public ShapeDrawable setStrokeColor(int color) {
-        setStroke(color, mShapeState.mStrokeWidth, mShapeState.mStrokeDashWidth, mShapeState.mStrokeDashGap);
+
+    public ShapeDrawable setStrokeColor(int startColor, int endColor) {
+        return setStrokeColor(new int[] {startColor, endColor});
+    }
+
+    public ShapeDrawable setStrokeColor(int startColor, int centerColor, int endColor) {
+        return setStrokeColor(new int[] {startColor, centerColor, endColor});
+    }
+
+    public ShapeDrawable setStrokeColor(int... colors) {
+        mShapeState.setStrokeColor(colors);
+        if (colors == null) {
+            mStrokePaint.setColor(0);
+        } else if (colors.length == 1) {
+            mStrokePaint.setColor(colors[0]);
+            mStrokePaint.clearShadowLayer();
+        }
+        mRectIsDirty = true;
+        invalidateSelf();
         return this;
     }
 
@@ -153,50 +192,19 @@ public class ShapeDrawable extends Drawable {
      * 设置边框宽度
      */
     public ShapeDrawable setStrokeWidth(int width) {
-        setStroke(mShapeState.mStrokeColor, width, mShapeState.mStrokeDashWidth, mShapeState.mStrokeDashGap);
-        return this;
-    }
-
-    /**
-     * 设置边框虚线宽度（为 0 就是实线，大于 0 就是虚线）
-     */
-    public ShapeDrawable setDashWidth(float dashWidth) {
-        setStroke(mShapeState.mStrokeColor, mShapeState.mStrokeWidth, dashWidth, mShapeState.mStrokeDashGap);
-        return this;
-    }
-
-    /**
-     * 设置虚线间隔（虚线与虚线之间的间隔）
-     */
-    public ShapeDrawable setDashGap(float dashGap) {
-        setStroke(mShapeState.mStrokeColor, mShapeState.mStrokeWidth, mShapeState.mStrokeDashWidth, dashGap);
-        return this;
-    }
-
-    /**
-     * 初始化边框属性
-     */
-    public ShapeDrawable setStroke(int width, int color, float dashWidth, float dashGap) {
-        mShapeState.setStroke(width, color, dashWidth, dashGap);
-
-        if (mStrokePaint == null) {
-            mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mStrokePaint.setStyle(Paint.Style.STROKE);
-        }
+        mShapeState.setStrokeWidth(width);
         mStrokePaint.setStrokeWidth(width);
-        mStrokePaint.setColor(color);
-
-        mStrokePaint.setPathEffect(dashWidth > 0 ? new DashPathEffect(new float[] {dashWidth, dashGap}, 0) : null);
+        mRectIsDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置渐变颜色
+     * 设置边框虚线宽度及间隔（为 0 就是实线，大于 0 就是虚线）
      */
-    public ShapeDrawable setGradientColors(int[] colors) {
-        mShapeState.setGradientColor(colors);
-        mRectIsDirty = true;
+    public ShapeDrawable setStrokeDash(float dashWidth, float dashGap) {
+        mShapeState.setStrokeDash(dashWidth, dashGap);
+        mStrokePaint.setPathEffect(dashWidth > 0 ? new DashPathEffect(new float[] {dashWidth, dashGap}, 0) : null);
         invalidateSelf();
         return this;
     }
@@ -393,7 +401,7 @@ public class ShapeDrawable extends Drawable {
 
     @SuppressLint("WrongConstant")
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         if (!ensureValidRect()) {
             // nothing to draw
             return;
@@ -402,18 +410,17 @@ public class ShapeDrawable extends Drawable {
         // remember the alpha values, in case we temporarily overwrite them
         // when we modulate them with mAlpha
         final int prevFillAlpha = mFillPaint.getAlpha();
-        final int prevStrokeAlpha = mStrokePaint != null ? mStrokePaint.getAlpha() : 0;
+        final int prevStrokeAlpha = mStrokePaint.getAlpha();
         // compute the modulate alpha values
         final int currFillAlpha = modulateAlpha(prevFillAlpha);
         final int currStrokeAlpha = modulateAlpha(prevStrokeAlpha);
 
-        final boolean haveStroke = currStrokeAlpha > 0 && mStrokePaint != null &&
-                mStrokePaint.getStrokeWidth() > 0;
         final boolean haveShadow = mShapeState.mShadowSize > 0;
+        final boolean haveStroke = currStrokeAlpha > 0 && mStrokePaint.getStrokeWidth() > 0;
         final boolean haveFill = currFillAlpha > 0;
         final ShapeState st = mShapeState;
         /*  we need a layer iff we're drawing both a fill and stroke, and the
-            stroke is non-opaque, and our shapetype actually supports
+            stroke is non-opaque, and our shape type actually supports
             fill+stroke. Otherwise we can just draw the stroke (if any) on top
             of the fill (if any) without worrying about blending artifacts.
          */
@@ -421,7 +428,7 @@ public class ShapeDrawable extends Drawable {
                  currStrokeAlpha < 255 && (mAlpha < 255 || mColorFilter != null);
 
         /*  Drawing with a layer is slower than direct drawing, but it
-            allows us to apply paint effects like alpha and colorfilter to
+            allows us to apply paint effects like alpha and color filter to
             the result of multiple separate draws. In our case, if the user
             asks for a non-opaque alpha value (via setAlpha), and we're
             stroking, then we need to apply the alpha AFTER we've drawn
@@ -487,8 +494,21 @@ public class ShapeDrawable extends Drawable {
                 shadowColor = ColorUtils.setAlphaComponent(mShapeState.mShadowColor, 254);
             }
 
-            mShadowPaint.setShadowLayer(mShapeState.mShadowSize, mShapeState.mShadowOffsetX,
-                    mShapeState.mShadowOffsetY, shadowColor);
+            float shadowOffsetX = 0;
+            if (mShapeState.mShadowOffsetX > 0) {
+                shadowOffsetX = mShapeState.mShadowOffsetX;
+            }
+
+            float shadowOffsetY = 0;
+            if (mShapeState.mShadowOffsetY > 0) {
+                shadowOffsetY = mShapeState.mShadowOffsetY;
+            }
+
+            mShadowPaint.setShadowLayer(mShapeState.mShadowSize, shadowOffsetX, shadowOffsetY, shadowColor);
+
+            // 这种方式也可以实现阴影效果
+            // mShadowPaint.setColor(shadowColor);
+            // mShadowPaint.setMaskFilter(new BlurMaskFilter(mShapeState.mShadowSize, BlurMaskFilter.Blur.NORMAL));
 
         } else {
             if (mShadowPaint != null) {
@@ -505,7 +525,9 @@ public class ShapeDrawable extends Drawable {
                         mPathIsDirty = mRectIsDirty = false;
                     }
                     if (haveShadow) {
-                        canvas.drawPath(mPath, mShadowPaint);
+                        mShadowPath.reset();
+                        mShadowPath.addRoundRect(mShadowRect, st.mRadiusArray, Path.Direction.CW);
+                        canvas.drawPath(mShadowPath, mShadowPaint);
                     }
                     canvas.drawPath(mPath, mFillPaint);
                     if (haveStroke) {
@@ -523,7 +545,7 @@ public class ShapeDrawable extends Drawable {
                         rad = r;
                     }
                     if (haveShadow) {
-                        canvas.drawRoundRect(mRect, rad, rad, mShadowPaint);
+                        canvas.drawRoundRect(mShadowRect, rad, rad, mShadowPaint);
                     }
                     canvas.drawRoundRect(mRect, rad, rad, mFillPaint);
                     if (haveStroke) {
@@ -531,7 +553,7 @@ public class ShapeDrawable extends Drawable {
                     }
                 } else {
                     if (haveShadow) {
-                        canvas.drawRect(mRect, mShadowPaint);
+                        canvas.drawRect(mShadowRect, mShadowPaint);
                     }
                     if (mFillPaint.getColor() != 0 || mColorFilter != null ||
                             mFillPaint.getShader() != null) {
@@ -544,7 +566,7 @@ public class ShapeDrawable extends Drawable {
                 break;
             case ShapeType.OVAL:
                 if (haveShadow) {
-                    canvas.drawOval(mRect, mShadowPaint);
+                    canvas.drawOval(mShadowRect, mShadowPaint);
                 }
                 canvas.drawOval(mRect, mFillPaint);
                 if (haveStroke) {
@@ -710,19 +732,40 @@ public class ShapeDrawable extends Drawable {
             mRectIsDirty = false;
 
             Rect bounds = getBounds();
-            float inset = 0;
-            
-            if (mStrokePaint != null) {
-                inset = mStrokePaint.getStrokeWidth() * 0.5f;
-            }
+            float inset = mStrokePaint.getStrokeWidth() * 0.5f;
 
             final ShapeState st = mShapeState;
 
-            mRect.set(bounds.left + inset + mShapeState.mShadowSize, bounds.top + inset + mShapeState.mShadowSize,
-                      bounds.right - inset - mShapeState.mShadowSize, bounds.bottom - inset - mShapeState.mShadowSize);
+            float let = bounds.left + inset + mShapeState.mShadowSize * 1.2f;
+            float top = bounds.top + inset + mShapeState.mShadowSize * 1.2f;
+            float right = bounds.right - inset - mShapeState.mShadowSize * 1.2f;
+            float bottom = bounds.bottom - inset - mShapeState.mShadowSize * 1.2f;
 
-            final int[] colors = st.mGradientColors;
-            if (colors != null) {
+            mRect.set(let, top, right, bottom);
+
+            float shadowLet;
+            float shadowTop;
+            float shadowRight;
+            float shadowBottom;
+            if (mShapeState.mShadowOffsetX > 0) {
+                shadowLet = let + mShapeState.mShadowOffsetX;
+                shadowRight = right - mShapeState.mShadowOffsetX;
+            } else {
+                shadowLet = let;
+                shadowRight = right + mShapeState.mShadowOffsetX;
+            }
+
+            if (mShapeState.mShadowOffsetY > 0) {
+                shadowTop = top + mShapeState.mShadowOffsetY;
+                shadowBottom = bottom - mShapeState.mShadowOffsetY;
+            } else {
+                shadowTop = top;
+                shadowBottom = bottom + mShapeState.mShadowOffsetY;
+            }
+
+            mShadowRect.set(shadowLet, shadowTop, shadowRight, shadowBottom);
+
+            if (st.mSolidColors != null || st.mStrokeColors != null) {
                 RectF r = mRect;
                 float x0, x1, y0, y1;
 
@@ -763,53 +806,106 @@ public class ShapeDrawable extends Drawable {
                         break;
                     }
 
-                    mFillPaint.setShader(new LinearGradient(x0, y0, x1, y1,
-                            colors, st.mPositions, Shader.TileMode.CLAMP));
+                    if (st.mSolidColors != null) {
+                        mFillPaint.setShader(new LinearGradient(x0, y0, x1, y1,
+                                st.mSolidColors, st.mPositions, Shader.TileMode.CLAMP));
+                    }
+                    if (st.mStrokeColors != null) {
+                        mStrokePaint.setShader(new LinearGradient(x0, y0, x1, y1,
+                                st.mStrokeColors, st.mPositions, Shader.TileMode.CLAMP));
+                    }
+
                 } else if (st.mGradientType == ShapeGradientType.RADIAL_GRADIENT) {
                     x0 = r.left + (r.right - r.left) * st.mCenterX;
                     y0 = r.top + (r.bottom - r.top) * st.mCenterY;
 
                     final float level = st.mUseLevel ? (float) getLevel() / 10000.0f : 1.0f;
 
-                    mFillPaint.setShader(new RadialGradient(x0, y0,
-                            level * st.mGradientRadius, colors, null,
-                            Shader.TileMode.CLAMP));
+                    if (st.mSolidColors != null) {
+                        mFillPaint.setShader(new RadialGradient(x0, y0,
+                                level * st.mGradientRadius, st.mSolidColors, null,
+                                Shader.TileMode.CLAMP));
+                    }
+                    if (st.mStrokeColors != null) {
+                        mStrokePaint.setShader(new RadialGradient(x0, y0,
+                                level * st.mGradientRadius, st.mStrokeColors, null,
+                                Shader.TileMode.CLAMP));
+                    }
+
                 } else if (st.mGradientType == ShapeGradientType.SWEEP_GRADIENT) {
                     x0 = r.left + (r.right - r.left) * st.mCenterX;
                     y0 = r.top + (r.bottom - r.top) * st.mCenterY;
 
-                    int[] tempColors = colors;
-                    float[] tempPositions = null;
+                    if (st.mSolidColors != null) {
 
-                    if (st.mUseLevel) {
-                        tempColors = st.mTempColors;
-                        final int length = colors.length;
-                        if (tempColors == null || tempColors.length != length + 1) {
-                            tempColors = st.mTempColors = new int[length + 1];
+                        int[] tempSolidColors = st.mSolidColors;
+                        float[] tempSolidPositions = null;
+
+                        if (st.mUseLevel) {
+                            tempSolidColors = st.mTempSolidColors;
+                            final int length = st.mSolidColors.length;
+                            if (tempSolidColors == null || tempSolidColors.length != length + 1) {
+                                tempSolidColors = st.mTempSolidColors = new int[length + 1];
+                            }
+                            System.arraycopy(st.mSolidColors, 0, tempSolidColors, 0, length);
+                            tempSolidColors[length] = st.mSolidColors[length - 1];
+
+
+                            tempSolidPositions = st.mTempSolidPositions;
+                            final float fraction = 1.0f / (float) (length - 1);
+                            if (tempSolidPositions == null || tempSolidPositions.length != length + 1) {
+                                tempSolidPositions = st.mTempSolidPositions = new float[length + 1];
+                            }
+
+                            final float level = (float) getLevel() / 10000.0f;
+                            for (int i = 0; i < length; i++) {
+                                tempSolidPositions[i] = i * fraction * level;
+                            }
+                            tempSolidPositions[length] = 1.0f;
                         }
-                        System.arraycopy(colors, 0, tempColors, 0, length);
-                        tempColors[length] = colors[length - 1];
 
-                        tempPositions = st.mTempPositions;
-                        final float fraction = 1.0f / (float) (length - 1);
-                        if (tempPositions == null || tempPositions.length != length + 1) {
-                            tempPositions = st.mTempPositions = new float[length + 1];
-                        }
-
-                        final float level = (float) getLevel() / 10000.0f;
-                        for (int i = 0; i < length; i++) {
-                            tempPositions[i] = i * fraction * level;
-                        }
-                        tempPositions[length] = 1.0f;
-
+                        mFillPaint.setShader(new SweepGradient(x0, y0, tempSolidColors, tempSolidPositions));
                     }
-                    mFillPaint.setShader(new SweepGradient(x0, y0, tempColors, tempPositions));
+
+
+                    if (st.mStrokeColors != null) {
+                        int[] tempStrokeColors = st.mStrokeColors;
+                        float[] tempStrokePositions = null;
+
+                        if (st.mUseLevel) {
+                            tempStrokeColors = st.mTempStrokeColors;
+                            final int length = st.mStrokeColors.length;
+                            if (tempStrokeColors == null || tempStrokeColors.length != length + 1) {
+                                tempStrokeColors = st.mTempStrokeColors = new int[length + 1];
+                            }
+                            System.arraycopy(st.mStrokeColors, 0, tempStrokeColors, 0, length);
+                            tempStrokeColors[length] = st.mStrokeColors[length - 1];
+
+                            tempStrokePositions = st.mTempStrokePositions;
+                            final float fraction = 1.0f / (float) (length - 1);
+                            if (tempStrokePositions == null || tempStrokePositions.length != length + 1) {
+                                tempStrokePositions = st.mTempStrokePositions = new float[length + 1];
+                            }
+
+                            final float level = (float) getLevel() / 10000.0f;
+                            for (int i = 0; i < length; i++) {
+                                tempStrokePositions[i] = i * fraction * level;
+                            }
+                            tempStrokePositions[length] = 1.0f;
+                        }
+
+                        mStrokePaint.setShader(new SweepGradient(x0, y0, tempStrokeColors, tempStrokePositions));
+                    }
                 }
 
                 // If we don't have a solid color, the alpha channel must be
                 // maxed out so that alpha modulation works correctly.
                 if (!st.mHasSolidColor) {
                     mFillPaint.setColor(Color.BLACK);
+                }
+
+                if (!st.mHasStrokeColor) {
+                    mStrokePaint.setColor(Color.BLACK);
                 }
             }
         }
@@ -832,6 +928,7 @@ public class ShapeDrawable extends Drawable {
         return mShapeState;
     }
 
+    @NonNull
     @Override
     public Drawable mutate() {
         if (!mMutated && super.mutate() == this) {
@@ -845,7 +942,7 @@ public class ShapeDrawable extends Drawable {
     private void initializeWithState(ShapeState state) {
         if (state.mHasSolidColor) {
             mFillPaint.setColor(state.mSolidColor);
-        } else if (state.mGradientColors == null) {
+        } else if (state.mSolidColors == null) {
             // If we don't have a solid color and we don't have a gradient,
             // the app is stroking the shape, set the color to the default
             // value of state.mSolidColor
@@ -856,7 +953,13 @@ public class ShapeDrawable extends Drawable {
         }
         mPadding = state.mPadding;
         if (state.mStrokeWidth >= 0) {
-            setStroke(state.mStrokeWidth, state.mStrokeColor, state.mStrokeDashWidth, state.mStrokeDashGap);
+            if (state.mHasStrokeColor) {
+                setStrokeColor(state.mStrokeColor);
+            } else {
+                setStrokeColor(state.mStrokeColors);
+            }
+            setStrokeWidth(state.mStrokeWidth);
+            setStrokeDash(state.mStrokeDashWidth, state.mStrokeDashGap);
         }
     }
 }

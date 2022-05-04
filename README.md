@@ -8,24 +8,33 @@
 
 ![](picture/demo_code.png)
 
+![](picture/dynamic_figure.jpg)
+
 #### 集成步骤
 
-* 在项目根目录下的 `build.gradle` 文件中加入
+* 如果你的项目 Gradle 配置是在 `7.0 以下`，需要在 `build.gradle` 文件中加入
 
 ```groovy
-buildscript {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
-}
 allprojects {
     repositories {
+        // JitPack 远程仓库：https://jitpack.io
         maven { url 'https://jitpack.io' }
     }
 }
 ```
 
-* 在项目 app 模块下的 `build.gradle` 文件中加入
+* 如果你的 Gradle 配置是 `7.0 及以上`，则需要在 `settings.gradle` 文件中加入
+
+```groovy
+dependencyResolutionManagement {
+    repositories {
+        // JitPack 远程仓库：https://jitpack.io
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+* 配置完远程仓库后，在项目 app 模块下的 `build.gradle` 文件中加入远程依赖
 
 ```groovy
 android {
@@ -38,7 +47,7 @@ android {
 
 dependencies {
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:6.2'
+    implementation 'com.github.getActivity:ShapeView:8.0'
 }
 ```
 
@@ -46,7 +55,7 @@ dependencies {
 
 * 如果项目是基于 **AndroidX** 包，请在项目 `gradle.properties` 文件中加入
 
-```groovy
+```text
 # 表示将第三方库迁移到 AndroidX
 android.enableJetifier = true
 ```
@@ -101,17 +110,17 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
     <attr name="shape_height" format="dimension" />
 
     <!-- 填充色（默认状态） -->
-    <attr name="shape_solidColor" format="color|reference" />
+    <attr name="shape_solidColor" format="color" />
     <!-- 填充色（按下状态） -->
-    <attr name="shape_solidPressedColor" format="color|reference" />
+    <attr name="shape_solidPressedColor" format="color" />
     <!-- 填充色（选中状态） -->
-    <attr name="shape_solidCheckedColor" format="color|reference" />
+    <attr name="shape_solidCheckedColor" format="color" />
     <!-- 填充色（禁用状态） -->
-    <attr name="shape_solidDisabledColor" format="color|reference" />
+    <attr name="shape_solidDisabledColor" format="color" />
     <!-- 填充色（焦点状态） -->
-    <attr name="shape_solidFocusedColor" format="color|reference" />
+    <attr name="shape_solidFocusedColor" format="color" />
     <!-- 填充色（选择状态） -->
-    <attr name="shape_solidSelectedColor" format="color|reference" />
+    <attr name="shape_solidSelectedColor" format="color" />
 
     <!-- 圆角大小 -->
     <attr name="shape_radius" format="dimension" />
@@ -130,6 +139,14 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
     <attr name="shape_centerColor" format="color" />
     <!-- 渐变色结束颜色 -->
     <attr name="shape_endColor" format="color" />
+
+    <!-- 边框渐变色起始颜色 -->
+    <attr name="shape_strokeStartColor" format="color" />
+    <!-- 边框渐变色中间颜色（可不设置） -->
+    <attr name="shape_strokeCenterColor" format="color" />
+    <!-- 边框渐变色结束颜色 -->
+    <attr name="shape_strokeEndColor" format="color" />
+
     <!-- 是否将用于缩放渐变 -->
     <attr name="shape_useLevel" format="boolean" />
     <!-- 渐变角度（仅用于线性渐变。必须是 0-315 范围内的值，并且是 45 的倍数） -->
@@ -151,17 +168,17 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
     <attr name="shape_gradientRadius" format="float|fraction|dimension" />
 
     <!-- 边框色（默认状态） -->
-    <attr name="shape_strokeColor" format="color|reference" />
+    <attr name="shape_strokeColor" format="color" />
     <!-- 边框色（按下状态） -->
-    <attr name="shape_strokePressedColor" format="color|reference" />
+    <attr name="shape_strokePressedColor" format="color" />
     <!-- 边框色（选中状态） -->
-    <attr name="shape_strokeCheckedColor" format="color|reference" />
+    <attr name="shape_strokeCheckedColor" format="color" />
     <!-- 边框色（禁用状态） -->
-    <attr name="shape_strokeDisabledColor" format="color|reference" />
+    <attr name="shape_strokeDisabledColor" format="color" />
     <!-- 边框色（焦点状态） -->
-    <attr name="shape_strokeFocusedColor" format="color|reference" />
+    <attr name="shape_strokeFocusedColor" format="color" />
     <!-- 边框色（选择状态） -->
-    <attr name="shape_strokeSelectedColor" format="color|reference" />
+    <attr name="shape_strokeSelectedColor" format="color" />
 
     <!-- 边框宽度 -->
     <attr name="shape_strokeWidth" format="dimension" />
@@ -172,11 +189,11 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
     <!-- 内环的半径（仅在 shape="ring" 生效） -->
     <attr name="shape_innerRadius" format="dimension" />
-    <!-- 内环的半径比率（仅在 shape="ring" 生效），计算公式：整个圆环 / innerRadiusRatio = innerRadius -->
+    <!-- 内环的半径比率（仅在 shape="ring" 生效） -->
     <attr name="shape_innerRadiusRatio" format="float" />
     <!-- 外环的厚度（仅在 shape="ring" 生效） -->
     <attr name="shape_thickness" format="dimension" />
-    <!-- 外环的厚度比率（仅在 shape="ring" 生效），计算公式：整个圆环 / thicknessRatio = thickness -->
+    <!-- 外环的厚度比率（仅在 shape="ring" 生效） -->
     <attr name="shape_thicknessRatio" format="float" />
 
     <!-- 阴影大小 -->
@@ -189,17 +206,17 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
     <attr name="shape_shadowOffsetY" format="dimension" />
 
     <!-- 文本色（默认状态） -->
-    <attr name="shape_textColor" format="color|reference" />
+    <attr name="shape_textColor" format="color" />
     <!-- 文本色（按下状态） -->
-    <attr name="shape_textPressedColor" format="color|reference" />
+    <attr name="shape_textPressedColor" format="color" />
     <!-- 文本色（选中状态） -->
-    <attr name="shape_textCheckedColor" format="color|reference" />
+    <attr name="shape_textCheckedColor" format="color" />
     <!-- 文本色（禁用状态） -->
-    <attr name="shape_textDisabledColor" format="color|reference" />
+    <attr name="shape_textDisabledColor" format="color" />
     <!-- 文本色（焦点状态） -->
-    <attr name="shape_textFocusedColor" format="color|reference" />
+    <attr name="shape_textFocusedColor" format="color" />
     <!-- 文本色（选择状态） -->
-    <attr name="shape_textSelectedColor" format="color|reference" />
+    <attr name="shape_textSelectedColor" format="color" />
 
     <!-- 文本渐变色起始颜色 -->
     <attr name="shape_textStartColor" format="color" />
@@ -214,6 +231,11 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
         <!-- 垂直渐变 -->
         <enum name="vertical" value="1" />
     </attr>
+
+    <!-- 文本边框颜色 -->
+    <attr name="shape_textStrokeColor" format="color" />
+    <!-- 文本边框大小 -->
+    <attr name="shape_textStrokeSize" format="dimension" />
 
     <!-- CheckBox 或者 RadioButton 图标（默认状态） -->
     <attr name="shape_buttonDrawable" format="reference" />
@@ -235,7 +257,7 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
     * View 的子类：ShapeView、ShapeTextView、ShapeButton、ShapeImageView、ShapeRadioButton、ShapeCheckBox、ShapeEditText
 
-    * ViewGroup 的子类：ShapeLinearLayout、ShapeFrameLayout、ShapeRelativeLayout、ShapeConstraintLayout、ShapeRecyclerView
+    * ViewGroup 的子类：ShapeLinearLayout、ShapeFrameLayout、ShapeRelativeLayout、ShapeConstraintLayout、ShapeRecyclerView、ShapeRadioGroup
 
 #### [常见疑问解答](HelpDoc.md)
 
@@ -243,9 +265,11 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
 #### 框架亮点
 
+* 功能强大：支持设置阴影、边框渐变色、文本渐变色
+
 * 更加便捷：无需新增 Xml 文件，直接定义控件属性即可
 
-* 即时生效：在布局中可实时预览效果，即见所得
+* 即时生效：在布局中可实时预览效果，即见所得，无需运行
 
 * 无学习成本：控件属性和原生 Shape 命名保持一致，无需额外学习
 
@@ -253,33 +277,45 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
 * 支持状态选择器：不仅支持设置背景色的状态选择器，还支持设置文本颜色的状态选择器
 
-* 功能覆盖全面：不仅支持设置背景阴影色，还支持设置文本渐变色
-
 #### 作者的其他开源项目
 
-* 安卓技术中台：[AndroidProject](https://github.com/getActivity/AndroidProject)
+* 安卓技术中台：[AndroidProject](https://github.com/getActivity/AndroidProject) ![](https://img.shields.io/github/stars/getActivity/AndroidProject.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidProject.svg)
 
-* 权限框架：[XXPermissions](https://github.com/getActivity/XXPermissions)
+* 安卓技术中台 Kt 版：[AndroidProject-Kotlin](https://github.com/getActivity/AndroidProject-Kotlin) ![](https://img.shields.io/github/stars/getActivity/AndroidProject-Kotlin.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidProject-Kotlin.svg)
 
-* 吐司框架：[ToastUtils](https://github.com/getActivity/ToastUtils)
+* 权限框架：[XXPermissions](https://github.com/getActivity/XXPermissions) ![](https://img.shields.io/github/stars/getActivity/XXPermissions.svg) ![](https://img.shields.io/github/forks/getActivity/XXPermissions.svg)
 
-* 网络框架：[EasyHttp](https://github.com/getActivity/EasyHttp)
+* 吐司框架：[ToastUtils](https://github.com/getActivity/ToastUtils) ![](https://img.shields.io/github/stars/getActivity/ToastUtils.svg) ![](https://img.shields.io/github/forks/getActivity/ToastUtils.svg)
 
-* 标题栏框架：[TitleBar](https://github.com/getActivity/TitleBar)
+* 网络框架：[EasyHttp](https://github.com/getActivity/EasyHttp) ![](https://img.shields.io/github/stars/getActivity/EasyHttp.svg) ![](https://img.shields.io/github/forks/getActivity/EasyHttp.svg)
 
-* 国际化框架：[MultiLanguages](https://github.com/getActivity/MultiLanguages)
+* 标题栏框架：[TitleBar](https://github.com/getActivity/TitleBar) ![](https://img.shields.io/github/stars/getActivity/TitleBar.svg) ![](https://img.shields.io/github/forks/getActivity/TitleBar.svg)
 
-* 悬浮窗框架：[XToast](https://github.com/getActivity/XToast)
+* 悬浮窗框架：[XToast](https://github.com/getActivity/XToast) ![](https://img.shields.io/github/stars/getActivity/XToast.svg) ![](https://img.shields.io/github/forks/getActivity/XToast.svg)
 
-* Gson 解析容错：[GsonFactory](https://github.com/getActivity/GsonFactory)
+* 语种切换框架：[MultiLanguages](https://github.com/getActivity/MultiLanguages) ![](https://img.shields.io/github/stars/getActivity/MultiLanguages.svg) ![](https://img.shields.io/github/forks/getActivity/MultiLanguages.svg)
 
-* 日志查看框架：[Logcat](https://github.com/getActivity/Logcat)
+* Gson 解析容错：[GsonFactory](https://github.com/getActivity/GsonFactory) ![](https://img.shields.io/github/stars/getActivity/GsonFactory.svg) ![](https://img.shields.io/github/forks/getActivity/GsonFactory.svg)
+
+* 日志查看框架：[Logcat](https://github.com/getActivity/Logcat) ![](https://img.shields.io/github/stars/getActivity/Logcat.svg) ![](https://img.shields.io/github/forks/getActivity/Logcat.svg)
+
+* Android 版本适配：[AndroidVersionAdapter](https://github.com/getActivity/AndroidVersionAdapter) ![](https://img.shields.io/github/stars/getActivity/AndroidVersionAdapter.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidVersionAdapter.svg)
+
+* Android 代码规范：[AndroidCodeStandard](https://github.com/getActivity/AndroidCodeStandard) ![](https://img.shields.io/github/stars/getActivity/AndroidCodeStandard.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidCodeStandard.svg)
+
+* Android 开源排行榜：[AndroidGithubBoss](https://github.com/getActivity/AndroidGithubBoss) ![](https://img.shields.io/github/stars/getActivity/AndroidGithubBoss.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidGithubBoss.svg)
+
+* Studio 精品插件：[StudioPlugins](https://github.com/getActivity/StudioPlugins) ![](https://img.shields.io/github/stars/getActivity/StudioPlugins.svg) ![](https://img.shields.io/github/forks/getActivity/StudioPlugins.svg)
+
+* 表情包大集合：[EmojiPackage](https://github.com/getActivity/EmojiPackage) ![](https://img.shields.io/github/stars/getActivity/EmojiPackage.svg) ![](https://img.shields.io/github/forks/getActivity/EmojiPackage.svg)
+
+* 省市区 Json 数据：[ProvinceJson](https://github.com/getActivity/ProvinceJson) ![](https://img.shields.io/github/stars/getActivity/ProvinceJson.svg) ![](https://img.shields.io/github/forks/getActivity/ProvinceJson.svg)
 
 #### 微信公众号：Android轮子哥
 
 ![](https://raw.githubusercontent.com/getActivity/Donate/master/picture/official_ccount.png)
 
-#### Android 技术分享 QQ 群：78797078
+#### Android 技术 Q 群：10047167
 
 #### 如果您觉得我的开源库帮你节省了大量的开发时间，请扫描下方的二维码随意打赏，要是能打赏个 10.24 :monkey_face:就太:thumbsup:了。您的支持将鼓励我继续创作:octocat:
 

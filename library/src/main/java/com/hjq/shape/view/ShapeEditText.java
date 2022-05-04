@@ -41,7 +41,7 @@ public class ShapeEditText extends AppCompatEditText {
 
         mShapeDrawableBuilder.intoBackground();
 
-        if (mTextColorBuilder.isTextGradientColors()) {
+        if (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor()) {
             setText(getText());
         } else {
             mTextColorBuilder.intoTextColor();
@@ -60,8 +60,9 @@ public class ShapeEditText extends AppCompatEditText {
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-        if (mTextColorBuilder != null && mTextColorBuilder.isTextGradientColors()) {
-            super.setText(mTextColorBuilder.buildLinearGradientSpannable(text), type);
+        if (mTextColorBuilder != null &&
+                (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor())) {
+            super.setText(mTextColorBuilder.buildTextSpannable(text), type);
         } else {
             super.setText(text, type);
         }

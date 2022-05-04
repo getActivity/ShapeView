@@ -41,7 +41,7 @@ public class ShapeButton extends AppCompatButton {
 
         mShapeDrawableBuilder.intoBackground();
 
-        if (mTextColorBuilder.isTextGradientColors()) {
+        if (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor()) {
             setText(getText());
         } else {
             mTextColorBuilder.intoTextColor();
@@ -56,12 +56,14 @@ public class ShapeButton extends AppCompatButton {
         }
         mTextColorBuilder.setTextColor(color);
         mTextColorBuilder.clearTextGradientColors();
+        mTextColorBuilder.clearTextStrokeColor();
     }
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-        if (mTextColorBuilder != null && mTextColorBuilder.isTextGradientColors()) {
-            super.setText(mTextColorBuilder.buildLinearGradientSpannable(text), type);
+        if (mTextColorBuilder != null &&
+                (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor())) {
+            super.setText(mTextColorBuilder.buildTextSpannable(text), type);
         } else {
             super.setText(text, type);
         }

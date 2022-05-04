@@ -16,11 +16,15 @@ public class ShapeState extends Drawable.ConstantState {
     public int mShapeType = ShapeType.RECTANGLE;
     public int mGradientType = ShapeGradientType.LINEAR_GRADIENT;
     public ShapeGradientOrientation mGradientOrientation = ShapeGradientOrientation.TOP_BOTTOM;
-    public int[] mGradientColors;
-    public int[] mTempColors; // no need to copy
-    public float[] mTempPositions; // no need to copy
+    public int[] mSolidColors;
+    public int[] mStrokeColors;
+    public int[] mTempSolidColors; // no need to copy
+    public int[] mTempStrokeColors; // no need to copy
+    public float[] mTempSolidPositions; // no need to copy
+    public float[] mTempStrokePositions; // no need to copy
     public float[] mPositions;
     public boolean mHasSolidColor;
+    public boolean mHasStrokeColor;
     public int mSolidColor;
     public int mStrokeWidth = -1;   // if >= 0 use stroking.
     public int mStrokeColor;
@@ -54,13 +58,17 @@ public class ShapeState extends Drawable.ConstantState {
         mShapeType = state.mShapeType;
         mGradientType = state.mGradientType;
         mGradientOrientation = state.mGradientOrientation;
-        if (state.mGradientColors != null) {
-            mGradientColors = state.mGradientColors.clone();
+        if (state.mSolidColors != null) {
+            mSolidColors = state.mSolidColors.clone();
+        }
+        if (state.mStrokeColors != null) {
+            mStrokeColors = state.mStrokeColors.clone();
         }
         if (state.mPositions != null) {
             mPositions = state.mPositions.clone();
         }
         mHasSolidColor = state.mHasSolidColor;
+        mHasStrokeColor = state.mHasStrokeColor;
         mSolidColor = state.mSolidColor;
         mStrokeWidth = state.mStrokeWidth;
         mStrokeColor = state.mStrokeColor;
@@ -121,16 +129,30 @@ public class ShapeState extends Drawable.ConstantState {
         mCenterY = y;
     }
 
-    public void setGradientColor(int[] colors) {
-        mHasSolidColor = false;
-        mGradientColors = colors;
+    public void setSolidColor(int... colors) {
+        if (colors == null) {
+            mSolidColor = 0;
+            mHasSolidColor = true;
+            computeOpacity();
+            return;
+        }
+
+        if (colors.length == 1) {
+            mHasSolidColor = true;
+            mSolidColor = colors[0];
+            mSolidColors = null;
+        } else {
+            mHasSolidColor = false;
+            mSolidColor = 0;
+            mSolidColors = colors;
+        }
         computeOpacity();
     }
 
     public void setSolidColor(int argb) {
         mHasSolidColor = true;
         mSolidColor = argb;
-        mGradientColors = null;
+        mSolidColors = null;
         computeOpacity();
     }
 
@@ -155,8 +177,22 @@ public class ShapeState extends Drawable.ConstantState {
             return;
         }
 
-        if (mGradientColors != null) {
-            for (int color : mGradientColors) {
+        if (mSolidColors != null) {
+            for (int color : mSolidColors) {
+                if (!isOpaque(color)) {
+                    mOpaque = false;
+                    return;
+                }
+            }
+        }
+
+        if (mHasStrokeColor) {
+            mOpaque = isOpaque(mStrokeColor);
+            return;
+        }
+
+        if (mStrokeColors != null) {
+            for (int color : mStrokeColors) {
                 if (!isOpaque(color)) {
                     mOpaque = false;
                     return;
@@ -171,15 +207,32 @@ public class ShapeState extends Drawable.ConstantState {
         return ((color >> 24) & 0xff) == 0xff;
     }
 
-    public void setStroke(int width, int color) {
+    public void setStrokeWidth(int width) {
         mStrokeWidth = width;
-        mStrokeColor = color;
         computeOpacity();
     }
 
-    public void setStroke(int width, int color, float dashWidth, float dashGap) {
-        mStrokeWidth = width;
-        mStrokeColor = color;
+    public void setStrokeColor(int... colors) {
+        if (colors == null) {
+            mStrokeColor = 0;
+            mHasStrokeColor = true;
+            computeOpacity();
+            return;
+        }
+
+        if (colors.length == 1) {
+            mHasStrokeColor = true;
+            mStrokeColor = colors[0];
+            mStrokeColors = null;
+        } else {
+            mHasStrokeColor = false;
+            mStrokeColor = 0;
+            mStrokeColors = colors;
+        }
+        computeOpacity();
+    }
+
+    public void setStrokeDash(float dashWidth, float dashGap) {
         mStrokeDashWidth = dashWidth;
         mStrokeDashGap = dashGap;
         computeOpacity();
