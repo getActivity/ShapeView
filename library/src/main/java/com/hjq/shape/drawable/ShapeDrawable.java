@@ -1,6 +1,7 @@
 package com.hjq.shape.drawable;
 
 import android.annotation.SuppressLint;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -18,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
+import android.view.Gravity;
 import android.view.View;
 
 /**
@@ -49,6 +51,9 @@ public class ShapeDrawable extends Drawable {
     private boolean mMutated;
     private Path mRingPath;
     private boolean mPathIsDirty = true;
+
+    /** 布局方向 */
+    private int mLayoutDirection;
 
     public ShapeDrawable() {
         this(new ShapeState());
@@ -309,46 +314,6 @@ public class ShapeDrawable extends Drawable {
     }
 
     /**
-     * 设置内环的半径
-     */
-    public ShapeDrawable setInnerRadius(int radius) {
-        mShapeState.mInnerRadius = radius;
-        mRectIsDirty = true;
-        invalidateSelf();
-        return this;
-    }
-
-    /**
-     * 设置内环的半径比率
-     */
-    public ShapeDrawable setInnerRadiusRatio(float radiusRatio) {
-        mShapeState.mInnerRadiusRatio = radiusRatio;
-        mRectIsDirty = true;
-        invalidateSelf();
-        return this;
-    }
-
-    /**
-     * 设置外环的厚度
-     */
-    public ShapeDrawable setThickness(int size) {
-        mShapeState.mThickness = size;
-        mRectIsDirty = true;
-        invalidateSelf();
-        return this;
-    }
-
-    /**
-     * 设置外环的厚度比率
-     */
-    public ShapeDrawable setThicknessRatio(float radiusRatio) {
-        mShapeState.mThicknessRatio = radiusRatio;
-        mRectIsDirty = true;
-        invalidateSelf();
-        return this;
-    }
-
-    /**
      * 设置阴影颜色
      */
     public ShapeDrawable setShadowColor(int color) {
@@ -389,6 +354,56 @@ public class ShapeDrawable extends Drawable {
     }
 
     /**
+     * 设置内环的半径
+     */
+    public ShapeDrawable setInnerRadius(int radius) {
+        mShapeState.mInnerRadius = radius;
+        mRectIsDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置内环的半径比率
+     */
+    public ShapeDrawable setInnerRadiusRatio(float radiusRatio) {
+        mShapeState.mInnerRadiusRatio = radiusRatio;
+        mRectIsDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置外环的厚度
+     */
+    public ShapeDrawable setThickness(int size) {
+        mShapeState.mThickness = size;
+        mRectIsDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置外环的厚度比率
+     */
+    public ShapeDrawable setThicknessRatio(float radiusRatio) {
+        mShapeState.mThicknessRatio = radiusRatio;
+        mRectIsDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置线条重心
+     */
+    public ShapeDrawable setLineGravity(int lineGravity) {
+        mShapeState.mLineGravity = lineGravity;
+        mRectIsDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
      * 将当前 Drawable 应用到 View 背景
      */
     public void intoBackground(View view) {
@@ -397,6 +412,12 @@ public class ShapeDrawable extends Drawable {
             view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         view.setBackground(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mLayoutDirection = view.getLayoutDirection();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                setLayoutDirection(mLayoutDirection);
+            }
+        }
     }
 
     @SuppressLint("WrongConstant")
@@ -494,21 +515,8 @@ public class ShapeDrawable extends Drawable {
                 shadowColor = ColorUtils.setAlphaComponent(mShapeState.mShadowColor, 254);
             }
 
-            float shadowOffsetX = 0;
-            if (mShapeState.mShadowOffsetX > 0) {
-                shadowOffsetX = mShapeState.mShadowOffsetX;
-            }
-
-            float shadowOffsetY = 0;
-            if (mShapeState.mShadowOffsetY > 0) {
-                shadowOffsetY = mShapeState.mShadowOffsetY;
-            }
-
-            mShadowPaint.setShadowLayer(mShapeState.mShadowSize, shadowOffsetX, shadowOffsetY, shadowColor);
-
-            // 这种方式也可以实现阴影效果
-            // mShadowPaint.setColor(shadowColor);
-            // mShadowPaint.setMaskFilter(new BlurMaskFilter(mShapeState.mShadowSize, BlurMaskFilter.Blur.NORMAL));
+             mShadowPaint.setColor(shadowColor);
+             mShadowPaint.setMaskFilter(new BlurMaskFilter(mShapeState.mShadowSize, BlurMaskFilter.Blur.NORMAL));
 
         } else {
             if (mShadowPaint != null) {
@@ -575,11 +583,58 @@ public class ShapeDrawable extends Drawable {
                 break;
             case ShapeType.LINE: {
                 RectF r = mRect;
-                float y = r.centerY();
-                if (haveShadow) {
-                    canvas.drawLine(r.left, y, r.right, y, mShadowPaint);
+                float startX;
+                float startY;
+                float stopX;
+                float stopY;
+                int lineGravity;
+                Callback callback = getCallback();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && callback instanceof View) {
+                    int layoutDirection = ((View) callback).getContext().getResources().getConfiguration().getLayoutDirection();
+                    lineGravity = Gravity.getAbsoluteGravity(st.mLineGravity, layoutDirection);
+                } else {
+                    lineGravity = st.mLineGravity;
                 }
-                canvas.drawLine(r.left, y, r.right, y, mStrokePaint);
+
+                switch (lineGravity) {
+                    case Gravity.LEFT:
+                        startX = 0;
+                        startY = 0;
+                        stopX = 0;
+                        stopY = r.bottom;
+                        break;
+                    case Gravity.RIGHT:
+                        startX = r.right;
+                        startY = 0;
+                        stopX = r.right;
+                        stopY = r.bottom;
+                        break;
+                    case Gravity.TOP:
+                        startX = 0;
+                        startY = 0;
+                        stopX = r.right;
+                        stopY = 0;
+                        break;
+                    case Gravity.BOTTOM:
+                        startX = 0;
+                        startY = r.bottom;
+                        stopX = r.right;
+                        stopY = r.bottom;
+                        break;
+                    case Gravity.CENTER:
+                    default:
+                        float y = r.centerY();
+                        startX = r.left;
+                        startY = y;
+                        stopX = r.right;
+                        stopY = y;
+                        break;
+                }
+
+                if (haveShadow) {
+                    canvas.drawLine(startX, startY, stopX, stopY, mShadowPaint);
+                }
+                canvas.drawLine(startX, startY, stopX, stopY, mStrokePaint);
                 break;
             }
             case ShapeType.RING:
@@ -604,6 +659,11 @@ public class ShapeDrawable extends Drawable {
                 mStrokePaint.setAlpha(prevStrokeAlpha);
             }
         }
+    }
+
+    @Override
+    public boolean onLayoutDirectionChanged(int layoutDirection) {
+        return mShapeState.mShapeType == ShapeType.LINE;
     }
 
     private int modulateAlpha(int alpha) {
@@ -736,10 +796,12 @@ public class ShapeDrawable extends Drawable {
 
             final ShapeState st = mShapeState;
 
-            float let = bounds.left + inset + mShapeState.mShadowSize * 1.2f;
-            float top = bounds.top + inset + mShapeState.mShadowSize * 1.2f;
-            float right = bounds.right - inset - mShapeState.mShadowSize * 1.2f;
-            float bottom = bounds.bottom - inset - mShapeState.mShadowSize * 1.2f;
+            float shadowScale = 1.2f;
+
+            float let = bounds.left + inset + mShapeState.mShadowSize * shadowScale;
+            float top = bounds.top + inset + mShapeState.mShadowSize * shadowScale;
+            float right = bounds.right - inset - mShapeState.mShadowSize * shadowScale;
+            float bottom = bounds.bottom - inset - mShapeState.mShadowSize * shadowScale;
 
             mRect.set(let, top, right, bottom);
 
@@ -747,9 +809,10 @@ public class ShapeDrawable extends Drawable {
             float shadowTop;
             float shadowRight;
             float shadowBottom;
+
             if (mShapeState.mShadowOffsetX > 0) {
                 shadowLet = let + mShapeState.mShadowOffsetX;
-                shadowRight = right - mShapeState.mShadowOffsetX;
+                shadowRight = right;
             } else {
                 shadowLet = let;
                 shadowRight = right + mShapeState.mShadowOffsetX;
@@ -757,7 +820,7 @@ public class ShapeDrawable extends Drawable {
 
             if (mShapeState.mShadowOffsetY > 0) {
                 shadowTop = top + mShapeState.mShadowOffsetY;
-                shadowBottom = bottom - mShapeState.mShadowOffsetY;
+                shadowBottom = bottom;
             } else {
                 shadowTop = top;
                 shadowBottom = bottom + mShapeState.mShadowOffsetY;

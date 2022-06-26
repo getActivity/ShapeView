@@ -3,6 +3,7 @@ package com.hjq.shape.drawable;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
 
 /**
  *    author : Android 轮子哥
@@ -51,6 +52,8 @@ public class ShapeState extends Drawable.ConstantState {
     public int mShadowOffsetX;
     public int mShadowOffsetY;
 
+    public int mLineGravity = Gravity.CENTER;
+
     public ShapeState() {}
 
     public ShapeState(ShapeState state) {
@@ -98,6 +101,8 @@ public class ShapeState extends Drawable.ConstantState {
         mShadowColor = state.mShadowColor;
         mShadowOffsetX = state.mShadowOffsetX;
         mShadowOffsetY = state.mShadowOffsetY;
+
+        mLineGravity = state.mLineGravity;
     }
 
     @Override

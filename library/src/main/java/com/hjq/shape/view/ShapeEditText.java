@@ -55,7 +55,6 @@ public class ShapeEditText extends AppCompatEditText {
             return;
         }
         mTextColorBuilder.setTextColor(color);
-        mTextColorBuilder.clearTextGradientColors();
     }
 
     @Override

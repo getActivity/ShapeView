@@ -5,12 +5,13 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.View;
 
+import com.hjq.shape.drawable.ExtendStateListDrawable;
 import com.hjq.shape.drawable.ShapeDrawable;
 import com.hjq.shape.drawable.ShapeGradientType;
 import com.hjq.shape.drawable.ShapeType;
-import com.hjq.shape.drawable.ExtendStateListDrawable;
 import com.hjq.shape.styleable.IShapeDrawableStyleable;
 
 /**
@@ -61,15 +62,17 @@ public final class ShapeDrawableBuilder {
     private int mDashWidth;
     private int mDashGap;
 
+    private int mShadowSize;
+    private int mShadowColor;
+    private int mShadowOffsetX;
+    private int mShadowOffsetY;
+
     private int mInnerRadius;
     private float mInnerRadiusRatio;
     private int mThickness;
     private float mThicknessRatio;
 
-    private int mShadowSize;
-    private int mShadowColor;
-    private int mShadowOffsetX;
-    private int mShadowOffsetY;
+    private int mLineGravity;
 
     public ShapeDrawableBuilder(View view, TypedArray typedArray, IShapeDrawableStyleable styleable) {
         mView = view;
@@ -150,15 +153,17 @@ public final class ShapeDrawableBuilder {
         mDashWidth = typedArray.getDimensionPixelSize(styleable.getDashWidthStyleable(), 0);
         mDashGap = typedArray.getDimensionPixelSize(styleable.getDashGapStyleable(), 0);
 
+        mShadowSize = typedArray.getDimensionPixelSize(styleable.getShadowSizeStyleable(), 0);
+        mShadowColor = typedArray.getColor(styleable.getShadowColorStyleable(), 0x10000000);
+        mShadowOffsetX = typedArray.getDimensionPixelOffset(styleable.getShadowOffsetXStyleable(), 0);
+        mShadowOffsetY = typedArray.getDimensionPixelOffset(styleable.getShadowOffsetYStyleable(), 0);
+
         mInnerRadius = typedArray.getDimensionPixelOffset(styleable.getInnerRadiusStyleable(), -1);
         mInnerRadiusRatio = typedArray.getFloat(styleable.getInnerRadiusRatioStyleable(), 3.0f);
         mThickness = typedArray.getDimensionPixelOffset(styleable.getThicknessStyleable(), -1);
         mThicknessRatio = typedArray.getFloat(styleable.getThicknessRatioStyleable(), 9.0f);
 
-        mShadowSize = typedArray.getDimensionPixelSize(styleable.getShadowSizeStyleable(), 0);
-        mShadowColor = typedArray.getColor(styleable.getShadowColorStyleable(), 0x10000000);
-        mShadowOffsetX = typedArray.getDimensionPixelOffset(styleable.getShadowOffsetXStyleable(), 0);
-        mShadowOffsetY = typedArray.getDimensionPixelOffset(styleable.getShadowOffsetYStyleable(), 0);
+        mLineGravity = typedArray.getInt(styleable.getLineGravityStyleable(), Gravity.CENTER);
     }
 
     public ShapeDrawableBuilder setShape(int shape) {
@@ -649,15 +654,17 @@ public final class ShapeDrawableBuilder {
                 .setGradientRadius(mGradientRadius)
                 .setGradientCenter(mCenterX, mCenterY);
 
+        drawable.setShadowSize(mShadowSize)
+                .setShadowColor(mShadowColor)
+                .setShadowOffsetX(mShadowOffsetX)
+                .setShadowOffsetY(mShadowOffsetY);
+
         drawable.setInnerRadiusRatio(mInnerRadiusRatio)
                 .setInnerRadius(mInnerRadius)
                 .setThicknessRatio(mThicknessRatio)
                 .setThickness(mThickness);
 
-        drawable.setShadowSize(mShadowSize)
-                .setShadowColor(mShadowColor)
-                .setShadowOffsetX(mShadowOffsetX)
-                .setShadowOffsetY(mShadowOffsetY);
+        drawable.setLineGravity(mLineGravity);
 
         // 填充色设置
         if (solidStateColor != null) {

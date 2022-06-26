@@ -4,7 +4,7 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
-import android.text.SpannableStringBuilder;
+import android.text.SpannableString;
 import android.text.Spanned;
 import android.widget.TextView;
 
@@ -80,7 +80,6 @@ public final class TextColorBuilder {
 
     public TextColorBuilder setTextColor(int color) {
         mTextColor = color;
-        clearTextGradientColors();
         return this;
     }
 
@@ -160,10 +159,6 @@ public final class TextColorBuilder {
         return mTextGradientColors != null && mTextGradientColors.length > 0;
     }
 
-    public void clearTextGradientColors() {
-        mTextGradientColors = null;
-    }
-
     public TextColorBuilder setTextGradientOrientation(int orientation) {
         mTextGradientOrientation = orientation;
         return this;
@@ -195,13 +190,17 @@ public final class TextColorBuilder {
         return mTextStrokeColor != Color.TRANSPARENT && mTextStrokeSize > 0;
     }
 
-    public void clearTextStrokeColor() {
+    public void clearTextSpannable() {
         mTextStrokeColor = Color.TRANSPARENT;
         mTextStrokeSize = 0;
+        if (!isTextGradientColors()) {
+            mTextView.setTextColor(mTextColor);
+        }
+        mTextView.setText(mTextView.getText().toString());
     }
 
-    public SpannableStringBuilder buildTextSpannable(CharSequence text) {
-        SpannableStringBuilder builder = new SpannableStringBuilder(text);
+    public SpannableString buildTextSpannable(CharSequence text) {
+        SpannableString builder = new SpannableString(text);
 
         LinearGradientFontSpan linearGradientFontSpan = null;
         StrokeFontSpan strokeFontSpan = null;
@@ -289,10 +288,9 @@ public final class TextColorBuilder {
     }
 
     public void intoTextColor() {
+        mTextView.setTextColor(buildColorState());
         if (isTextGradientColors() || isTextStrokeColor()) {
             mTextView.setText(buildTextSpannable(mTextView.getText()));
-            return;
         }
-        mTextView.setTextColor(buildColorState());
     }
 }

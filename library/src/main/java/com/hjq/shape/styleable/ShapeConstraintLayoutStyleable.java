@@ -180,6 +180,26 @@ public final class ShapeConstraintLayoutStyleable implements IShapeDrawableStyle
     }
 
     @Override
+    public int getShadowSizeStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_shadowSize;
+    }
+
+    @Override
+    public int getShadowColorStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_shadowColor;
+    }
+
+    @Override
+    public int getShadowOffsetXStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_shadowOffsetX;
+    }
+
+    @Override
+    public int getShadowOffsetYStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_shadowOffsetY;
+    }
+
+    @Override
     public int getInnerRadiusStyleable() {
         return R.styleable.ShapeConstraintLayout_shape_innerRadius;
     }
@@ -200,22 +220,7 @@ public final class ShapeConstraintLayoutStyleable implements IShapeDrawableStyle
     }
 
     @Override
-    public int getShadowSizeStyleable() {
-        return R.styleable.ShapeConstraintLayout_shape_shadowSize;
-    }
-
-    @Override
-    public int getShadowColorStyleable() {
-        return R.styleable.ShapeConstraintLayout_shape_shadowColor;
-    }
-
-    @Override
-    public int getShadowOffsetXStyleable() {
-        return R.styleable.ShapeConstraintLayout_shape_shadowOffsetX;
-    }
-
-    @Override
-    public int getShadowOffsetYStyleable() {
-        return R.styleable.ShapeConstraintLayout_shape_shadowOffsetY;
+    public int getLineGravityStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_lineGravity;
     }
 }

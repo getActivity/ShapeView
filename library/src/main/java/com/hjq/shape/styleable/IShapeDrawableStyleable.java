@@ -82,6 +82,14 @@ public interface IShapeDrawableStyleable {
 
     int getDashGapStyleable();
 
+    int getShadowSizeStyleable();
+
+    int getShadowColorStyleable();
+
+    int getShadowOffsetXStyleable();
+
+    int getShadowOffsetYStyleable();
+
     int getInnerRadiusStyleable();
 
     int getInnerRadiusRatioStyleable();
@@ -90,11 +98,5 @@ public interface IShapeDrawableStyleable {
 
     int getThicknessRatioStyleable();
 
-    int getShadowSizeStyleable();
-
-    int getShadowColorStyleable();
-
-    int getShadowOffsetXStyleable();
-
-    int getShadowOffsetYStyleable();
+    int getLineGravityStyleable();
 }

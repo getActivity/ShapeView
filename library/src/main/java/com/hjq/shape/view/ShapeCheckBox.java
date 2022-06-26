@@ -61,7 +61,6 @@ public class ShapeCheckBox extends AppCompatCheckBox {
             return;
         }
         mTextColorBuilder.setTextColor(color);
-        mTextColorBuilder.clearTextGradientColors();
     }
 
     @Override

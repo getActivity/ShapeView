@@ -55,8 +55,6 @@ public class ShapeButton extends AppCompatButton {
             return;
         }
         mTextColorBuilder.setTextColor(color);
-        mTextColorBuilder.clearTextGradientColors();
-        mTextColorBuilder.clearTextStrokeColor();
     }
 
     @Override

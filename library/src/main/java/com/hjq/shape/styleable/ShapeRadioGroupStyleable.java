@@ -180,6 +180,26 @@ public final class ShapeRadioGroupStyleable implements IShapeDrawableStyleable {
     }
 
     @Override
+    public int getShadowSizeStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_shadowSize;
+    }
+
+    @Override
+    public int getShadowColorStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_shadowColor;
+    }
+
+    @Override
+    public int getShadowOffsetXStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_shadowOffsetX;
+    }
+
+    @Override
+    public int getShadowOffsetYStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_shadowOffsetY;
+    }
+
+    @Override
     public int getInnerRadiusStyleable() {
         return R.styleable.ShapeRadioGroup_shape_innerRadius;
     }
@@ -200,22 +220,7 @@ public final class ShapeRadioGroupStyleable implements IShapeDrawableStyleable {
     }
 
     @Override
-    public int getShadowSizeStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_shadowSize;
-    }
-
-    @Override
-    public int getShadowColorStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_shadowColor;
-    }
-
-    @Override
-    public int getShadowOffsetXStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_shadowOffsetX;
-    }
-
-    @Override
-    public int getShadowOffsetYStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_shadowOffsetY;
+    public int getLineGravityStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_lineGravity;
     }
 }

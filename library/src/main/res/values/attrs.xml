@@ -95,6 +95,15 @@
     <!-- 边框虚线间隔（虚线与虚线之间的间隔） -->
     <attr name="shape_dashGap" format="dimension" />
 
+    <!-- 阴影大小 -->
+    <attr name="shape_shadowSize" format="dimension" />
+    <!-- 阴影颜色 -->
+    <attr name="shape_shadowColor" format="color" />
+    <!-- 阴影水平偏移 -->
+    <attr name="shape_shadowOffsetX" format="dimension" />
+    <!-- 阴影垂直偏移 -->
+    <attr name="shape_shadowOffsetY" format="dimension" />
+
     <!-- 内环的半径（仅在 shape="ring" 生效） -->
     <attr name="shape_innerRadius" format="dimension" />
     <!-- 内环的半径比率（仅在 shape="ring" 生效），计算公式：整个圆环 / innerRadiusRatio = innerRadius -->
@@ -104,14 +113,16 @@
     <!-- 外环的厚度比率（仅在 shape="ring" 生效），计算公式：整个圆环 / thicknessRatio = thickness -->
     <attr name="shape_thicknessRatio" format="float" />
 
-    <!-- 阴影大小 -->
-    <attr name="shape_shadowSize" format="dimension" />
-    <!-- 阴影颜色 -->
-    <attr name="shape_shadowColor" format="color" />
-    <!-- 阴影水平偏移 -->
-    <attr name="shape_shadowOffsetX" format="dimension" />
-    <!-- 阴影垂直偏移 -->
-    <attr name="shape_shadowOffsetY" format="dimension" />
+    <!-- 线条重心（仅在 shape="line" 生效） -->
+    <attr name="shape_lineGravity">
+        <flag name="top" value="0x30" />
+        <flag name="bottom" value="0x50" />
+        <flag name="left" value="0x03" />
+        <flag name="right" value="0x05" />
+        <flag name="start" value="0x00800003" />
+        <flag name="end" value="0x00800005" />
+        <flag name="center" value="0x11" />
+    </attr>
 
     <!-- 文本色（默认状态） -->
     <attr name="shape_textColor" format="color" />
@@ -193,15 +204,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
 
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
@@ -253,15 +266,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
 
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
@@ -315,15 +330,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
 
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
@@ -385,15 +402,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
 
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
@@ -453,15 +472,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
 
         <attr name="shape_textColor" />
         <attr name="shape_textPressedColor" />
@@ -513,15 +534,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
     </declare-styleable>
 
     <declare-styleable name="ShapeView">
@@ -559,15 +582,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
     </declare-styleable>
 
     <declare-styleable name="ShapeLinearLayout">
@@ -605,15 +630,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
     </declare-styleable>
 
     <declare-styleable name="ShapeFrameLayout">
@@ -651,15 +678,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
     </declare-styleable>
 
     <declare-styleable name="ShapeRelativeLayout">
@@ -697,15 +726,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
     </declare-styleable>
 
     <declare-styleable name="ShapeConstraintLayout">
@@ -743,15 +774,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
     </declare-styleable>
 
     <declare-styleable name="ShapeRecyclerView">
@@ -789,15 +822,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
     </declare-styleable>
 
     <declare-styleable name="ShapeRadioGroup">
@@ -835,15 +870,17 @@
         <attr name="shape_dashWidth" />
         <attr name="shape_dashGap" />
 
+        <attr name="shape_shadowSize" />
+        <attr name="shape_shadowColor" />
+        <attr name="shape_shadowOffsetX" />
+        <attr name="shape_shadowOffsetY" />
+
         <attr name="shape_innerRadiusRatio" />
         <attr name="shape_innerRadius" />
         <attr name="shape_thicknessRatio" />
         <attr name="shape_thickness" />
 
-        <attr name="shape_shadowSize" />
-        <attr name="shape_shadowColor" />
-        <attr name="shape_shadowOffsetX" />
-        <attr name="shape_shadowOffsetY" />
+        <attr name="shape_lineGravity" />
     </declare-styleable>
 
 </resources>

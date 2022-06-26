@@ -61,7 +61,6 @@ public class ShapeRadioButton extends AppCompatRadioButton {
             return;
         }
         mTextColorBuilder.setTextColor(color);
-        mTextColorBuilder.clearTextGradientColors();
     }
 
     @Override

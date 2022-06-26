@@ -180,6 +180,26 @@ public final class ShapeEditTextStyleable implements IShapeDrawableStyleable, IT
     }
 
     @Override
+    public int getShadowSizeStyleable() {
+        return R.styleable.ShapeEditText_shape_shadowSize;
+    }
+
+    @Override
+    public int getShadowColorStyleable() {
+        return R.styleable.ShapeEditText_shape_shadowColor;
+    }
+
+    @Override
+    public int getShadowOffsetXStyleable() {
+        return R.styleable.ShapeEditText_shape_shadowOffsetX;
+    }
+
+    @Override
+    public int getShadowOffsetYStyleable() {
+        return R.styleable.ShapeEditText_shape_shadowOffsetY;
+    }
+
+    @Override
     public int getInnerRadiusStyleable() {
         return R.styleable.ShapeEditText_shape_innerRadius;
     }
@@ -200,23 +220,8 @@ public final class ShapeEditTextStyleable implements IShapeDrawableStyleable, IT
     }
 
     @Override
-    public int getShadowSizeStyleable() {
-        return R.styleable.ShapeEditText_shape_shadowSize;
-    }
-
-    @Override
-    public int getShadowColorStyleable() {
-        return R.styleable.ShapeEditText_shape_shadowColor;
-    }
-
-    @Override
-    public int getShadowOffsetXStyleable() {
-        return R.styleable.ShapeEditText_shape_shadowOffsetX;
-    }
-
-    @Override
-    public int getShadowOffsetYStyleable() {
-        return R.styleable.ShapeEditText_shape_shadowOffsetY;
+    public int getLineGravityStyleable() {
+        return R.styleable.ShapeEditText_shape_lineGravity;
     }
 
     /**

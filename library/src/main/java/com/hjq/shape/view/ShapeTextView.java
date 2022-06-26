@@ -55,7 +55,6 @@ public class ShapeTextView extends AppCompatTextView {
             return;
         }
         mTextColorBuilder.setTextColor(color);
-        mTextColorBuilder.clearTextGradientColors();
     }
 
     @Override
