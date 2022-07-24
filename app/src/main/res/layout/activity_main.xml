@@ -211,7 +211,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:clickable="true"
                 android:gravity="center"
                 android:paddingTop="30dp"
                 android:paddingBottom="30dp"
@@ -220,6 +219,22 @@
                 android:textSize="14sp"
                 app:shape="rectangle"
                 app:shape_radius="10dp"
+                app:shape_shadowColor="#20000000"
+                app:shape_shadowSize="10dp"
+                app:shape_solidColor="#FFFFFF" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
+                android:text="直角阴影效果"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:shape="rectangle"
+                app:shape_radius="1px"
                 app:shape_shadowColor="#20000000"
                 app:shape_shadowSize="10dp"
                 app:shape_solidColor="#FFFFFF" />
@@ -376,9 +391,9 @@
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:padding="10dp"
-                app:shape_textColor="#5A8DDF"
                 android:text="文本边框颜色效果"
                 android:textSize="18sp"
+                app:shape_textColor="#5A8DDF"
                 app:shape_textEndColor="#f08833"
                 app:shape_textGradientOrientation="horizontal"
                 app:shape_textStartColor="#fefa54"
@@ -932,8 +947,8 @@
                 android:text="线在字的左边"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                app:shape_lineGravity="start"
                 app:shape="line"
+                app:shape_lineGravity="start"
                 app:shape_strokeColor="#ffff0000"
                 app:shape_strokeWidth="2dp"/>
 
@@ -946,8 +961,8 @@
                 android:text="改变线的大小和颜色"
                 android:textColor="@android:color/black"
                 android:textSize="14sp"
-                app:shape_lineGravity="bottom"
                 app:shape="line"
+                app:shape_lineGravity="bottom"
                 app:shape_strokeColor="#ffff00ff"
                 app:shape_strokeWidth="3dp" />
 

@@ -319,6 +319,7 @@ public class ShapeDrawable extends Drawable {
     public ShapeDrawable setShadowColor(int color) {
         mShapeState.setShadowColor(color);
         mPathIsDirty = true;
+        mRectIsDirty = true;
         invalidateSelf();
         return this;
     }
@@ -329,6 +330,7 @@ public class ShapeDrawable extends Drawable {
     public ShapeDrawable setShadowSize(int size) {
         mShapeState.setShadowSize(size);
         mPathIsDirty = true;
+        mRectIsDirty = true;
         invalidateSelf();
         return this;
     }
@@ -339,6 +341,7 @@ public class ShapeDrawable extends Drawable {
     public ShapeDrawable setShadowOffsetX(int offsetX) {
         mShapeState.setShadowOffsetX(offsetX);
         mPathIsDirty = true;
+        mRectIsDirty = true;
         invalidateSelf();
         return this;
     }
@@ -349,6 +352,7 @@ public class ShapeDrawable extends Drawable {
     public ShapeDrawable setShadowOffsetY(int offsetY) {
         mShapeState.setShadowOffsetY(offsetY);
         mPathIsDirty = true;
+        mRectIsDirty = true;
         invalidateSelf();
         return this;
     }
@@ -516,7 +520,8 @@ public class ShapeDrawable extends Drawable {
             }
 
              mShadowPaint.setColor(shadowColor);
-             mShadowPaint.setMaskFilter(new BlurMaskFilter(mShapeState.mShadowSize, BlurMaskFilter.Blur.NORMAL));
+             // 这里解释一下为什么要阴影大小除以 1.2f，因为如果不这么做会导致阴影显示会超过 View 边界，从而导致出现阴影被截断的效果
+             mShadowPaint.setMaskFilter(new BlurMaskFilter(mShapeState.mShadowSize / 1.2f, BlurMaskFilter.Blur.NORMAL));
 
         } else {
             if (mShadowPaint != null) {
@@ -796,12 +801,10 @@ public class ShapeDrawable extends Drawable {
 
             final ShapeState st = mShapeState;
 
-            float shadowScale = 1.2f;
-
-            float let = bounds.left + inset + mShapeState.mShadowSize * shadowScale;
-            float top = bounds.top + inset + mShapeState.mShadowSize * shadowScale;
-            float right = bounds.right - inset - mShapeState.mShadowSize * shadowScale;
-            float bottom = bounds.bottom - inset - mShapeState.mShadowSize * shadowScale;
+            float let = bounds.left + inset + mShapeState.mShadowSize;
+            float top = bounds.top + inset + mShapeState.mShadowSize;
+            float right = bounds.right - inset - mShapeState.mShadowSize;
+            float bottom = bounds.bottom - inset - mShapeState.mShadowSize;
 
             mRect.set(let, top, right, bottom);
 

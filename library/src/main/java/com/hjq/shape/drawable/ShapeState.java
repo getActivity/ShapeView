@@ -172,6 +172,11 @@ public class ShapeState extends Drawable.ConstantState {
             return;
         }
 
+        if (mShadowSize > 0) {
+            mOpaque = false;
+            return;
+        }
+
         if (mStrokeWidth > 0 && !isOpaque(mStrokeColor)) {
             mOpaque = false;
             return;

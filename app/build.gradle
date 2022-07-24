@@ -8,8 +8,8 @@ android {
         minSdkVersion 16
         // noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
-        versionCode 82
-        versionName "8.2"
+        versionCode 83
+        versionName "8.3"
     }
 
     // 支持 Java JDK 8
@@ -63,5 +63,5 @@ dependencies {
     implementation 'com.github.getActivity:TitleBar:9.5'
 
     // 内存泄漏检测：https://github.com/square/leakcanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 }
