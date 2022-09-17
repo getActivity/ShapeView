@@ -831,6 +831,14 @@ public class ShapeDrawable extends Drawable {
 
             mShadowRect.set(shadowLet, shadowTop, shadowRight, shadowBottom);
 
+            if (st.mSolidColors == null) {
+                mFillPaint.setShader(null);
+            }
+
+            if (st.mStrokeColors == null) {
+                mStrokePaint.setShader(null);
+            }
+
             if (st.mSolidColors != null || st.mStrokeColors != null) {
                 RectF r = mRect;
                 float x0, x1, y0, y1;

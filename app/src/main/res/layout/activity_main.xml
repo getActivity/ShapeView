@@ -113,6 +113,8 @@
                 android:textSize="14sp"
                 app:shape="rectangle"
                 app:shape_radius="20dp"
+                app:shape_endColor="#ED58FF"
+                app:shape_startColor="#49DAFA"
                 app:shape_strokeColor="#000000"
                 app:shape_strokeWidth="1dp" />
 
@@ -385,7 +387,6 @@
                 app:shape_textStartColor="#49DAFA" />
 
             <com.hjq.shape.view.ShapeTextView
-                android:id="@+id/test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

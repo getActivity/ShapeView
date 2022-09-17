@@ -1,10 +1,10 @@
 # Shape 框架
 
-* 项目地址：[Github](https://github.com/getActivity/ShapeView)、[码云](https://gitee.com/getActivity/ShapeView)
+* 项目地址：[Github](https://github.com/getActivity/ShapeView)
 
 * 博客介绍：[震惊，没想到 Shape 也可以这么写](https://www.jianshu.com/p/1288d8873440)
 
-* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/8.3/ShapeView.apk)
+* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/8.5/ShapeView.apk)
 
 ![](picture/demo_code.png)
 
@@ -47,11 +47,11 @@ android {
 
 dependencies {
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:8.3'
+    implementation 'com.github.getActivity:ShapeView:8.5'
 }
 ```
 
-#### AndroidX
+#### AndroidX 兼容
 
 * 如果项目是基于 **AndroidX** 包，请在项目 `gradle.properties` 文件中加入
 
