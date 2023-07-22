@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.styleable.ShapeLinearLayoutStyleable;
 
 /**
@@ -15,7 +16,7 @@ import com.hjq.shape.styleable.ShapeLinearLayoutStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 LinearLayout
  */
-public class ShapeLinearLayout extends LinearLayout {
+public class ShapeLinearLayout extends LinearLayout implements IGetShapeDrawableBuilder {
 
     private static final ShapeLinearLayoutStyleable STYLEABLE = new ShapeLinearLayoutStyleable();
 
@@ -39,6 +40,7 @@ public class ShapeLinearLayout extends LinearLayout {
         mShapeDrawableBuilder.intoBackground();
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }

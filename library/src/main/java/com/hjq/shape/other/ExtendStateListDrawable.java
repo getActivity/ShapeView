@@ -1,4 +1,4 @@
-package com.hjq.shape.drawable;
+package com.hjq.shape.other;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;

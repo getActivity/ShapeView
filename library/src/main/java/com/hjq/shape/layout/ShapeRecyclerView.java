@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.styleable.ShapeRecyclerViewStyleable;
 
 /**
@@ -15,7 +16,7 @@ import com.hjq.shape.styleable.ShapeRecyclerViewStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 RecyclerView
  */
-public class ShapeRecyclerView extends RecyclerView {
+public class ShapeRecyclerView extends RecyclerView implements IGetShapeDrawableBuilder {
 
     private static final ShapeRecyclerViewStyleable STYLEABLE = new ShapeRecyclerViewStyleable();
 
@@ -39,6 +40,7 @@ public class ShapeRecyclerView extends RecyclerView {
         mShapeDrawableBuilder.intoBackground();
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }

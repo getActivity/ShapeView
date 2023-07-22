@@ -10,6 +10,9 @@ import com.hjq.shape.R;
 import com.hjq.shape.builder.ButtonDrawableBuilder;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
 import com.hjq.shape.builder.TextColorBuilder;
+import com.hjq.shape.config.IGetButtonDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
+import com.hjq.shape.config.IGetTextColorBuilder;
 import com.hjq.shape.styleable.ShapeRadioButtonStyleable;
 
 /**
@@ -18,7 +21,8 @@ import com.hjq.shape.styleable.ShapeRadioButtonStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 RadioButton
  */
-public class ShapeRadioButton extends AppCompatRadioButton {
+public class ShapeRadioButton extends AppCompatRadioButton implements
+        IGetShapeDrawableBuilder, IGetTextColorBuilder, IGetButtonDrawableBuilder {
 
     private static final ShapeRadioButtonStyleable STYLEABLE = new ShapeRadioButtonStyleable();
 
@@ -37,7 +41,7 @@ public class ShapeRadioButton extends AppCompatRadioButton {
     public ShapeRadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeRadioButton);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeRadioButton, 0, R.style.ShapeRadioButtonStyle);
         mShapeDrawableBuilder = new ShapeDrawableBuilder(this, typedArray, STYLEABLE);
         mTextColorBuilder = new TextColorBuilder(this, typedArray, STYLEABLE);
         mButtonDrawableBuilder = new ButtonDrawableBuilder(this, typedArray, STYLEABLE);
@@ -45,7 +49,7 @@ public class ShapeRadioButton extends AppCompatRadioButton {
 
         mShapeDrawableBuilder.intoBackground();
 
-        if (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor()) {
+        if (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable()) {
             setText(getText());
         } else {
             mTextColorBuilder.intoTextColor();
@@ -66,7 +70,7 @@ public class ShapeRadioButton extends AppCompatRadioButton {
     @Override
     public void setText(CharSequence text, BufferType type) {
         if (mTextColorBuilder != null &&
-                (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor())) {
+                (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable())) {
             super.setText(mTextColorBuilder.buildTextSpannable(text), type);
         } else {
             super.setText(text, type);
@@ -82,14 +86,17 @@ public class ShapeRadioButton extends AppCompatRadioButton {
         mButtonDrawableBuilder.setButtonDrawable(drawable);
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }
 
+    @Override
     public TextColorBuilder getTextColorBuilder() {
         return mTextColorBuilder;
     }
 
+    @Override
     public ButtonDrawableBuilder getButtonDrawableBuilder() {
         return mButtonDrawableBuilder;
     }

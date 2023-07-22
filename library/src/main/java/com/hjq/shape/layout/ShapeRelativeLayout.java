@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.styleable.ShapeRelativeLayoutStyleable;
 
 /**
@@ -15,7 +16,7 @@ import com.hjq.shape.styleable.ShapeRelativeLayoutStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 RelativeLayout
  */
-public class ShapeRelativeLayout extends RelativeLayout {
+public class ShapeRelativeLayout extends RelativeLayout implements IGetShapeDrawableBuilder {
 
     private static final ShapeRelativeLayoutStyleable STYLEABLE = new ShapeRelativeLayoutStyleable();
 
@@ -39,6 +40,7 @@ public class ShapeRelativeLayout extends RelativeLayout {
         mShapeDrawableBuilder.intoBackground();
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }

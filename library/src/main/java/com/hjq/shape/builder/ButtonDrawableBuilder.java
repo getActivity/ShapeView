@@ -6,7 +6,8 @@ import android.graphics.drawable.StateListDrawable;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.widget.CompoundButton;
 
-import com.hjq.shape.styleable.ICompoundButtonStyleable;
+import com.hjq.shape.R;
+import com.hjq.shape.config.ICompoundButtonStyleable;
 
 /**
  *    author : Android 轮子哥
@@ -19,56 +20,62 @@ public final class ButtonDrawableBuilder {
     private final CompoundButton mCompoundButton;
 
     private Drawable mButtonDrawable;
-    private Drawable mDrawablePressedDrawable;
-    private Drawable mDrawableCheckedDrawable;
-    private Drawable mDrawableDisabledDrawable;
-    private Drawable mDrawableFocusedDrawable;
-    private Drawable mDrawableSelectedDrawable;
+    private Drawable mButtonPressedDrawable;
+    private Drawable mButtonCheckedDrawable;
+    private Drawable mButtonDisabledDrawable;
+    private Drawable mButtonFocusedDrawable;
+    private Drawable mButtonSelectedDrawable;
 
     public ButtonDrawableBuilder(CompoundButton compoundButton, TypedArray typedArray, ICompoundButtonStyleable styleable) {
         mCompoundButton = compoundButton;
+
         if (typedArray.hasValue(styleable.getButtonDrawableStyleable())) {
-            mButtonDrawable = typedArray.getDrawable(styleable.getButtonDrawableStyleable());
+            if (typedArray.getResourceId(styleable.getButtonDrawableStyleable(), 0) != R.drawable.shape_view_placeholder) {
+                mButtonDrawable = typedArray.getDrawable(styleable.getButtonDrawableStyleable());
+            } else {
+                mButtonDrawable = CompoundButtonCompat.getButtonDrawable(mCompoundButton);
+            }
         } else {
-            mButtonDrawable = CompoundButtonCompat.getButtonDrawable(mCompoundButton);
+            mButtonDrawable = null;
+            mCompoundButton.setButtonDrawable(null);
         }
 
         if (typedArray.hasValue(styleable.getButtonPressedDrawableStyleable())) {
-            mDrawablePressedDrawable = typedArray.getDrawable(styleable.getButtonPressedDrawableStyleable());
+            mButtonPressedDrawable = typedArray.getDrawable(styleable.getButtonPressedDrawableStyleable());
         }
 
         if (typedArray.hasValue(styleable.getButtonCheckedDrawableStyleable())) {
-            mDrawableCheckedDrawable = typedArray.getDrawable(styleable.getButtonCheckedDrawableStyleable());
+            mButtonCheckedDrawable = typedArray.getDrawable(styleable.getButtonCheckedDrawableStyleable());
         }
 
         if (typedArray.hasValue(styleable.getButtonDisabledDrawableStyleable())) {
-            mDrawableDisabledDrawable = typedArray.getDrawable(styleable.getButtonDisabledDrawableStyleable());
+            mButtonDisabledDrawable = typedArray.getDrawable(styleable.getButtonDisabledDrawableStyleable());
         }
 
         if (typedArray.hasValue(styleable.getButtonFocusedDrawableStyleable())) {
-            mDrawableFocusedDrawable = typedArray.getDrawable(styleable.getButtonFocusedDrawableStyleable());
+            mButtonFocusedDrawable = typedArray.getDrawable(styleable.getButtonFocusedDrawableStyleable());
         }
 
         if (typedArray.hasValue(styleable.getButtonSelectedDrawableStyleable())) {
-            mDrawableSelectedDrawable = typedArray.getDrawable(styleable.getButtonSelectedDrawableStyleable());
+            mButtonSelectedDrawable = typedArray.getDrawable(styleable.getButtonSelectedDrawableStyleable());
         }
     }
 
     public ButtonDrawableBuilder setButtonDrawable(Drawable drawable) {
-        if (mDrawablePressedDrawable == mButtonDrawable) {
-            mDrawablePressedDrawable = drawable;
+        if (mButtonPressedDrawable == mButtonDrawable) {
+            mButtonPressedDrawable = drawable;
         }
-        if (mDrawableCheckedDrawable == mButtonDrawable) {
-            mDrawableCheckedDrawable = drawable;
+        if (mButtonCheckedDrawable == mButtonDrawable) {
+            mButtonCheckedDrawable = drawable;
         }
-        if (mDrawableDisabledDrawable == mButtonDrawable) {
-            mDrawableDisabledDrawable = drawable;
+        if (mButtonDisabledDrawable == mButtonDrawable) {
+            mButtonDisabledDrawable = drawable;
         }
-        if (mDrawableFocusedDrawable == mButtonDrawable) {
-            mDrawableFocusedDrawable = drawable;
+        if (mButtonFocusedDrawable == mButtonDrawable) {
+            mButtonFocusedDrawable = drawable;
         }
-        if (mDrawableSelectedDrawable == mButtonDrawable) {
-            mDrawableSelectedDrawable = drawable;
+        if (mButtonSelectedDrawable == mButtonDrawable) {
+            mButtonSelectedDrawable = drawable;
         }
         mButtonDrawable = drawable;
         return this;
@@ -78,49 +85,49 @@ public final class ButtonDrawableBuilder {
         return mButtonDrawable;
     }
 
-    public ButtonDrawableBuilder setDrawablePressedDrawable(Drawable drawable) {
-        mDrawablePressedDrawable = drawable;
+    public ButtonDrawableBuilder setButtonPressedDrawable(Drawable drawable) {
+        mButtonPressedDrawable = drawable;
         return this;
     }
 
-    public Drawable getDrawablePressedDrawable() {
-        return mDrawablePressedDrawable;
+    public Drawable getButtonPressedDrawable() {
+        return mButtonPressedDrawable;
     }
 
-    public ButtonDrawableBuilder setDrawableCheckedDrawable(Drawable drawable) {
-        mDrawableCheckedDrawable = drawable;
+    public ButtonDrawableBuilder setButtonCheckedDrawable(Drawable drawable) {
+        mButtonCheckedDrawable = drawable;
         return this;
     }
 
-    public Drawable getDrawableCheckedDrawable() {
-        return mDrawableCheckedDrawable;
+    public Drawable getButtonCheckedDrawable() {
+        return mButtonCheckedDrawable;
     }
 
-    public ButtonDrawableBuilder setDrawableDisabledDrawable(Drawable drawable) {
-        mDrawableDisabledDrawable = drawable;
+    public ButtonDrawableBuilder setButtonDisabledDrawable(Drawable drawable) {
+        mButtonDisabledDrawable = drawable;
         return this;
     }
 
-    public Drawable getDrawableDisabledDrawable() {
-        return mDrawableDisabledDrawable;
+    public Drawable getButtonDisabledDrawable() {
+        return mButtonDisabledDrawable;
     }
 
-    public ButtonDrawableBuilder setDrawableFocusedDrawable(Drawable drawable) {
-        mDrawableFocusedDrawable = drawable;
+    public ButtonDrawableBuilder setButtonFocusedDrawable(Drawable drawable) {
+        mButtonFocusedDrawable = drawable;
         return this;
     }
 
-    public Drawable getDrawableFocusedDrawable() {
-        return mDrawableFocusedDrawable;
+    public Drawable getButtonFocusedDrawable() {
+        return mButtonFocusedDrawable;
     }
 
-    public ButtonDrawableBuilder setDrawableSelectedDrawable(Drawable drawable) {
-        mDrawableSelectedDrawable = drawable;
+    public ButtonDrawableBuilder setButtonSelectedDrawable(Drawable drawable) {
+        mButtonSelectedDrawable = drawable;
         return this;
     }
 
-    public Drawable getDrawableSelectedDrawable() {
-        return mDrawableSelectedDrawable;
+    public Drawable getButtonSelectedDrawable() {
+        return mButtonSelectedDrawable;
     }
 
     public void intoButtonDrawable() {
@@ -128,30 +135,30 @@ public final class ButtonDrawableBuilder {
             return;
         }
 
-        if (mDrawablePressedDrawable == null &&
-                mDrawableCheckedDrawable == null &&
-                mDrawableDisabledDrawable == null &&
-                mDrawableFocusedDrawable == null &&
-                mDrawableSelectedDrawable == null) {
+        if (mButtonPressedDrawable == null &&
+                mButtonCheckedDrawable == null &&
+                mButtonDisabledDrawable == null &&
+                mButtonFocusedDrawable == null &&
+                mButtonSelectedDrawable == null) {
             mCompoundButton.setButtonDrawable(mButtonDrawable);
             return;
         }
 
         StateListDrawable drawable = new StateListDrawable();
-        if (mDrawablePressedDrawable != null) {
-            drawable.addState(new int[]{android.R.attr.state_pressed}, mDrawablePressedDrawable);
+        if (mButtonPressedDrawable != null) {
+            drawable.addState(new int[]{android.R.attr.state_pressed}, mButtonPressedDrawable);
         }
-        if (mDrawableCheckedDrawable != null) {
-            drawable.addState(new int[]{android.R.attr.state_checked}, mDrawableCheckedDrawable);
+        if (mButtonCheckedDrawable != null) {
+            drawable.addState(new int[]{android.R.attr.state_checked}, mButtonCheckedDrawable);
         }
-        if (mDrawableDisabledDrawable != null) {
-            drawable.addState(new int[]{-android.R.attr.state_enabled}, mDrawableDisabledDrawable);
+        if (mButtonDisabledDrawable != null) {
+            drawable.addState(new int[]{-android.R.attr.state_enabled}, mButtonDisabledDrawable);
         }
-        if (mDrawableFocusedDrawable != null) {
-            drawable.addState(new int[]{android.R.attr.state_focused}, mDrawableFocusedDrawable);
+        if (mButtonFocusedDrawable != null) {
+            drawable.addState(new int[]{android.R.attr.state_focused}, mButtonFocusedDrawable);
         }
-        if (mDrawableSelectedDrawable != null) {
-            drawable.addState(new int[]{android.R.attr.state_selected}, mDrawableSelectedDrawable);
+        if (mButtonSelectedDrawable != null) {
+            drawable.addState(new int[]{android.R.attr.state_selected}, mButtonSelectedDrawable);
         }
         drawable.addState(new int[]{}, mButtonDrawable);
         mCompoundButton.setButtonDrawable(drawable);

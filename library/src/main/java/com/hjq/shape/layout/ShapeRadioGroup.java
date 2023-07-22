@@ -7,6 +7,7 @@ import android.widget.RadioGroup;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.styleable.ShapeRadioGroupStyleable;
 
 /**
@@ -15,7 +16,7 @@ import com.hjq.shape.styleable.ShapeRadioGroupStyleable;
  *    time   : 2021/09/07
  *    desc   : 支持直接定义 Shape 背景的 RadioGroup
  */
-public class ShapeRadioGroup extends RadioGroup {
+public class ShapeRadioGroup extends RadioGroup implements IGetShapeDrawableBuilder {
 
     private static final ShapeRadioGroupStyleable STYLEABLE = new ShapeRadioGroupStyleable();
 
@@ -34,6 +35,7 @@ public class ShapeRadioGroup extends RadioGroup {
         mShapeDrawableBuilder.intoBackground();
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }

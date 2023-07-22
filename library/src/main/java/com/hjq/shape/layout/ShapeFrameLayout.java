@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.styleable.ShapeFrameLayoutStyleable;
 
 /**
@@ -15,7 +16,7 @@ import com.hjq.shape.styleable.ShapeFrameLayoutStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 FrameLayout
  */
-public class ShapeFrameLayout extends FrameLayout {
+public class ShapeFrameLayout extends FrameLayout implements IGetShapeDrawableBuilder {
 
     private static final ShapeFrameLayoutStyleable STYLEABLE = new ShapeFrameLayoutStyleable();
 
@@ -39,6 +40,7 @@ public class ShapeFrameLayout extends FrameLayout {
         mShapeDrawableBuilder.intoBackground();
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }

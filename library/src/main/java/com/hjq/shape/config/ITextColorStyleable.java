@@ -1,4 +1,4 @@
-package com.hjq.shape.styleable;
+package com.hjq.shape.config;
 
 /**
  *    author : Android 轮子哥

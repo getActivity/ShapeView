@@ -8,10 +8,10 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.widget.TextView;
 
+import com.hjq.shape.config.ITextColorStyleable;
 import com.hjq.shape.span.LinearGradientFontSpan;
 import com.hjq.shape.span.MultiFontSpan;
 import com.hjq.shape.span.StrokeFontSpan;
-import com.hjq.shape.styleable.ITextColorStyleable;
 
 /**
  *    author : Android 轮子哥
@@ -155,7 +155,7 @@ public final class TextColorBuilder {
         return mTextGradientColors;
     }
 
-    public boolean isTextGradientColors() {
+    public boolean isTextGradientColorsEnable() {
         return mTextGradientColors != null && mTextGradientColors.length > 0;
     }
 
@@ -186,14 +186,14 @@ public final class TextColorBuilder {
         return mTextStrokeSize;
     }
 
-    public boolean isTextStrokeColor() {
+    public boolean isTextStrokeColorEnable() {
         return mTextStrokeColor != Color.TRANSPARENT && mTextStrokeSize > 0;
     }
 
     public void clearTextSpannable() {
         mTextStrokeColor = Color.TRANSPARENT;
         mTextStrokeSize = 0;
-        if (!isTextGradientColors()) {
+        if (!isTextGradientColorsEnable()) {
             mTextView.setTextColor(mTextColor);
         }
         mTextView.setText(mTextView.getText().toString());
@@ -205,13 +205,13 @@ public final class TextColorBuilder {
         LinearGradientFontSpan linearGradientFontSpan = null;
         StrokeFontSpan strokeFontSpan = null;
 
-        if (isTextGradientColors()) {
+        if (isTextGradientColorsEnable()) {
             linearGradientFontSpan = new LinearGradientFontSpan()
                     .setTextGradientColor(mTextGradientColors)
                     .setTextGradientOrientation(mTextGradientOrientation)
                     .setTextGradientPositions(null);
         }
-        if (isTextStrokeColor()) {
+        if (isTextStrokeColorEnable()) {
             strokeFontSpan = new StrokeFontSpan()
                     .setTextStrokeColor(mTextStrokeColor)
                     .setTextStrokeSize(mTextStrokeSize);
@@ -289,7 +289,7 @@ public final class TextColorBuilder {
 
     public void intoTextColor() {
         mTextView.setTextColor(buildColorState());
-        if (isTextGradientColors() || isTextStrokeColor()) {
+        if (isTextGradientColorsEnable() || isTextStrokeColorEnable()) {
             mTextView.setText(buildTextSpannable(mTextView.getText()));
         }
     }

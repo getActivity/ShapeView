@@ -3,7 +3,6 @@ package com.hjq.shape.span;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 public class StrokeFontSpan extends CommonFontSpan {
 
@@ -12,11 +11,6 @@ public class StrokeFontSpan extends CommonFontSpan {
 
     private int mTextStrokeColor;
     private int mTextStrokeSize;
-
-    @Override
-    public float onMeasure(@NonNull Paint paint, @Nullable Paint.FontMetricsInt fontMetricsInt, CharSequence text, int start, int end) {
-        return super.onMeasure(paint, fontMetricsInt, text, start, end);
-    }
 
     @Override
     public void onDraw(@NonNull Canvas canvas, @NonNull Paint paint, CharSequence text, int start, int end, float x, int top, int y, int bottom) {

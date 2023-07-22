@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
 import com.hjq.shape.builder.TextColorBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
+import com.hjq.shape.config.IGetTextColorBuilder;
 import com.hjq.shape.styleable.ShapeButtonStyleable;
 
 /**
@@ -16,7 +18,8 @@ import com.hjq.shape.styleable.ShapeButtonStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 Button
  */
-public class ShapeButton extends AppCompatButton {
+public class ShapeButton extends AppCompatButton implements
+        IGetShapeDrawableBuilder, IGetTextColorBuilder {
 
     private static final ShapeButtonStyleable STYLEABLE = new ShapeButtonStyleable();
 
@@ -41,7 +44,7 @@ public class ShapeButton extends AppCompatButton {
 
         mShapeDrawableBuilder.intoBackground();
 
-        if (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor()) {
+        if (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable()) {
             setText(getText());
         } else {
             mTextColorBuilder.intoTextColor();
@@ -60,17 +63,19 @@ public class ShapeButton extends AppCompatButton {
     @Override
     public void setText(CharSequence text, BufferType type) {
         if (mTextColorBuilder != null &&
-                (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor())) {
+                (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable())) {
             super.setText(mTextColorBuilder.buildTextSpannable(text), type);
         } else {
             super.setText(text, type);
         }
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }
 
+    @Override
     public TextColorBuilder getTextColorBuilder() {
         return mTextColorBuilder;
     }

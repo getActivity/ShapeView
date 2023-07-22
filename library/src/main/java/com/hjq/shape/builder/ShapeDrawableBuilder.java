@@ -8,11 +8,14 @@ import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
 
-import com.hjq.shape.drawable.ExtendStateListDrawable;
+import com.hjq.shape.config.IShapeDrawableStyleable;
 import com.hjq.shape.drawable.ShapeDrawable;
+import com.hjq.shape.drawable.ShapeGradientOrientationLimit;
 import com.hjq.shape.drawable.ShapeGradientType;
+import com.hjq.shape.drawable.ShapeGradientTypeLimit;
 import com.hjq.shape.drawable.ShapeType;
-import com.hjq.shape.styleable.IShapeDrawableStyleable;
+import com.hjq.shape.drawable.ShapeTypeLimit;
+import com.hjq.shape.other.ExtendStateListDrawable;
 
 /**
  *    author : Android 轮子哥
@@ -26,9 +29,10 @@ public final class ShapeDrawableBuilder {
 
     private final View mView;
 
-    private int mShape;
-    private int mShapeWidth;
-    private int mShapeHeight;
+    @ShapeTypeLimit
+    private int mType;
+    private int mWidth;
+    private int mHeight;
 
     private int mSolidColor;
     private Integer mSolidPressedColor;
@@ -43,13 +47,13 @@ public final class ShapeDrawableBuilder {
     private float mBottomRightRadius;
 
     private int[] mSolidGradientColors;
-    private int[] mStrokeGradientColors;
-    private boolean mUseLevel;
-    private int mAngle;
-    private int mGradientType;
-    private float mCenterX;
-    private float mCenterY;
-    private int mGradientRadius;
+    @ShapeGradientOrientationLimit
+    private int mSolidGradientOrientation;
+    @ShapeGradientTypeLimit
+    private int mSolidGradientType;
+    private float mSolidGradientCenterX;
+    private float mSolidGradientCenterY;
+    private int mSolidGradientRadius;
 
     private int mStrokeColor;
     private Integer mStrokePressedColor;
@@ -58,27 +62,31 @@ public final class ShapeDrawableBuilder {
     private Integer mStrokeFocusedColor;
     private Integer mStrokeSelectedColor;
 
-    private int mStrokeWidth;
-    private int mDashWidth;
-    private int mDashGap;
+    private int[] mStrokeGradientColors;
+    @ShapeGradientOrientationLimit
+    private int mStrokeGradientOrientation;
+
+    private int mStrokeSize;
+    private int mStrokeDashSize;
+    private int mStrokeDashGap;
 
     private int mShadowSize;
     private int mShadowColor;
     private int mShadowOffsetX;
     private int mShadowOffsetY;
 
-    private int mInnerRadius;
-    private float mInnerRadiusRatio;
-    private int mThickness;
-    private float mThicknessRatio;
+    private int mRingInnerRadiusSize;
+    private float mRingInnerRadiusRatio;
+    private int mRingThicknessSize;
+    private float mRingThicknessRatio;
 
     private int mLineGravity;
 
     public ShapeDrawableBuilder(View view, TypedArray typedArray, IShapeDrawableStyleable styleable) {
         mView = view;
-        mShape = typedArray.getInt(styleable.getShapeTypeStyleable(), ShapeType.RECTANGLE);
-        mShapeWidth = typedArray.getDimensionPixelSize(styleable.getShapeWidthStyleable(), -1);
-        mShapeHeight = typedArray.getDimensionPixelSize(styleable.getShapeHeightStyleable(), -1);
+        mType = typedArray.getInt(styleable.getShapeTypeStyleable(), ShapeType.RECTANGLE);
+        mWidth = typedArray.getDimensionPixelSize(styleable.getShapeWidthStyleable(), -1);
+        mHeight = typedArray.getDimensionPixelSize(styleable.getShapeHeightStyleable(), -1);
 
         mSolidColor = typedArray.getColor(styleable.getSolidColorStyleable(), NO_COLOR);
         if (typedArray.hasValue(styleable.getSolidPressedColorStyleable())) {
@@ -98,10 +106,10 @@ public final class ShapeDrawableBuilder {
         }
 
         int radius = typedArray.getDimensionPixelSize(styleable.getRadiusStyleable(), 0);
-        mTopLeftRadius = typedArray.getDimensionPixelSize(styleable.getTopLeftRadiusStyleable(), radius);
-        mTopRightRadius = typedArray.getDimensionPixelSize(styleable.getTopRightRadiusStyleable(), radius);
-        mBottomLeftRadius = typedArray.getDimensionPixelSize(styleable.getBottomLeftRadiusStyleable(), radius);
-        mBottomRightRadius = typedArray.getDimensionPixelSize(styleable.getBottomRightRadiusStyleable(), radius);
+        mTopLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopLeftStyleable(), radius);
+        mTopRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopRightStyleable(), radius);
+        mBottomLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomLeftStyleable(), radius);
+        mBottomRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomRightStyleable(), radius);
 
         if (typedArray.hasValue(styleable.getSolidStartColorStyleable()) && typedArray.hasValue(styleable.getSolidEndColorStyleable())) {
             if (typedArray.hasValue(styleable.getSolidCenterColorStyleable())) {
@@ -114,23 +122,11 @@ public final class ShapeDrawableBuilder {
             }
         }
 
-        if (typedArray.hasValue(styleable.getStrokeStartColorStyleable()) && typedArray.hasValue(styleable.getStrokeEndColorStyleable())) {
-            if (typedArray.hasValue(styleable.getStrokeCenterColorStyleable())) {
-                mStrokeGradientColors = new int[] {typedArray.getColor(styleable.getStrokeStartColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getStrokeCenterColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getStrokeEndColorStyleable(), NO_COLOR)};
-            } else {
-                mStrokeGradientColors = new int[] {typedArray.getColor(styleable.getStrokeStartColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getStrokeEndColorStyleable(), NO_COLOR)};
-            }
-        }
-
-        mUseLevel = typedArray.getBoolean(styleable.getUseLevelStyleable(), false);
-        mAngle = (int) typedArray.getFloat(styleable.getAngleStyleable(), 0);
-        mGradientType = typedArray.getInt(styleable.getGradientTypeStyleable(), ShapeGradientType.LINEAR_GRADIENT);
-        mCenterX = typedArray.getFloat(styleable.getCenterXStyleable(), 0.5f);
-        mCenterY = typedArray.getFloat(styleable.getCenterYStyleable(), 0.5f);
-        mGradientRadius = typedArray.getDimensionPixelSize(styleable.getGradientRadiusStyleable(), radius);
+        mSolidGradientOrientation = (int) typedArray.getFloat(styleable.getSolidGradientOrientationStyleable(), 0);
+        mSolidGradientType = typedArray.getInt(styleable.getSolidGradientTypeStyleable(), ShapeGradientType.LINEAR_GRADIENT);
+        mSolidGradientCenterX = typedArray.getFloat(styleable.getSolidCenterXStyleable(), 0.5f);
+        mSolidGradientCenterY = typedArray.getFloat(styleable.getSolidCenterYStyleable(), 0.5f);
+        mSolidGradientRadius = typedArray.getDimensionPixelSize(styleable.getSolidGradientRadiusStyleable(), radius);
 
         mStrokeColor = typedArray.getColor(styleable.getStrokeColorStyleable(), NO_COLOR);
         if (typedArray.hasValue(styleable.getStrokePressedColorStyleable())) {
@@ -149,48 +145,111 @@ public final class ShapeDrawableBuilder {
             mStrokeSelectedColor = typedArray.getColor(styleable.getStrokeSelectedColorStyleable(), NO_COLOR);
         }
 
-        mStrokeWidth = typedArray.getDimensionPixelSize(styleable.getStrokeWidthStyleable(), 0);
-        mDashWidth = typedArray.getDimensionPixelSize(styleable.getDashWidthStyleable(), 0);
-        mDashGap = typedArray.getDimensionPixelSize(styleable.getDashGapStyleable(), 0);
+        if (typedArray.hasValue(styleable.getStrokeStartColorStyleable()) && typedArray.hasValue(styleable.getStrokeEndColorStyleable())) {
+            if (typedArray.hasValue(styleable.getStrokeCenterColorStyleable())) {
+                mStrokeGradientColors = new int[] {typedArray.getColor(styleable.getStrokeStartColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getStrokeCenterColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getStrokeEndColorStyleable(), NO_COLOR)};
+            } else {
+                mStrokeGradientColors = new int[] {typedArray.getColor(styleable.getStrokeStartColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getStrokeEndColorStyleable(), NO_COLOR)};
+            }
+        }
+
+        mStrokeGradientOrientation = (int) typedArray.getFloat(styleable.getStrokeGradientOrientationStyleable(), 0);
+
+        mStrokeSize = typedArray.getDimensionPixelSize(styleable.getStrokeSizeStyleable(), 0);
+        mStrokeDashSize = typedArray.getDimensionPixelSize(styleable.getStrokeDashSizeStyleable(), 0);
+        mStrokeDashGap = typedArray.getDimensionPixelSize(styleable.getStrokeDashGapStyleable(), 0);
 
         mShadowSize = typedArray.getDimensionPixelSize(styleable.getShadowSizeStyleable(), 0);
         mShadowColor = typedArray.getColor(styleable.getShadowColorStyleable(), 0x10000000);
         mShadowOffsetX = typedArray.getDimensionPixelOffset(styleable.getShadowOffsetXStyleable(), 0);
         mShadowOffsetY = typedArray.getDimensionPixelOffset(styleable.getShadowOffsetYStyleable(), 0);
 
-        mInnerRadius = typedArray.getDimensionPixelOffset(styleable.getInnerRadiusStyleable(), -1);
-        mInnerRadiusRatio = typedArray.getFloat(styleable.getInnerRadiusRatioStyleable(), 3.0f);
-        mThickness = typedArray.getDimensionPixelOffset(styleable.getThicknessStyleable(), -1);
-        mThicknessRatio = typedArray.getFloat(styleable.getThicknessRatioStyleable(), 9.0f);
+        mRingInnerRadiusSize = typedArray.getDimensionPixelOffset(styleable.getRingInnerRadiusSizeStyleable(), -1);
+        mRingInnerRadiusRatio = typedArray.getFloat(styleable.getRingInnerRadiusRatioStyleable(), 3.0f);
+        mRingThicknessSize = typedArray.getDimensionPixelOffset(styleable.getRingThicknessSizeStyleable(), -1);
+        mRingThicknessRatio = typedArray.getFloat(styleable.getRingThicknessRatioStyleable(), 9.0f);
 
         mLineGravity = typedArray.getInt(styleable.getLineGravityStyleable(), Gravity.CENTER);
     }
 
-    public ShapeDrawableBuilder setShape(int shape) {
-        mShape = shape;
+    public ShapeDrawableBuilder setType(@ShapeTypeLimit int type) {
+        mType = type;
         return this;
     }
 
-    public int getShape() {
-        return mShape;
+    @ShapeTypeLimit
+    public int getType() {
+        return mType;
     }
 
-    public ShapeDrawableBuilder setShapeWidth(int width) {
-        mShapeWidth = width;
+    public ShapeDrawableBuilder setWidth(int width) {
+        mWidth = width;
         return this;
     }
 
-    public int getShapeWidth() {
-        return mShapeWidth;
+    public int getWidth() {
+        return mWidth;
     }
 
-    public ShapeDrawableBuilder setShapeHeight(int height) {
-        mShapeHeight = height;
+    public ShapeDrawableBuilder setHeight(int height) {
+        mHeight = height;
         return this;
     }
 
-    public int getShapeHeight() {
-        return mShapeHeight;
+    public int getHeight() {
+        return mHeight;
+    }
+
+    public ShapeDrawableBuilder setRadius(float radius) {
+        return setRadius(radius, radius, radius, radius);
+    }
+
+    public ShapeDrawableBuilder setRadius(float topLeftRadius, float topRightRadius,
+                                          float bottomLeftRadius, float bottomRightRadius) {
+        mTopLeftRadius = topLeftRadius;
+        mTopRightRadius = topRightRadius;
+        mBottomLeftRadius = bottomLeftRadius;
+        mBottomRightRadius = bottomRightRadius;
+        return this;
+    }
+
+    public ShapeDrawableBuilder setTopLeftRadius(float radius) {
+        mTopLeftRadius = radius;
+        return this;
+    }
+
+    public float getTopLeftRadius() {
+        return mTopLeftRadius;
+    }
+
+    public ShapeDrawableBuilder setTopRightRadius(float radius) {
+        mTopRightRadius = radius;
+        return this;
+    }
+
+    public float getTopRightRadius() {
+        return mTopRightRadius;
+    }
+
+    public ShapeDrawableBuilder setBottomLeftRadius(float radius) {
+        mBottomLeftRadius = radius;
+        return this;
+    }
+
+    public float getBottomLeftRadius() {
+        return mBottomLeftRadius;
+    }
+
+    public ShapeDrawableBuilder setBottomRightRadius(float radius) {
+        mBottomRightRadius = radius;
+        return this;
+    }
+
+    public float getBottomRightRadius() {
+        return mBottomRightRadius;
     }
 
     public ShapeDrawableBuilder setSolidColor(int color) {
@@ -253,54 +312,6 @@ public final class ShapeDrawableBuilder {
         return mSolidSelectedColor;
     }
 
-    public ShapeDrawableBuilder setRadius(float radius) {
-        return setRadius(radius, radius, radius, radius);
-    }
-
-    public ShapeDrawableBuilder setRadius(float topLeftRadius, float topRightRadius, float bottomLeftRadius, float bottomRightRadius) {
-        mTopLeftRadius = topLeftRadius;
-        mTopRightRadius = topRightRadius;
-        mBottomLeftRadius = bottomLeftRadius;
-        mBottomRightRadius = bottomRightRadius;
-        return this;
-    }
-
-    public ShapeDrawableBuilder setTopLeftRadius(float radius) {
-        mTopLeftRadius = radius;
-        return this;
-    }
-
-    public float getTopLeftRadius() {
-        return mTopLeftRadius;
-    }
-
-    public ShapeDrawableBuilder setTopRightRadius(float radius) {
-        mTopRightRadius = radius;
-        return this;
-    }
-
-    public float getTopRightRadius() {
-        return mTopRightRadius;
-    }
-
-    public ShapeDrawableBuilder setBottomLeftRadius(float radius) {
-        mBottomLeftRadius = radius;
-        return this;
-    }
-
-    public float getBottomLeftRadius() {
-        return mBottomLeftRadius;
-    }
-
-    public ShapeDrawableBuilder setBottomRightRadius(float radius) {
-        mBottomRightRadius = radius;
-        return this;
-    }
-
-    public float getBottomRightRadius() {
-        return mBottomRightRadius;
-    }
-
     public ShapeDrawableBuilder setSolidGradientColors(int startColor, int endColor) {
         return setSolidGradientColors(new int[]{startColor, endColor});
     }
@@ -319,7 +330,7 @@ public final class ShapeDrawableBuilder {
         return mSolidGradientColors;
     }
 
-    public boolean isSolidGradientColors() {
+    public boolean isSolidGradientColorsEnable() {
         return mSolidGradientColors != null &&
                 mSolidGradientColors.length > 0;
     }
@@ -328,85 +339,51 @@ public final class ShapeDrawableBuilder {
         mSolidGradientColors = null;
     }
 
-    public ShapeDrawableBuilder setStrokeGradientColors(int startColor, int endColor) {
-        return setStrokeGradientColors(new int[]{startColor, endColor});
-    }
-
-    public ShapeDrawableBuilder setStrokeGradientColors(int startColor, int centerColor, int endColor) {
-        return setStrokeGradientColors(new int[]{startColor, centerColor, endColor});
-    }
-
-    public ShapeDrawableBuilder setStrokeGradientColors(int[] colors) {
-        mStrokeGradientColors = colors;
+    public ShapeDrawableBuilder setSolidGradientOrientation(@ShapeGradientOrientationLimit int orientation) {
+        mSolidGradientOrientation = orientation;
         return this;
     }
 
-    @Nullable
-    public int[] getStrokeGradientColors() {
-        return mStrokeGradientColors;
+    @ShapeGradientOrientationLimit
+    public int getSolidGradientOrientation() {
+        return mSolidGradientOrientation;
     }
 
-    public boolean isStrokeGradientColors() {
-        return mStrokeGradientColors != null &&
-                mStrokeGradientColors.length > 0;
-    }
-
-    public void clearStrokeGradientColors() {
-        mStrokeGradientColors = null;
-    }
-
-    public ShapeDrawableBuilder setUseLevel(boolean useLevel) {
-        mUseLevel = useLevel;
+    public ShapeDrawableBuilder setSolidGradientType(@ShapeGradientTypeLimit int type) {
+        mSolidGradientType = type;
         return this;
     }
 
-    public boolean isUseLevel() {
-        return mUseLevel;
+    @ShapeGradientTypeLimit
+    public int getSolidGradientType() {
+        return mSolidGradientType;
     }
 
-    public ShapeDrawableBuilder setAngle(int angle) {
-        mAngle = angle;
+    public ShapeDrawableBuilder setSolidGradientCenterX(float centerX) {
+        mSolidGradientCenterX = centerX;
         return this;
     }
 
-    public int getAngle() {
-        return mAngle;
+    public float getSolidGradientCenterX() {
+        return mSolidGradientCenterX;
     }
 
-    public ShapeDrawableBuilder setGradientType(int type) {
-        mGradientType = type;
+    public ShapeDrawableBuilder setSolidGradientCenterY(float centerY) {
+        mSolidGradientCenterY = centerY;
         return this;
     }
 
-    public int getGradientType() {
-        return mGradientType;
+    public float getSolidGradientCenterY() {
+        return mSolidGradientCenterY;
     }
 
-    public ShapeDrawableBuilder setCenterX(float x) {
-        mCenterX = x;
+    public ShapeDrawableBuilder setSolidGradientRadius(int radius) {
+        mSolidGradientRadius = radius;
         return this;
     }
 
-    public float getCenterX() {
-        return mCenterX;
-    }
-
-    public ShapeDrawableBuilder setCenterY(float y) {
-        mCenterY = y;
-        return this;
-    }
-
-    public float getCenterY() {
-        return mCenterY;
-    }
-
-    public ShapeDrawableBuilder setGradientRadius(int radius) {
-        mGradientRadius = radius;
-        return this;
-    }
-
-    public int getGradientRadius() {
-        return mGradientRadius;
+    public int getSolidGradientRadius() {
+        return mSolidGradientRadius;
     }
 
     public ShapeDrawableBuilder setStrokeColor(int color) {
@@ -469,71 +446,108 @@ public final class ShapeDrawableBuilder {
         return mStrokeSelectedColor;
     }
 
-    public ShapeDrawableBuilder setStrokeWidth(int width) {
-        mStrokeWidth = width;
+    public ShapeDrawableBuilder setStrokeGradientColors(int startColor, int endColor) {
+        return setStrokeGradientColors(new int[]{startColor, endColor});
+    }
+
+    public ShapeDrawableBuilder setStrokeGradientColors(int startColor, int centerColor, int endColor) {
+        return setStrokeGradientColors(new int[]{startColor, centerColor, endColor});
+    }
+
+    public ShapeDrawableBuilder setStrokeGradientColors(int[] colors) {
+        mStrokeGradientColors = colors;
         return this;
     }
 
-    public int getStrokeWidth() {
-        return mStrokeWidth;
+    @Nullable
+    public int[] getStrokeGradientColors() {
+        return mStrokeGradientColors;
     }
 
-    public ShapeDrawableBuilder setDashWidth(int width) {
-        mDashWidth = width;
+    public boolean isStrokeGradientColorsEnable() {
+        return mStrokeGradientColors != null &&
+                mStrokeGradientColors.length > 0;
+    }
+
+    public void clearStrokeGradientColors() {
+        mStrokeGradientColors = null;
+    }
+
+    public ShapeDrawableBuilder setStrokeGradientOrientation(@ShapeGradientOrientationLimit int orientation) {
+        mStrokeGradientOrientation = orientation;
         return this;
     }
 
-    public int getDashWidth() {
-        return mDashWidth;
+    @ShapeGradientOrientationLimit
+    public int getStrokeGradientOrientation() {
+        return mStrokeGradientOrientation;
     }
 
-    public ShapeDrawableBuilder setDashGap(int gap) {
-        mDashGap = gap;
+    public ShapeDrawableBuilder setStrokeSize(int size) {
+        mStrokeSize = size;
         return this;
     }
 
-    public int getDashGap() {
-        return mDashGap;
+    public int getStrokeSize() {
+        return mStrokeSize;
     }
 
-    public boolean isDashLineEnable() {
-        return mDashGap > 0;
-    }
-
-    public ShapeDrawableBuilder setInnerRadius(int radius) {
-        mInnerRadius = radius;
+    public ShapeDrawableBuilder setStrokeDashSize(int size) {
+        mStrokeDashSize = size;
         return this;
     }
 
-    public int getInnerRadius() {
-        return mInnerRadius;
+    public int getStrokeDashSize() {
+        return mStrokeDashSize;
     }
 
-    public ShapeDrawableBuilder setInnerRadiusRatio(float ratio) {
-        mInnerRadiusRatio = ratio;
+    public ShapeDrawableBuilder setStrokeDashGap(int gap) {
+        mStrokeDashGap = gap;
         return this;
     }
 
-    public float getInnerRadiusRatio() {
-        return mInnerRadiusRatio;
+    public int getStrokeDashGap() {
+        return mStrokeDashGap;
     }
 
-    public ShapeDrawableBuilder setThickness(int size) {
-        mThickness = size;
+    public boolean isStrokeDashLineEnable() {
+        return mStrokeDashGap > 0;
+    }
+
+    public ShapeDrawableBuilder setRingInnerRadiusSize(int size) {
+        mRingInnerRadiusSize = size;
         return this;
     }
 
-    public int getThickness() {
-        return mThickness;
+    public int getRingInnerRadiusSize() {
+        return mRingInnerRadiusSize;
     }
 
-    public ShapeDrawableBuilder setThicknessRatio(float ratio) {
-        mThicknessRatio = ratio;
+    public ShapeDrawableBuilder setRingInnerRadiusRatio(float ratio) {
+        mRingInnerRadiusRatio = ratio;
         return this;
     }
 
-    public float getThicknessRatio() {
-        return mThicknessRatio;
+    public float getRingInnerRadiusRatio() {
+        return mRingInnerRadiusRatio;
+    }
+
+    public ShapeDrawableBuilder setRingThicknessSize(int size) {
+        mRingThicknessSize = size;
+        return this;
+    }
+
+    public int getRingThicknessSize() {
+        return mRingThicknessSize;
+    }
+
+    public ShapeDrawableBuilder setRingThicknessRatio(float ratio) {
+        mRingThicknessRatio = ratio;
+        return this;
+    }
+
+    public float getRingThicknessRatio() {
+        return mRingThicknessRatio;
     }
 
     public boolean isShadowEnable() {
@@ -576,6 +590,15 @@ public final class ShapeDrawableBuilder {
         return mShadowOffsetY;
     }
 
+    public int getLineGravity() {
+        return mLineGravity;
+    }
+
+    public ShapeDrawableBuilder setLineGravity(int gravity) {
+        mLineGravity = gravity;
+        return this;
+    }
+
     public Drawable buildBackgroundDrawable() {
         boolean hasSolidColorState = mSolidPressedColor != null || mSolidCheckedColor != null ||
                 mSolidDisabledColor != null || mSolidFocusedColor != null || mSolidSelectedColor != null;
@@ -583,7 +606,7 @@ public final class ShapeDrawableBuilder {
         boolean hasStrokeColorState = mStrokePressedColor != null || mStrokeCheckedColor != null ||
                 mStrokeDisabledColor != null || mStrokeFocusedColor != null || mStrokeSelectedColor != null;
 
-        if (!isSolidGradientColors() && !isStrokeGradientColors() &&
+        if (!isSolidGradientColorsEnable() && !isStrokeGradientColorsEnable() &&
                 mSolidColor == NO_COLOR && !hasSolidColorState && mStrokeColor == NO_COLOR && !hasStrokeColorState) {
             // 啥都没有设置，直接 return
             return null;
@@ -642,34 +665,46 @@ public final class ShapeDrawableBuilder {
     public void refreshShapeDrawable(ShapeDrawable drawable,
                                      @Nullable Integer solidStateColor,
                                      @Nullable Integer strokeStateColor) {
-        drawable.setShape(mShape)
-                .setSize(mShapeWidth, mShapeHeight)
-                .setRadius(mTopLeftRadius, mTopRightRadius, mBottomLeftRadius, mBottomRightRadius)
-                .setUseLevel(mUseLevel)
-                .setStrokeWidth(mStrokeWidth)
-                .setStrokeDash(mDashWidth, mDashGap);
+        drawable.setType(mType)
+                .setWidth(mWidth)
+                .setHeight(mHeight)
+                .setRadius(mTopLeftRadius, mTopRightRadius,
+                        mBottomLeftRadius, mBottomRightRadius);
 
-        drawable.setGradientAngle(mAngle)
-                .setGradientType(mGradientType)
-                .setGradientRadius(mGradientRadius)
-                .setGradientCenter(mCenterX, mCenterY);
+        drawable.setSolidGradientType(mSolidGradientType)
+                .setSolidGradientOrientation(mSolidGradientOrientation)
+                .setSolidGradientRadius(mSolidGradientRadius)
+                .setSolidGradientCenterX(mSolidGradientCenterX)
+                .setSolidGradientCenterY(mSolidGradientCenterY);
+
+        drawable.setStrokeGradientOrientation(mStrokeGradientOrientation)
+                .setStrokeSize(mStrokeSize)
+                .setStrokeDashSize(mStrokeDashSize)
+                .setStrokeDashGap(mStrokeDashGap);
 
         drawable.setShadowSize(mShadowSize)
                 .setShadowColor(mShadowColor)
                 .setShadowOffsetX(mShadowOffsetX)
                 .setShadowOffsetY(mShadowOffsetY);
 
-        drawable.setInnerRadiusRatio(mInnerRadiusRatio)
-                .setInnerRadius(mInnerRadius)
-                .setThicknessRatio(mThicknessRatio)
-                .setThickness(mThickness);
+        if (mRingInnerRadiusRatio > 0) {
+            drawable.setRingInnerRadiusRatio(mRingInnerRadiusRatio);
+        } else if (mRingInnerRadiusSize > -1) {
+            drawable.setRingInnerRadiusSize(mRingInnerRadiusSize);
+        }
+
+        if (mRingThicknessRatio > 0) {
+            drawable.setRingThicknessRatio(mRingThicknessRatio);
+        } else if (mRingThicknessSize > -1) {
+            drawable.setRingThicknessSize(mRingThicknessSize);
+        }
 
         drawable.setLineGravity(mLineGravity);
 
         // 填充色设置
         if (solidStateColor != null) {
             drawable.setSolidColor(solidStateColor);
-        } else if (isSolidGradientColors()){
+        } else if (isSolidGradientColorsEnable()){
             drawable.setSolidColor(mSolidGradientColors);
         } else {
             drawable.setSolidColor(mSolidColor);
@@ -678,7 +713,7 @@ public final class ShapeDrawableBuilder {
         // 边框色设置
         if (strokeStateColor != null) {
             drawable.setStrokeColor(strokeStateColor);
-        } else if (isStrokeGradientColors()) {
+        } else if (isStrokeGradientColorsEnable()) {
             drawable.setStrokeColor(mStrokeGradientColors);
         } else {
             drawable.setStrokeColor(mStrokeColor);
@@ -696,8 +731,9 @@ public final class ShapeDrawableBuilder {
     public void intoBackground() {
         // 获取到的 Drawable 有可能为空
         Drawable drawable = buildBackgroundDrawable();
-        if (isDashLineEnable() || isShadowEnable()) {
+        if (isStrokeDashLineEnable() || isShadowEnable()) {
             // 需要关闭硬件加速，否则虚线或者阴影在某些手机上面无法生效
+            // https://developer.android.com/guide/topics/graphics/hardware-accel?hl=zh-cn
             mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         mView.setBackground(drawable);

@@ -1,4 +1,4 @@
-package com.hjq.shape.styleable;
+package com.hjq.shape.config;
 
 /**
  *    author : Android 轮子哥
@@ -14,6 +14,16 @@ public interface IShapeDrawableStyleable {
 
     int getShapeHeightStyleable();
 
+    int getRadiusStyleable();
+
+    int getRadiusInTopLeftStyleable();
+
+    int getRadiusInTopRightStyleable();
+
+    int getRadiusInBottomLeftStyleable();
+
+    int getRadiusInBottomRightStyleable();
+
     int getSolidColorStyleable();
 
     int getSolidPressedColorStyleable();
@@ -28,39 +38,21 @@ public interface IShapeDrawableStyleable {
 
     int getSolidSelectedColorStyleable();
 
-    int getRadiusStyleable();
-
-    int getTopLeftRadiusStyleable();
-
-    int getTopRightRadiusStyleable();
-
-    int getBottomLeftRadiusStyleable();
-
-    int getBottomRightRadiusStyleable();
-
     int getSolidStartColorStyleable();
 
     int getSolidCenterColorStyleable();
 
     int getSolidEndColorStyleable();
 
-    int getStrokeStartColorStyleable();
+    int getSolidGradientOrientationStyleable();
 
-    int getStrokeCenterColorStyleable();
+    int getSolidGradientTypeStyleable();
 
-    int getStrokeEndColorStyleable();
+    int getSolidCenterXStyleable();
 
-    int getUseLevelStyleable();
+    int getSolidCenterYStyleable();
 
-    int getAngleStyleable();
-
-    int getGradientTypeStyleable();
-
-    int getCenterXStyleable();
-
-    int getCenterYStyleable();
-
-    int getGradientRadiusStyleable();
+    int getSolidGradientRadiusStyleable();
 
     int getStrokeColorStyleable();
 
@@ -76,11 +68,19 @@ public interface IShapeDrawableStyleable {
 
     int getStrokeSelectedColorStyleable();
 
-    int getStrokeWidthStyleable();
+    int getStrokeStartColorStyleable();
 
-    int getDashWidthStyleable();
+    int getStrokeCenterColorStyleable();
 
-    int getDashGapStyleable();
+    int getStrokeEndColorStyleable();
+
+    int getStrokeGradientOrientationStyleable();
+
+    int getStrokeSizeStyleable();
+
+    int getStrokeDashSizeStyleable();
+
+    int getStrokeDashGapStyleable();
 
     int getShadowSizeStyleable();
 
@@ -90,13 +90,13 @@ public interface IShapeDrawableStyleable {
 
     int getShadowOffsetYStyleable();
 
-    int getInnerRadiusStyleable();
+    int getRingInnerRadiusSizeStyleable();
 
-    int getInnerRadiusRatioStyleable();
+    int getRingInnerRadiusRatioStyleable();
 
-    int getThicknessStyleable();
+    int getRingThicknessSizeStyleable();
 
-    int getThicknessRatioStyleable();
+    int getRingThicknessRatioStyleable();
 
     int getLineGravityStyleable();
 }

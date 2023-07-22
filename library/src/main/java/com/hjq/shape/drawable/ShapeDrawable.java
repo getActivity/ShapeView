@@ -17,6 +17,7 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
 import android.view.Gravity;
@@ -32,7 +33,7 @@ public class ShapeDrawable extends Drawable {
 
     private ShapeState mShapeState;
     
-    private final Paint mFillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint mSolidPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Rect mPadding;
     private final Paint mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);   // optional, set by the caller
     private Paint mShadowPaint;
@@ -47,13 +48,10 @@ public class ShapeDrawable extends Drawable {
     private final Path mShadowPath = new Path();
 
     private Paint mLayerPaint;    // internal, used if we use saveLayer()
-    private boolean mRectIsDirty;   // internal state
+    private boolean mRectDirty;   // internal state
     private boolean mMutated;
     private Path mRingPath;
-    private boolean mPathIsDirty = true;
-
-    /** 布局方向 */
-    private int mLayoutDirection;
+    private boolean mPathDirty = true;
 
     public ShapeDrawable() {
         this(new ShapeState());
@@ -62,7 +60,7 @@ public class ShapeDrawable extends Drawable {
     public ShapeDrawable(ShapeState state) {
         mShapeState = state;
         initializeWithState(state);
-        mRectIsDirty = true;
+        mRectDirty = true;
         mMutated = false;
 
         mStrokePaint.setStyle(Paint.Style.STROKE);
@@ -84,9 +82,13 @@ public class ShapeDrawable extends Drawable {
         return super.getPadding(padding);
     }
 
+    public ShapeDrawable setPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom) {
+        return setPadding(new Rect(paddingLeft, paddingTop, paddingRight, paddingBottom));
+    }
+
     public ShapeDrawable setPadding(Rect padding) {
         mPadding = padding;
-        mPathIsDirty = true;
+        mPathDirty = true;
         invalidateSelf();
         return this;
     }
@@ -96,40 +98,52 @@ public class ShapeDrawable extends Drawable {
      *
      * @param shape         Shape 形状类型
      */
-    public ShapeDrawable setShape(int shape) {
+    public ShapeDrawable setType(@ShapeTypeLimit int shape) {
         mRingPath = null;
-        mShapeState.setShape(shape);
-        mPathIsDirty = true;
+        mShapeState.setType(shape);
+        mPathDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置 Shape 大小
-     *
-     * @param width         Shape 宽度
-     * @param height        Shape 高度
+     * 设置 Shape 宽度
      */
-    public ShapeDrawable setSize(int width, int height) {
-        mShapeState.setSize(width, height);
-        mPathIsDirty = true;
+    public ShapeDrawable setWidth(int width) {
+        mShapeState.width = width;
+        mPathDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 指定渐变角的半径。 如果这 > 0，则可绘制对象将绘制在圆角矩形中，而不是矩形中。 仅当形状为RECTANGLE类型时才使用此属性。
-     * 注意：更改此属性将影响从资源加载的可绘制对象的所有实例。 建议在更改此属性之前调用mutate() 。
-     *
-     * @param radius       矩形角的半径（以像素为单位）
+     * 设置 Shape 高度
+     */
+    public ShapeDrawable setHeight(int height) {
+        mShapeState.height = height;
+        mPathDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置矩形的圆角大小
      */
     public ShapeDrawable setRadius(float radius) {
         mShapeState.setCornerRadius(radius);
-        mPathIsDirty = true;
+        mPathDirty = true;
         invalidateSelf();
         return this;
     }
 
+    /**
+     * 设置矩形的圆角大小
+     *
+     * @param topLeftRadius         左上圆角大小
+     * @param topRightRadius        右上圆角大小
+     * @param bottomLeftRadius      左下圆角大小
+     * @param bottomRightRadius     右下圆角大小
+     */
     public ShapeDrawable setRadius(float topLeftRadius, float topRightRadius, float bottomLeftRadius, float bottomRightRadius) {
         if (topLeftRadius == topRightRadius && topLeftRadius == bottomLeftRadius && topLeftRadius == bottomRightRadius) {
             return setRadius(topLeftRadius);
@@ -138,49 +152,99 @@ public class ShapeDrawable extends Drawable {
         mShapeState.setCornerRadii(new float[] {
                 topLeftRadius, topLeftRadius, topRightRadius, topRightRadius,
                 bottomRightRadius, bottomRightRadius, bottomLeftRadius, bottomLeftRadius});
-        mPathIsDirty = true;
+        mPathDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置填充颜色
+     * 设置填充色
      */
 
-    public ShapeDrawable setSolidColor(int startColor, int endColor) {
+    public ShapeDrawable setSolidColor(@ColorInt int startColor, @ColorInt int endColor) {
         return setSolidColor(new int[] {startColor, endColor});
     }
 
-    public ShapeDrawable setSolidColor(int startColor, int centerColor, int endColor) {
+    public ShapeDrawable setSolidColor(@ColorInt int startColor, @ColorInt int centerColor, @ColorInt int endColor) {
         return setSolidColor(new int[] {startColor, centerColor, endColor});
     }
 
-    public ShapeDrawable setSolidColor(int... colors) {
+    public ShapeDrawable setSolidColor(@ColorInt int... colors) {
         mShapeState.setSolidColor(colors);
         if (colors == null) {
-            mFillPaint.setColor(0);
+            mSolidPaint.setColor(0);
         } else if (colors.length == 1) {
-            mFillPaint.setColor(colors[0]);
-            mFillPaint.clearShadowLayer();
+            mSolidPaint.setColor(colors[0]);
+            mSolidPaint.clearShadowLayer();
         }
-        mRectIsDirty = true;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置边框颜色
+     * 设置填充色渐变类型
+     */
+    public ShapeDrawable setSolidGradientType(@ShapeGradientTypeLimit int type) {
+        mShapeState.setSolidGradientType(type);
+        mRectDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置填充色渐变方向
+     */
+    public ShapeDrawable setSolidGradientOrientation(@ShapeGradientOrientationLimit int orientation) {
+        mShapeState.solidGradientOrientation = orientation;
+        mRectDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置填充色渐变中心 X 点坐标的相对位置（默认值为 0.5）
+     */
+    public ShapeDrawable setSolidGradientCenterX(float centerX) {
+        mShapeState.solidCenterX = centerX;
+        mRectDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置填充色渐变中心 Y 点坐标的相对位置（默认值为 0.5）
+     */
+    public ShapeDrawable setSolidGradientCenterY(float centerY) {
+        mShapeState.solidCenterY = centerY;
+        mRectDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置填充色渐变半径大小
+     */
+    public ShapeDrawable setSolidGradientRadius(float radius) {
+        mShapeState.gradientRadius = radius;
+        mRectDirty = true;
+        invalidateSelf();
+        return this;
+    }
+
+    /**
+     * 设置边框色
      */
 
-    public ShapeDrawable setStrokeColor(int startColor, int endColor) {
+    public ShapeDrawable setStrokeColor(@ColorInt int startColor, @ColorInt int endColor) {
         return setStrokeColor(new int[] {startColor, endColor});
     }
 
-    public ShapeDrawable setStrokeColor(int startColor, int centerColor, int endColor) {
+    public ShapeDrawable setStrokeColor(@ColorInt int startColor, @ColorInt int centerColor, @ColorInt int endColor) {
         return setStrokeColor(new int[] {startColor, centerColor, endColor});
     }
 
-    public ShapeDrawable setStrokeColor(int... colors) {
+    public ShapeDrawable setStrokeColor(@ColorInt int... colors) {
         mShapeState.setStrokeColor(colors);
         if (colors == null) {
             mStrokePaint.setColor(0);
@@ -188,58 +252,52 @@ public class ShapeDrawable extends Drawable {
             mStrokePaint.setColor(colors[0]);
             mStrokePaint.clearShadowLayer();
         }
-        mRectIsDirty = true;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置边框宽度
+     * 设置边框色渐变方向
      */
-    public ShapeDrawable setStrokeWidth(int width) {
-        mShapeState.setStrokeWidth(width);
-        mStrokePaint.setStrokeWidth(width);
-        mRectIsDirty = true;
+    public ShapeDrawable setStrokeGradientOrientation(@ShapeGradientOrientationLimit int orientation) {
+        mShapeState.strokeGradientOrientation = orientation;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置边框虚线宽度及间隔（为 0 就是实线，大于 0 就是虚线）
+     * 设置边框大小
      */
-    public ShapeDrawable setStrokeDash(float dashWidth, float dashGap) {
-        mShapeState.setStrokeDash(dashWidth, dashGap);
-        mStrokePaint.setPathEffect(dashWidth > 0 ? new DashPathEffect(new float[] {dashWidth, dashGap}, 0) : null);
+    public ShapeDrawable setStrokeSize(int size) {
+        mShapeState.setStrokeSize(size);
+        mStrokePaint.setStrokeWidth(size);
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置 Shape 渐变类型
+     * 设置边框每一节虚线宽度
      */
-    public ShapeDrawable setGradientType(int type) {
-        mShapeState.setGradientType(type);
-        mRectIsDirty = true;
+    public ShapeDrawable setStrokeDashSize(float dashSize) {
+        mShapeState.strokeDashSize = dashSize;
+        mStrokePaint.setPathEffect(dashSize > 0 ?
+                new DashPathEffect(new float[] {dashSize, mShapeState.strokeDashGap}, 0) : null);
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置渐变中心位置
+     * 设置边框虚线每一节间隔
      */
-    public ShapeDrawable setGradientCenter(float x, float y) {
-        mShapeState.setGradientCenter(x, y);
-        mRectIsDirty = true;
-        invalidateSelf();
-        return this;
-    }
-
-    /**
-     * 设置渐变半径大小
-     */
-    public ShapeDrawable setGradientRadius(float radius) {
-        mShapeState.setGradientRadius(radius);
-        mRectIsDirty = true;
+    public ShapeDrawable setStrokeDashGap(float dashGap) {
+        mShapeState.strokeDashGap = dashGap;
+        mStrokePaint.setPathEffect(mShapeState.strokeDashSize > 0 ?
+                new DashPathEffect(new float[] {mShapeState.strokeDashSize, dashGap}, 0) : null);
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
@@ -258,68 +316,19 @@ public class ShapeDrawable extends Drawable {
      * @see #getLevel() 
      */
     public ShapeDrawable setUseLevel(boolean useLevel) {
-        mShapeState.mUseLevel = useLevel;
-        mRectIsDirty = true;
+        mShapeState.useLevel = useLevel;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
     
     /**
-     * 设置渐变角度
-     */
-    public ShapeDrawable setGradientAngle(int angle) {
-        angle %= 360;
-        // angle 必须为 45 的整数倍
-        if (angle % 45 == 0) {
-            switch (angle) {
-                case 0:
-                    setGradientOrientation(ShapeGradientOrientation.LEFT_RIGHT);
-                    break;
-                case 45:
-                    setGradientOrientation(ShapeGradientOrientation.BL_TR);
-                    break;
-                case 90:
-                    setGradientOrientation(ShapeGradientOrientation.BOTTOM_TOP);
-                    break;
-                case 135:
-                    setGradientOrientation(ShapeGradientOrientation.BR_TL);
-                    break;
-                case 180:
-                    setGradientOrientation(ShapeGradientOrientation.RIGHT_LEFT);
-                    break;
-                case 225:
-                    setGradientOrientation(ShapeGradientOrientation.TR_BL);
-                    break;
-                case 270:
-                    setGradientOrientation(ShapeGradientOrientation.TOP_BOTTOM);
-                    break;
-                case 315:
-                    setGradientOrientation(ShapeGradientOrientation.TL_BR);
-                    break;
-                default:
-                    break;
-            }
-        }
-        return this;
-    }
-
-    /**
-     * 设置渐变方向
-     */
-    public ShapeDrawable setGradientOrientation(ShapeGradientOrientation orientation) {
-        mShapeState.mGradientOrientation = orientation;
-        mRectIsDirty = true;
-        invalidateSelf();
-        return this;
-    }
-
-    /**
      * 设置阴影颜色
      */
-    public ShapeDrawable setShadowColor(int color) {
-        mShapeState.setShadowColor(color);
-        mPathIsDirty = true;
-        mRectIsDirty = true;
+    public ShapeDrawable setShadowColor(@ColorInt int color) {
+        mShapeState.shadowColor = color;
+        mPathDirty = true;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
@@ -328,9 +337,9 @@ public class ShapeDrawable extends Drawable {
      * 设置阴影大小
      */
     public ShapeDrawable setShadowSize(int size) {
-        mShapeState.setShadowSize(size);
-        mPathIsDirty = true;
-        mRectIsDirty = true;
+        mShapeState.shadowSize = size;
+        mPathDirty = true;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
@@ -339,30 +348,31 @@ public class ShapeDrawable extends Drawable {
      * 设置阴影水平偏移
      */
     public ShapeDrawable setShadowOffsetX(int offsetX) {
-        mShapeState.setShadowOffsetX(offsetX);
-        mPathIsDirty = true;
-        mRectIsDirty = true;
+        mShapeState.shadowOffsetX = offsetX;
+        mPathDirty = true;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 阴影垂直偏移
+     * 设置阴影垂直偏移
      */
     public ShapeDrawable setShadowOffsetY(int offsetY) {
-        mShapeState.setShadowOffsetY(offsetY);
-        mPathIsDirty = true;
-        mRectIsDirty = true;
+        mShapeState.shadowOffsetY = offsetY;
+        mPathDirty = true;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置内环的半径
+     * 设置内环的半径大小
      */
-    public ShapeDrawable setInnerRadius(int radius) {
-        mShapeState.mInnerRadius = radius;
-        mRectIsDirty = true;
+    public ShapeDrawable setRingInnerRadiusSize(int size) {
+        mShapeState.ringInnerRadiusSize = size;
+        mShapeState.ringInnerRadiusRatio = 0;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
@@ -370,19 +380,21 @@ public class ShapeDrawable extends Drawable {
     /**
      * 设置内环的半径比率
      */
-    public ShapeDrawable setInnerRadiusRatio(float radiusRatio) {
-        mShapeState.mInnerRadiusRatio = radiusRatio;
-        mRectIsDirty = true;
+    public ShapeDrawable setRingInnerRadiusRatio(float ratio) {
+        mShapeState.ringInnerRadiusRatio = ratio;
+        mShapeState.ringInnerRadiusSize = -1;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 设置外环的厚度
+     * 设置外环的厚度大小
      */
-    public ShapeDrawable setThickness(int size) {
-        mShapeState.mThickness = size;
-        mRectIsDirty = true;
+    public ShapeDrawable setRingThicknessSize(int size) {
+        mShapeState.ringThicknessSize = size;
+        mShapeState.ringThicknessRatio = 0;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
@@ -390,9 +402,10 @@ public class ShapeDrawable extends Drawable {
     /**
      * 设置外环的厚度比率
      */
-    public ShapeDrawable setThicknessRatio(float radiusRatio) {
-        mShapeState.mThicknessRatio = radiusRatio;
-        mRectIsDirty = true;
+    public ShapeDrawable setRingThicknessRatio(float ratio) {
+        mShapeState.ringThicknessRatio = ratio;
+        mShapeState.ringThicknessSize = -1;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
@@ -401,25 +414,26 @@ public class ShapeDrawable extends Drawable {
      * 设置线条重心
      */
     public ShapeDrawable setLineGravity(int lineGravity) {
-        mShapeState.mLineGravity = lineGravity;
-        mRectIsDirty = true;
+        mShapeState.lineGravity = lineGravity;
+        mRectDirty = true;
         invalidateSelf();
         return this;
     }
 
     /**
-     * 将当前 Drawable 应用到 View 背景
+     * 将当前 Drawable 对象应用到 View 背景
      */
     public void intoBackground(View view) {
-        if (mShapeState.mStrokeDashGap > 0 || mShapeState.mShadowSize > 0) {
+        if (mShapeState.strokeDashGap > 0 || mShapeState.shadowSize > 0) {
             // 需要关闭硬件加速，否则虚线或者阴影在某些手机上面无法生效
             view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         view.setBackground(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            mLayoutDirection = view.getLayoutDirection();
+            // 布局方向
+            int layoutDirection = view.getLayoutDirection();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                setLayoutDirection(mLayoutDirection);
+                setLayoutDirection(layoutDirection);
             }
         }
     }
@@ -434,13 +448,13 @@ public class ShapeDrawable extends Drawable {
 
         // remember the alpha values, in case we temporarily overwrite them
         // when we modulate them with mAlpha
-        final int prevFillAlpha = mFillPaint.getAlpha();
+        final int prevFillAlpha = mSolidPaint.getAlpha();
         final int prevStrokeAlpha = mStrokePaint.getAlpha();
         // compute the modulate alpha values
         final int currFillAlpha = modulateAlpha(prevFillAlpha);
         final int currStrokeAlpha = modulateAlpha(prevStrokeAlpha);
 
-        final boolean haveShadow = mShapeState.mShadowSize > 0;
+        final boolean haveShadow = mShapeState.shadowSize > 0;
         final boolean haveStroke = currStrokeAlpha > 0 && mStrokePaint.getStrokeWidth() > 0;
         final boolean haveFill = currFillAlpha > 0;
         final ShapeState st = mShapeState;
@@ -449,7 +463,7 @@ public class ShapeDrawable extends Drawable {
             fill+stroke. Otherwise we can just draw the stroke (if any) on top
             of the fill (if any) without worrying about blending artifacts.
          */
-         final boolean useLayer = haveStroke && haveFill && st.mShapeType != ShapeType.LINE &&
+         final boolean useLayer = haveStroke && haveFill && st.shapeType != ShapeType.LINE &&
                  currStrokeAlpha < 255 && (mAlpha < 255 || mColorFilter != null);
 
         /*  Drawing with a layer is slower than direct drawing, but it
@@ -469,29 +483,22 @@ public class ShapeDrawable extends Drawable {
             mLayerPaint.setColorFilter(mColorFilter);
 
             float rad = mStrokePaint.getStrokeWidth();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                canvas.saveLayer(mRect.left - rad, mRect.top - rad,
-                        mRect.right + rad, mRect.bottom + rad,
-                        mLayerPaint);
-            } else {
-                canvas.saveLayer(mRect.left - rad, mRect.top - rad,
-                        mRect.right + rad, mRect.bottom + rad,
-                        mLayerPaint, 0x04);
-            }
+            ShapeDrawableUtils.saveCanvasLayer(canvas, mRect.left - rad, mRect.top - rad,
+                    mRect.right + rad, mRect.bottom + rad, mLayerPaint);
 
             // don't perform the filter in our individual paints
             // since the layer will do it for us
-            mFillPaint.setColorFilter(null);
+            mSolidPaint.setColorFilter(null);
             mStrokePaint.setColorFilter(null);
         } else {
             /*  if we're not using a layer, apply the dither/filter to our
                 individual paints
             */
-            mFillPaint.setAlpha(currFillAlpha);
-            mFillPaint.setDither(mDither);
-            mFillPaint.setColorFilter(mColorFilter);
-            if (mColorFilter != null && !mShapeState.mHasSolidColor) {
-                mFillPaint.setColor(mAlpha << 24);
+            mSolidPaint.setAlpha(currFillAlpha);
+            mSolidPaint.setDither(mDither);
+            mSolidPaint.setColorFilter(mColorFilter);
+            if (mColorFilter != null && !mShapeState.hasSolidColor) {
+                mSolidPaint.setColor(mAlpha << 24);
             }
             if (haveStroke) {
                 mStrokePaint.setAlpha(currStrokeAlpha);
@@ -510,18 +517,25 @@ public class ShapeDrawable extends Drawable {
             if (haveStroke) {
                 mShadowPaint.setStrokeWidth(mStrokePaint.getStrokeWidth());
             } else {
-                mShadowPaint.setStrokeWidth(mShapeState.mShadowSize / 4f);
+                mShadowPaint.setStrokeWidth(mShapeState.shadowSize / 4f);
             }
 
-            int shadowColor = mShapeState.mShadowColor;
+            int shadowColor = mShapeState.shadowColor;
             // 如果阴影颜色是非透明的，则需要设置一点透明度进去，否则会显示不出来
-            if (ColorUtils.setAlphaComponent(mShapeState.mShadowColor, 255) == mShapeState.mShadowColor) {
-                shadowColor = ColorUtils.setAlphaComponent(mShapeState.mShadowColor, 254);
+            if (ColorUtils.setAlphaComponent(mShapeState.shadowColor, 255) == mShapeState.shadowColor) {
+                shadowColor = ColorUtils.setAlphaComponent(mShapeState.shadowColor, 254);
             }
 
              mShadowPaint.setColor(shadowColor);
-             // 这里解释一下为什么要阴影大小除以 1.2f，因为如果不这么做会导致阴影显示会超过 View 边界，从而导致出现阴影被截断的效果
-             mShadowPaint.setMaskFilter(new BlurMaskFilter(mShapeState.mShadowSize / 1.2f, BlurMaskFilter.Blur.NORMAL));
+
+             float shadowRadius;
+             // 这里解释一下为什么要阴影大小除以倍数，因为如果不这么做会导致阴影显示会超过 View 边界，从而导致出现阴影被截断的效果
+             if (Build.VERSION.SDK_INT >= 28) {
+                 shadowRadius = mShapeState.shadowSize / 2f;
+             } else {
+                 shadowRadius = mShapeState.shadowSize / 3f;
+             }
+             mShadowPaint.setMaskFilter(new BlurMaskFilter(shadowRadius, BlurMaskFilter.Blur.NORMAL));
 
         } else {
             if (mShadowPaint != null) {
@@ -529,30 +543,30 @@ public class ShapeDrawable extends Drawable {
             }
         }
 
-        switch (st.mShapeType) {
+        switch (st.shapeType) {
             case ShapeType.RECTANGLE:
-                if (st.mRadiusArray != null) {
-                    if (mPathIsDirty || mRectIsDirty) {
+                if (st.radiusArray != null) {
+                    if (mPathDirty || mRectDirty) {
                         mPath.reset();
-                        mPath.addRoundRect(mRect, st.mRadiusArray, Path.Direction.CW);
-                        mPathIsDirty = mRectIsDirty = false;
+                        mPath.addRoundRect(mRect, st.radiusArray, Path.Direction.CW);
+                        mPathDirty = mRectDirty = false;
                     }
                     if (haveShadow) {
                         mShadowPath.reset();
-                        mShadowPath.addRoundRect(mShadowRect, st.mRadiusArray, Path.Direction.CW);
+                        mShadowPath.addRoundRect(mShadowRect, st.radiusArray, Path.Direction.CW);
                         canvas.drawPath(mShadowPath, mShadowPaint);
                     }
-                    canvas.drawPath(mPath, mFillPaint);
+                    canvas.drawPath(mPath, mSolidPaint);
                     if (haveStroke) {
                         canvas.drawPath(mPath, mStrokePaint);
                     }
-                } else if (st.mRadius > 0.0f) {
+                } else if (st.radius > 0.0f) {
                     // since the caller is only giving us 1 value, we will force
                     // it to be square if the rect is too small in one dimension
                     // to show it. If we did nothing, Skia would clamp the rad
                     // independently along each axis, giving us a thin ellipse
                     // if the rect were very wide but not very tall
-                    float rad = st.mRadius;
+                    float rad = st.radius;
                     float r = Math.min(mRect.width(), mRect.height()) * 0.5f;
                     if (rad > r) {
                         rad = r;
@@ -560,7 +574,7 @@ public class ShapeDrawable extends Drawable {
                     if (haveShadow) {
                         canvas.drawRoundRect(mShadowRect, rad, rad, mShadowPaint);
                     }
-                    canvas.drawRoundRect(mRect, rad, rad, mFillPaint);
+                    canvas.drawRoundRect(mRect, rad, rad, mSolidPaint);
                     if (haveStroke) {
                         canvas.drawRoundRect(mRect, rad, rad, mStrokePaint);
                     }
@@ -568,9 +582,9 @@ public class ShapeDrawable extends Drawable {
                     if (haveShadow) {
                         canvas.drawRect(mShadowRect, mShadowPaint);
                     }
-                    if (mFillPaint.getColor() != 0 || mColorFilter != null ||
-                            mFillPaint.getShader() != null) {
-                        canvas.drawRect(mRect, mFillPaint);
+                    if (mSolidPaint.getColor() != 0 || mColorFilter != null ||
+                            mSolidPaint.getShader() != null) {
+                        canvas.drawRect(mRect, mSolidPaint);
                     }
                     if (haveStroke) {
                         canvas.drawRect(mRect, mStrokePaint);
@@ -581,7 +595,7 @@ public class ShapeDrawable extends Drawable {
                 if (haveShadow) {
                     canvas.drawOval(mShadowRect, mShadowPaint);
                 }
-                canvas.drawOval(mRect, mFillPaint);
+                canvas.drawOval(mRect, mSolidPaint);
                 if (haveStroke) {
                     canvas.drawOval(mRect, mStrokePaint);
                 }
@@ -596,9 +610,9 @@ public class ShapeDrawable extends Drawable {
                 Callback callback = getCallback();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && callback instanceof View) {
                     int layoutDirection = ((View) callback).getContext().getResources().getConfiguration().getLayoutDirection();
-                    lineGravity = Gravity.getAbsoluteGravity(st.mLineGravity, layoutDirection);
+                    lineGravity = Gravity.getAbsoluteGravity(st.lineGravity, layoutDirection);
                 } else {
-                    lineGravity = st.mLineGravity;
+                    lineGravity = st.lineGravity;
                 }
 
                 switch (lineGravity) {
@@ -647,7 +661,7 @@ public class ShapeDrawable extends Drawable {
                 if (haveShadow) {
                     canvas.drawPath(path, mShadowPaint);
                 }
-                canvas.drawPath(path, mFillPaint);
+                canvas.drawPath(path, mSolidPaint);
                 if (haveStroke) {
                     canvas.drawPath(path, mStrokePaint);
                 }
@@ -659,7 +673,7 @@ public class ShapeDrawable extends Drawable {
         if (useLayer) {
             canvas.restore();
         } else {
-            mFillPaint.setAlpha(prevFillAlpha);
+            mSolidPaint.setAlpha(prevFillAlpha);
             if (haveStroke) {
                 mStrokePaint.setAlpha(prevStrokeAlpha);
             }
@@ -668,7 +682,7 @@ public class ShapeDrawable extends Drawable {
 
     @Override
     public boolean onLayoutDirectionChanged(int layoutDirection) {
-        return mShapeState.mShapeType == ShapeType.LINE;
+        return mShapeState.shapeType == ShapeType.LINE;
     }
 
     private int modulateAlpha(int alpha) {
@@ -678,7 +692,7 @@ public class ShapeDrawable extends Drawable {
     
     @Override
     public int getChangingConfigurations() {
-        return super.getChangingConfigurations() | mShapeState.mChangingConfigurations;
+        return super.getChangingConfigurations() | mShapeState.changingConfigurations;
     }
 
     @Override
@@ -712,44 +726,44 @@ public class ShapeDrawable extends Drawable {
 
     @Override
     public int getOpacity() {
-        return mShapeState.mOpaque ? PixelFormat.OPAQUE : PixelFormat.TRANSLUCENT;
+        return mShapeState.opaque ? PixelFormat.OPAQUE : PixelFormat.TRANSLUCENT;
     }
 
     @Override
     protected void onBoundsChange(Rect r) {
         super.onBoundsChange(r);
         mRingPath = null;
-        mPathIsDirty = true;
-        mRectIsDirty = true;
+        mPathDirty = true;
+        mRectDirty = true;
     }
 
     @Override
     protected boolean onLevelChange(int level) {
         super.onLevelChange(level);
-        mRectIsDirty = true;
-        mPathIsDirty = true;
+        mRectDirty = true;
+        mPathDirty = true;
         invalidateSelf();
         return true;
     }
 
-    private Path buildRing(ShapeState st) {
-        if (mRingPath != null && (!st.mUseLevelForShape || !mPathIsDirty)) {
+    private Path buildRing(ShapeState shapeState) {
+        if (mRingPath != null && (!shapeState.useLevelForShape || !mPathDirty)) {
             return mRingPath;
         }
-        mPathIsDirty = false;
+        mPathDirty = false;
 
-        float sweep = st.mUseLevelForShape ? (360.0f * getLevel() / 10000.0f) : 360f;
+        float sweep = shapeState.useLevelForShape ? (360.0f * getLevel() / 10000f) : 360f;
 
         RectF bounds = new RectF(mRect);
 
         float x = bounds.width() / 2.0f;
         float y = bounds.height() / 2.0f;
 
-        float thickness = st.mThickness != -1 ?
-                st.mThickness : bounds.width() / st.mThicknessRatio;
+        float thickness = shapeState.ringThicknessSize != -1 ?
+                shapeState.ringThicknessSize : bounds.width() / shapeState.ringThicknessRatio;
         // inner radius
-        float radius = st.mInnerRadius != -1 ?
-                st.mInnerRadius : bounds.width() / st.mInnerRadiusRatio;
+        float radius = shapeState.ringInnerRadiusSize != -1 ?
+                shapeState.ringInnerRadiusSize : bounds.width() / shapeState.ringInnerRadiusRatio;
 
         RectF innerBounds = new RectF(bounds);
         innerBounds.inset(x - radius, y - radius);
@@ -793,194 +807,136 @@ public class ShapeDrawable extends Drawable {
      * @return true if the resulting rectangle is not empty, false otherwise
      */
     private boolean ensureValidRect() {
-        if (mRectIsDirty) {
-            mRectIsDirty = false;
+        if (!mRectDirty) {
+            return !mRect.isEmpty();
+        }
 
-            Rect bounds = getBounds();
-            float inset = mStrokePaint.getStrokeWidth() * 0.5f;
+        mRectDirty = false;
 
-            final ShapeState st = mShapeState;
+        Rect bounds = getBounds();
+        float inset = mStrokePaint.getStrokeWidth() * 0.5f;
 
-            float let = bounds.left + inset + mShapeState.mShadowSize;
-            float top = bounds.top + inset + mShapeState.mShadowSize;
-            float right = bounds.right - inset - mShapeState.mShadowSize;
-            float bottom = bounds.bottom - inset - mShapeState.mShadowSize;
+        final ShapeState st = mShapeState;
 
-            mRect.set(let, top, right, bottom);
+        float let = bounds.left + inset + mShapeState.shadowSize;
+        float top = bounds.top + inset + mShapeState.shadowSize;
+        float right = bounds.right - inset - mShapeState.shadowSize;
+        float bottom = bounds.bottom - inset - mShapeState.shadowSize;
 
-            float shadowLet;
-            float shadowTop;
-            float shadowRight;
-            float shadowBottom;
+        mRect.set(let, top, right, bottom);
 
-            if (mShapeState.mShadowOffsetX > 0) {
-                shadowLet = let + mShapeState.mShadowOffsetX;
-                shadowRight = right;
-            } else {
-                shadowLet = let;
-                shadowRight = right + mShapeState.mShadowOffsetX;
-            }
+        float shadowLet;
+        float shadowTop;
+        float shadowRight;
+        float shadowBottom;
 
-            if (mShapeState.mShadowOffsetY > 0) {
-                shadowTop = top + mShapeState.mShadowOffsetY;
-                shadowBottom = bottom;
-            } else {
-                shadowTop = top;
-                shadowBottom = bottom + mShapeState.mShadowOffsetY;
-            }
+        if (mShapeState.shadowOffsetX > 0) {
+            shadowLet = let + mShapeState.shadowOffsetX;
+            shadowRight = right;
+        } else {
+            shadowLet = let;
+            shadowRight = right + mShapeState.shadowOffsetX;
+        }
 
-            mShadowRect.set(shadowLet, shadowTop, shadowRight, shadowBottom);
+        if (mShapeState.shadowOffsetY > 0) {
+            shadowTop = top + mShapeState.shadowOffsetY;
+            shadowBottom = bottom;
+        } else {
+            shadowTop = top;
+            shadowBottom = bottom + mShapeState.shadowOffsetY;
+        }
 
-            if (st.mSolidColors == null) {
-                mFillPaint.setShader(null);
-            }
+        mShadowRect.set(shadowLet, shadowTop, shadowRight, shadowBottom);
 
-            if (st.mStrokeColors == null) {
-                mStrokePaint.setShader(null);
-            }
+        if (st.solidColors == null) {
+            mSolidPaint.setShader(null);
+        }
 
-            if (st.mSolidColors != null || st.mStrokeColors != null) {
-                RectF r = mRect;
-                float x0, x1, y0, y1;
+        if (st.strokeColors == null) {
+            mStrokePaint.setShader(null);
+        }
 
-                if (st.mGradientType == ShapeGradientType.LINEAR_GRADIENT) {
-                    final float level = st.mUseLevel ? (float) getLevel() / 10000.0f : 1.0f;                    
-                    switch (st.mGradientOrientation) {
-                    case TOP_BOTTOM:
-                        x0 = r.left;            y0 = r.top;
-                        x1 = x0;                y1 = level * r.bottom;
-                        break;
-                    case TR_BL:
-                        x0 = r.right;           y0 = r.top;
-                        x1 = level * r.left;    y1 = level * r.bottom;
-                        break;
-                    case RIGHT_LEFT:
-                        x0 = r.right;           y0 = r.top;
-                        x1 = level * r.left;    y1 = y0;
-                        break;
-                    case BR_TL:
-                        x0 = r.right;           y0 = r.bottom;
-                        x1 = level * r.left;    y1 = level * r.top;
-                        break;
-                    case BOTTOM_TOP:
-                        x0 = r.left;            y0 = r.bottom;
-                        x1 = x0;                y1 = level * r.top;
-                        break;
-                    case BL_TR:
-                        x0 = r.left;            y0 = r.bottom;
-                        x1 = level * r.right;   y1 = level * r.top;
-                        break;
-                    case LEFT_RIGHT:
-                        x0 = r.left;            y0 = r.top;
-                        x1 = level * r.right;   y1 = y0;
-                        break;
-                    default:/* TL_BR */
-                        x0 = r.left;            y0 = r.top;
-                        x1 = level * r.right;   y1 = level * r.bottom;
-                        break;
-                    }
+        if (st.solidColors != null) {
+            RectF rect = mRect;
 
-                    if (st.mSolidColors != null) {
-                        mFillPaint.setShader(new LinearGradient(x0, y0, x1, y1,
-                                st.mSolidColors, st.mPositions, Shader.TileMode.CLAMP));
-                    }
-                    if (st.mStrokeColors != null) {
-                        mStrokePaint.setShader(new LinearGradient(x0, y0, x1, y1,
-                                st.mStrokeColors, st.mPositions, Shader.TileMode.CLAMP));
-                    }
+            switch (st.solidGradientType) {
+                case ShapeGradientType.LINEAR_GRADIENT: {
+                    final float level = st.useLevel ? getLevel() / 10000f : 1f;
+                    float[] coordinate = ShapeDrawableUtils.computeLinearGradientCoordinate(
+                            mRect, level, st.solidGradientOrientation);
+                    mSolidPaint.setShader(new LinearGradient(coordinate[0], coordinate[1], coordinate[2], coordinate[3],
+                            st.solidColors, st.positions, Shader.TileMode.CLAMP));
+                    break;
+                }
+                case ShapeGradientType.RADIAL_GRADIENT: {
+                    float x0;
+                    float y0;
+                    x0 = rect.left + (rect.right - rect.left) * st.solidCenterX;
+                    y0 = rect.top + (rect.bottom - rect.top) * st.solidCenterY;
 
-                } else if (st.mGradientType == ShapeGradientType.RADIAL_GRADIENT) {
-                    x0 = r.left + (r.right - r.left) * st.mCenterX;
-                    y0 = r.top + (r.bottom - r.top) * st.mCenterY;
+                    final float level = st.useLevel ? getLevel() / 10000f : 1f;
 
-                    final float level = st.mUseLevel ? (float) getLevel() / 10000.0f : 1.0f;
+                    mSolidPaint.setShader(new RadialGradient(x0, y0,
+                            level * st.gradientRadius, st.solidColors, null,
+                            Shader.TileMode.CLAMP));
+                    break;
+                }
+                case ShapeGradientType.SWEEP_GRADIENT: {
+                    float x0;
+                    float y0;
 
-                    if (st.mSolidColors != null) {
-                        mFillPaint.setShader(new RadialGradient(x0, y0,
-                                level * st.mGradientRadius, st.mSolidColors, null,
-                                Shader.TileMode.CLAMP));
-                    }
-                    if (st.mStrokeColors != null) {
-                        mStrokePaint.setShader(new RadialGradient(x0, y0,
-                                level * st.mGradientRadius, st.mStrokeColors, null,
-                                Shader.TileMode.CLAMP));
-                    }
+                    x0 = rect.left + (rect.right - rect.left) * st.solidCenterX;
+                    y0 = rect.top + (rect.bottom - rect.top) * st.solidCenterY;
 
-                } else if (st.mGradientType == ShapeGradientType.SWEEP_GRADIENT) {
-                    x0 = r.left + (r.right - r.left) * st.mCenterX;
-                    y0 = r.top + (r.bottom - r.top) * st.mCenterY;
+                    int[] tempSolidColors = st.solidColors;
+                    float[] tempSolidPositions = null;
 
-                    if (st.mSolidColors != null) {
-
-                        int[] tempSolidColors = st.mSolidColors;
-                        float[] tempSolidPositions = null;
-
-                        if (st.mUseLevel) {
-                            tempSolidColors = st.mTempSolidColors;
-                            final int length = st.mSolidColors.length;
-                            if (tempSolidColors == null || tempSolidColors.length != length + 1) {
-                                tempSolidColors = st.mTempSolidColors = new int[length + 1];
-                            }
-                            System.arraycopy(st.mSolidColors, 0, tempSolidColors, 0, length);
-                            tempSolidColors[length] = st.mSolidColors[length - 1];
+                    if (st.useLevel) {
+                        tempSolidColors = st.tempSolidColors;
+                        final int length = st.solidColors.length;
+                        if (tempSolidColors == null || tempSolidColors.length != length + 1) {
+                            tempSolidColors = st.tempSolidColors = new int[length + 1];
+                        }
+                        System.arraycopy(st.solidColors, 0, tempSolidColors, 0, length);
+                        tempSolidColors[length] = st.solidColors[length - 1];
 
 
-                            tempSolidPositions = st.mTempSolidPositions;
-                            final float fraction = 1.0f / (float) (length - 1);
-                            if (tempSolidPositions == null || tempSolidPositions.length != length + 1) {
-                                tempSolidPositions = st.mTempSolidPositions = new float[length + 1];
-                            }
-
-                            final float level = (float) getLevel() / 10000.0f;
-                            for (int i = 0; i < length; i++) {
-                                tempSolidPositions[i] = i * fraction * level;
-                            }
-                            tempSolidPositions[length] = 1.0f;
+                        tempSolidPositions = st.tempSolidPositions;
+                        final float fraction = 1f / (length - 1);
+                        if (tempSolidPositions == null || tempSolidPositions.length != length + 1) {
+                            tempSolidPositions = st.tempSolidPositions = new float[length + 1];
                         }
 
-                        mFillPaint.setShader(new SweepGradient(x0, y0, tempSolidColors, tempSolidPositions));
-                    }
-
-
-                    if (st.mStrokeColors != null) {
-                        int[] tempStrokeColors = st.mStrokeColors;
-                        float[] tempStrokePositions = null;
-
-                        if (st.mUseLevel) {
-                            tempStrokeColors = st.mTempStrokeColors;
-                            final int length = st.mStrokeColors.length;
-                            if (tempStrokeColors == null || tempStrokeColors.length != length + 1) {
-                                tempStrokeColors = st.mTempStrokeColors = new int[length + 1];
-                            }
-                            System.arraycopy(st.mStrokeColors, 0, tempStrokeColors, 0, length);
-                            tempStrokeColors[length] = st.mStrokeColors[length - 1];
-
-                            tempStrokePositions = st.mTempStrokePositions;
-                            final float fraction = 1.0f / (float) (length - 1);
-                            if (tempStrokePositions == null || tempStrokePositions.length != length + 1) {
-                                tempStrokePositions = st.mTempStrokePositions = new float[length + 1];
-                            }
-
-                            final float level = (float) getLevel() / 10000.0f;
-                            for (int i = 0; i < length; i++) {
-                                tempStrokePositions[i] = i * fraction * level;
-                            }
-                            tempStrokePositions[length] = 1.0f;
+                        final float level = getLevel() / 10000f;
+                        for (int i = 0; i < length; i++) {
+                            tempSolidPositions[i] = i * fraction * level;
                         }
-
-                        mStrokePaint.setShader(new SweepGradient(x0, y0, tempStrokeColors, tempStrokePositions));
+                        tempSolidPositions[length] = 1f;
                     }
-                }
 
-                // If we don't have a solid color, the alpha channel must be
-                // maxed out so that alpha modulation works correctly.
-                if (!st.mHasSolidColor) {
-                    mFillPaint.setColor(Color.BLACK);
+                    mSolidPaint.setShader(new SweepGradient(x0, y0, tempSolidColors, tempSolidPositions));
+                    break;
                 }
+                default:
+                    break;
+            }
 
-                if (!st.mHasStrokeColor) {
-                    mStrokePaint.setColor(Color.BLACK);
-                }
+            // If we don't have a solid color, the alpha channel must be
+            // maxed out so that alpha modulation works correctly.
+            if (!st.hasSolidColor) {
+                mSolidPaint.setColor(Color.BLACK);
+            }
+        }
+
+        if (st.strokeColors != null) {
+            final float level = st.useLevel ? getLevel() / 10000f : 1f;
+            float[] coordinate = ShapeDrawableUtils.computeLinearGradientCoordinate(
+                    mRect, level, st.strokeGradientOrientation);
+            mStrokePaint.setShader(new LinearGradient(coordinate[0], coordinate[1], coordinate[2], coordinate[3],
+                    st.strokeColors, st.positions, Shader.TileMode.CLAMP));
+
+            if (!st.hasStrokeColor) {
+                mStrokePaint.setColor(Color.BLACK);
             }
         }
         return !mRect.isEmpty();
@@ -988,17 +944,17 @@ public class ShapeDrawable extends Drawable {
 
     @Override
     public int getIntrinsicWidth() {
-        return mShapeState.mWidth;
+        return mShapeState.width;
     }
 
     @Override
     public int getIntrinsicHeight() {
-        return mShapeState.mHeight;
+        return mShapeState.height;
     }
     
     @Override
     public ConstantState getConstantState() {
-        mShapeState.mChangingConfigurations = getChangingConfigurations();
+        mShapeState.changingConfigurations = getChangingConfigurations();
         return mShapeState;
     }
 
@@ -1014,26 +970,27 @@ public class ShapeDrawable extends Drawable {
     }
 
     private void initializeWithState(ShapeState state) {
-        if (state.mHasSolidColor) {
-            mFillPaint.setColor(state.mSolidColor);
-        } else if (state.mSolidColors == null) {
+        if (state.hasSolidColor) {
+            mSolidPaint.setColor(state.solidColor);
+        } else if (state.solidColors == null) {
             // If we don't have a solid color and we don't have a gradient,
             // the app is stroking the shape, set the color to the default
-            // value of state.mSolidColor
-            mFillPaint.setColor(0);
+            // value of state.solidColor
+            mSolidPaint.setColor(0);
         } else {
             // Otherwise, make sure the fill alpha is maxed out.
-            mFillPaint.setColor(Color.BLACK);
+            mSolidPaint.setColor(Color.BLACK);
         }
-        mPadding = state.mPadding;
-        if (state.mStrokeWidth >= 0) {
-            if (state.mHasStrokeColor) {
-                setStrokeColor(state.mStrokeColor);
+        mPadding = state.padding;
+        if (state.strokeSize >= 0) {
+            if (state.hasStrokeColor) {
+                setStrokeColor(state.strokeColor);
             } else {
-                setStrokeColor(state.mStrokeColors);
+                setStrokeColor(state.strokeColors);
             }
-            setStrokeWidth(state.mStrokeWidth);
-            setStrokeDash(state.mStrokeDashWidth, state.mStrokeDashGap);
+            setStrokeSize(state.strokeSize);
+            setStrokeDashSize(state.strokeDashSize);
+            setStrokeDashGap(state.strokeDashGap);
         }
     }
 }

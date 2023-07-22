@@ -10,6 +10,9 @@ import com.hjq.shape.R;
 import com.hjq.shape.builder.ButtonDrawableBuilder;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
 import com.hjq.shape.builder.TextColorBuilder;
+import com.hjq.shape.config.IGetButtonDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
+import com.hjq.shape.config.IGetTextColorBuilder;
 import com.hjq.shape.styleable.ShapeCheckBoxStyleable;
 
 /**
@@ -18,7 +21,8 @@ import com.hjq.shape.styleable.ShapeCheckBoxStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 CheckBox
  */
-public class ShapeCheckBox extends AppCompatCheckBox {
+public class ShapeCheckBox extends AppCompatCheckBox implements
+        IGetShapeDrawableBuilder, IGetTextColorBuilder, IGetButtonDrawableBuilder {
 
     private static final ShapeCheckBoxStyleable STYLEABLE = new ShapeCheckBoxStyleable();
 
@@ -37,7 +41,7 @@ public class ShapeCheckBox extends AppCompatCheckBox {
     public ShapeCheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeCheckBox);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeCheckBox, 0, R.style.ShapeCheckBoxStyle);
         mShapeDrawableBuilder = new ShapeDrawableBuilder(this, typedArray, STYLEABLE);
         mTextColorBuilder = new TextColorBuilder(this, typedArray, STYLEABLE);
         mButtonDrawableBuilder = new ButtonDrawableBuilder(this, typedArray, STYLEABLE);
@@ -45,7 +49,7 @@ public class ShapeCheckBox extends AppCompatCheckBox {
 
         mShapeDrawableBuilder.intoBackground();
 
-        if (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor()) {
+        if (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable()) {
             setText(getText());
         } else {
             mTextColorBuilder.intoTextColor();
@@ -66,7 +70,7 @@ public class ShapeCheckBox extends AppCompatCheckBox {
     @Override
     public void setText(CharSequence text, BufferType type) {
         if (mTextColorBuilder != null &&
-                (mTextColorBuilder.isTextGradientColors() || mTextColorBuilder.isTextStrokeColor())) {
+                (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable())) {
             super.setText(mTextColorBuilder.buildTextSpannable(text), type);
         } else {
             super.setText(text, type);
@@ -82,14 +86,17 @@ public class ShapeCheckBox extends AppCompatCheckBox {
         mButtonDrawableBuilder.setButtonDrawable(drawable);
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }
 
+    @Override
     public TextColorBuilder getTextColorBuilder() {
         return mTextColorBuilder;
     }
 
+    @Override
     public ButtonDrawableBuilder getButtonDrawableBuilder() {
         return mButtonDrawableBuilder;
     }

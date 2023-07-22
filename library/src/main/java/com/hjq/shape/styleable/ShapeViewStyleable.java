@@ -1,6 +1,7 @@
 package com.hjq.shape.styleable;
 
 import com.hjq.shape.R;
+import com.hjq.shape.config.IShapeDrawableStyleable;
 
 /**
  *    author : Android 轮子哥
@@ -16,7 +17,7 @@ public final class ShapeViewStyleable implements IShapeDrawableStyleable {
 
     @Override
     public int getShapeTypeStyleable() {
-        return R.styleable.ShapeView_shape;
+        return R.styleable.ShapeView_shape_type;
     }
 
     @Override
@@ -27,6 +28,31 @@ public final class ShapeViewStyleable implements IShapeDrawableStyleable {
     @Override
     public int getShapeHeightStyleable() {
         return R.styleable.ShapeView_shape_height;
+    }
+
+    @Override
+    public int getRadiusStyleable() {
+        return R.styleable.ShapeView_shape_radius;
+    }
+
+    @Override
+    public int getRadiusInTopLeftStyleable() {
+        return R.styleable.ShapeView_shape_radiusInTopLeft;
+    }
+
+    @Override
+    public int getRadiusInTopRightStyleable() {
+        return R.styleable.ShapeView_shape_radiusInTopRight;
+    }
+
+    @Override
+    public int getRadiusInBottomLeftStyleable() {
+        return R.styleable.ShapeView_shape_radiusInBottomLeft;
+    }
+
+    @Override
+    public int getRadiusInBottomRightStyleable() {
+        return R.styleable.ShapeView_shape_radiusInBottomRight;
     }
 
     @Override
@@ -55,88 +81,43 @@ public final class ShapeViewStyleable implements IShapeDrawableStyleable {
     }
 
     @Override
-    public int getRadiusStyleable() {
-        return R.styleable.ShapeView_shape_radius;
-    }
-
-    @Override
-    public int getTopLeftRadiusStyleable() {
-        return R.styleable.ShapeView_shape_topLeftRadius;
-    }
-
-    @Override
-    public int getTopRightRadiusStyleable() {
-        return R.styleable.ShapeView_shape_topRightRadius;
-    }
-
-    @Override
-    public int getBottomLeftRadiusStyleable() {
-        return R.styleable.ShapeView_shape_bottomLeftRadius;
-    }
-
-    @Override
-    public int getBottomRightRadiusStyleable() {
-        return R.styleable.ShapeView_shape_bottomRightRadius;
-    }
-
-    @Override
     public int getSolidStartColorStyleable() {
-        return R.styleable.ShapeView_shape_startColor;
+        return R.styleable.ShapeView_shape_solidStartColor;
     }
 
     @Override
     public int getSolidCenterColorStyleable() {
-        return R.styleable.ShapeView_shape_centerColor;
+        return R.styleable.ShapeView_shape_solidCenterColor;
     }
 
     @Override
     public int getSolidEndColorStyleable() {
-        return R.styleable.ShapeView_shape_endColor;
+        return R.styleable.ShapeView_shape_solidEndColor;
     }
 
     @Override
-    public int getStrokeStartColorStyleable() {
-        return R.styleable.ShapeView_shape_strokeStartColor;
+    public int getSolidGradientOrientationStyleable() {
+        return R.styleable.ShapeView_shape_solidGradientOrientation;
     }
 
     @Override
-    public int getStrokeCenterColorStyleable() {
-        return R.styleable.ShapeView_shape_strokeCenterColor;
+    public int getSolidGradientTypeStyleable() {
+        return R.styleable.ShapeView_shape_solidGradientType;
     }
 
     @Override
-    public int getStrokeEndColorStyleable() {
-        return R.styleable.ShapeView_shape_strokeEndColor;
+    public int getSolidCenterXStyleable() {
+        return R.styleable.ShapeView_shape_solidCenterX;
     }
 
     @Override
-    public int getUseLevelStyleable() {
-        return R.styleable.ShapeView_shape_useLevel;
+    public int getSolidCenterYStyleable() {
+        return R.styleable.ShapeView_shape_solidCenterY;
     }
 
     @Override
-    public int getAngleStyleable() {
-        return R.styleable.ShapeView_shape_angle;
-    }
-
-    @Override
-    public int getGradientTypeStyleable() {
-        return R.styleable.ShapeView_shape_gradientType;
-    }
-
-    @Override
-    public int getCenterXStyleable() {
-        return R.styleable.ShapeView_shape_centerX;
-    }
-
-    @Override
-    public int getCenterYStyleable() {
-        return R.styleable.ShapeView_shape_centerY;
-    }
-
-    @Override
-    public int getGradientRadiusStyleable() {
-        return R.styleable.ShapeView_shape_gradientRadius;
+    public int getSolidGradientRadiusStyleable() {
+        return R.styleable.ShapeView_shape_solidGradientRadius;
     }
 
     @Override
@@ -165,18 +146,38 @@ public final class ShapeViewStyleable implements IShapeDrawableStyleable {
     }
 
     @Override
-    public int getStrokeWidthStyleable() {
-        return R.styleable.ShapeView_shape_strokeWidth;
+    public int getStrokeStartColorStyleable() {
+        return R.styleable.ShapeView_shape_strokeStartColor;
     }
 
     @Override
-    public int getDashWidthStyleable() {
-        return R.styleable.ShapeView_shape_dashWidth;
+    public int getStrokeCenterColorStyleable() {
+        return R.styleable.ShapeView_shape_strokeCenterColor;
     }
 
     @Override
-    public int getDashGapStyleable() {
-        return R.styleable.ShapeView_shape_dashGap;
+    public int getStrokeEndColorStyleable() {
+        return R.styleable.ShapeView_shape_strokeEndColor;
+    }
+
+    @Override
+    public int getStrokeGradientOrientationStyleable() {
+        return R.styleable.ShapeView_shape_strokeGradientOrientation;
+    }
+
+    @Override
+    public int getStrokeSizeStyleable() {
+        return R.styleable.ShapeView_shape_strokeSize;
+    }
+
+    @Override
+    public int getStrokeDashSizeStyleable() {
+        return R.styleable.ShapeView_shape_strokeDashSize;
+    }
+
+    @Override
+    public int getStrokeDashGapStyleable() {
+        return R.styleable.ShapeView_shape_strokeDashGap;
     }
 
     @Override
@@ -200,23 +201,23 @@ public final class ShapeViewStyleable implements IShapeDrawableStyleable {
     }
 
     @Override
-    public int getInnerRadiusStyleable() {
-        return R.styleable.ShapeView_shape_innerRadius;
+    public int getRingInnerRadiusSizeStyleable() {
+        return R.styleable.ShapeView_shape_ringInnerRadiusSize;
     }
 
     @Override
-    public int getInnerRadiusRatioStyleable() {
-        return R.styleable.ShapeView_shape_innerRadiusRatio;
+    public int getRingInnerRadiusRatioStyleable() {
+        return R.styleable.ShapeView_shape_ringInnerRadiusRatio;
     }
 
     @Override
-    public int getThicknessStyleable() {
-        return R.styleable.ShapeView_shape_thickness;
+    public int getRingThicknessSizeStyleable() {
+        return R.styleable.ShapeView_shape_ringThicknessSize;
     }
 
     @Override
-    public int getThicknessRatioStyleable() {
-        return R.styleable.ShapeView_shape_thicknessRatio;
+    public int getRingThicknessRatioStyleable() {
+        return R.styleable.ShapeView_shape_ringThicknessRatio;
     }
 
     @Override

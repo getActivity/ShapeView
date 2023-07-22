@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.styleable.ShapeImageViewStyleable;
 
 /**
@@ -15,7 +16,7 @@ import com.hjq.shape.styleable.ShapeImageViewStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 ImageView
  */
-public class ShapeImageView extends AppCompatImageView {
+public class ShapeImageView extends AppCompatImageView implements IGetShapeDrawableBuilder {
 
     private static final ShapeImageViewStyleable STYLEABLE = new ShapeImageViewStyleable();
 
@@ -39,6 +40,7 @@ public class ShapeImageView extends AppCompatImageView {
         mShapeDrawableBuilder.intoBackground();
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }

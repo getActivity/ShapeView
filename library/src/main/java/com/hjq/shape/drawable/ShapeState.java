@@ -13,96 +13,99 @@ import android.view.Gravity;
  */
 public class ShapeState extends Drawable.ConstantState {
 
-    public int mChangingConfigurations;
-    public int mShapeType = ShapeType.RECTANGLE;
-    public int mGradientType = ShapeGradientType.LINEAR_GRADIENT;
-    public ShapeGradientOrientation mGradientOrientation = ShapeGradientOrientation.TOP_BOTTOM;
-    public int[] mSolidColors;
-    public int[] mStrokeColors;
-    public int[] mTempSolidColors; // no need to copy
-    public int[] mTempStrokeColors; // no need to copy
-    public float[] mTempSolidPositions; // no need to copy
-    public float[] mTempStrokePositions; // no need to copy
-    public float[] mPositions;
-    public boolean mHasSolidColor;
-    public boolean mHasStrokeColor;
-    public int mSolidColor;
-    public int mStrokeWidth = -1;   // if >= 0 use stroking.
-    public int mStrokeColor;
-    public float mStrokeDashWidth;
-    public float mStrokeDashGap;
-    public float mRadius;    // use this if mRadiusArray is null
-    public float[] mRadiusArray;
-    public Rect mPadding;
-    public int mWidth = -1;
-    public int mHeight = -1;
-    public float mInnerRadiusRatio;
-    public float mThicknessRatio;
-    public int mInnerRadius;
-    public int mThickness;
-    public float mCenterX = 0.5f;
-    public float mCenterY = 0.5f;
-    public float mGradientRadius = 0.5f;
-    public boolean mUseLevel;
-    public boolean mUseLevelForShape;
-    public boolean mOpaque;
+    public int changingConfigurations;
+    @ShapeTypeLimit
+    public int shapeType = ShapeType.RECTANGLE;
+    @ShapeGradientTypeLimit
+    public int solidGradientType = ShapeGradientType.LINEAR_GRADIENT;
+    @ShapeGradientOrientationLimit
+    public int solidGradientOrientation = ShapeGradientOrientation.TOP_TO_BOTTOM;
+    public int[] solidColors;
+    public int[] strokeColors;
+    public int[] tempSolidColors; // no need to copy
+    public float[] tempSolidPositions; // no need to copy
+    public float[] positions;
+    public boolean hasSolidColor;
+    public boolean hasStrokeColor;
+    public int solidColor;
+    public int strokeSize = -1;   // if >= 0 use stroking.
+    @ShapeGradientOrientationLimit
+    public int strokeGradientOrientation = ShapeGradientOrientation.TOP_TO_BOTTOM;
+    public int strokeColor;
+    public float strokeDashSize;
+    public float strokeDashGap;
+    public float radius;    // use this if mRadiusArray is null
+    public float[] radiusArray;
+    public Rect padding;
+    public int width = -1;
+    public int height = -1;
+    public float ringInnerRadiusRatio;
+    public float ringThicknessRatio;
+    public int ringInnerRadiusSize = -1;
+    public int ringThicknessSize = -1;
+    public float solidCenterX = 0.5f;
+    public float solidCenterY = 0.5f;
+    public float gradientRadius = 0.5f;
+    public boolean useLevel;
+    public boolean useLevelForShape;
+    public boolean opaque;
 
-    public int mShadowSize;
-    public int mShadowColor;
-    public int mShadowOffsetX;
-    public int mShadowOffsetY;
+    public int shadowSize;
+    public int shadowColor;
+    public int shadowOffsetX;
+    public int shadowOffsetY;
 
-    public int mLineGravity = Gravity.CENTER;
+    public int lineGravity = Gravity.CENTER;
 
     public ShapeState() {}
 
     public ShapeState(ShapeState state) {
-        mChangingConfigurations = state.mChangingConfigurations;
-        mShapeType = state.mShapeType;
-        mGradientType = state.mGradientType;
-        mGradientOrientation = state.mGradientOrientation;
-        if (state.mSolidColors != null) {
-            mSolidColors = state.mSolidColors.clone();
+        changingConfigurations = state.changingConfigurations;
+        shapeType = state.shapeType;
+        solidGradientType = state.solidGradientType;
+        solidGradientOrientation = state.solidGradientOrientation;
+        if (state.solidColors != null) {
+            solidColors = state.solidColors.clone();
         }
-        if (state.mStrokeColors != null) {
-            mStrokeColors = state.mStrokeColors.clone();
+        if (state.strokeColors != null) {
+            strokeColors = state.strokeColors.clone();
         }
-        if (state.mPositions != null) {
-            mPositions = state.mPositions.clone();
+        if (state.positions != null) {
+            positions = state.positions.clone();
         }
-        mHasSolidColor = state.mHasSolidColor;
-        mHasStrokeColor = state.mHasStrokeColor;
-        mSolidColor = state.mSolidColor;
-        mStrokeWidth = state.mStrokeWidth;
-        mStrokeColor = state.mStrokeColor;
-        mStrokeDashWidth = state.mStrokeDashWidth;
-        mStrokeDashGap = state.mStrokeDashGap;
-        mRadius = state.mRadius;
-        if (state.mRadiusArray != null) {
-            mRadiusArray = state.mRadiusArray.clone();
+        hasSolidColor = state.hasSolidColor;
+        hasStrokeColor = state.hasStrokeColor;
+        solidColor = state.solidColor;
+        strokeSize = state.strokeSize;
+        strokeColor = state.strokeColor;
+        strokeDashSize = state.strokeDashSize;
+        strokeDashGap = state.strokeDashGap;
+        radius = state.radius;
+        if (state.radiusArray != null) {
+            radiusArray = state.radiusArray.clone();
         }
-        if (state.mPadding != null) {
-            mPadding = new Rect(state.mPadding);
+        if (state.padding != null) {
+            padding = new Rect(state.padding);
         }
-        mWidth = state.mWidth;
-        mHeight = state.mHeight;
-        mInnerRadiusRatio = state.mInnerRadiusRatio;
-        mThicknessRatio = state.mThicknessRatio;
-        mInnerRadius = state.mInnerRadius;
-        mThickness = state.mThickness;
-        mCenterX = state.mCenterX;
-        mCenterY = state.mCenterY;
-        mGradientRadius = state.mGradientRadius;
-        mUseLevel = state.mUseLevel;
-        mUseLevelForShape = state.mUseLevelForShape;
-        mOpaque = state.mOpaque;
+        width = state.width;
+        height = state.height;
+        ringInnerRadiusRatio = state.ringInnerRadiusRatio;
+        ringThicknessRatio = state.ringThicknessRatio;
+        ringInnerRadiusSize = state.ringInnerRadiusSize;
+        ringThicknessSize = state.ringThicknessSize;
+        solidCenterX = state.solidCenterX;
+        solidCenterY = state.solidCenterY;
+        gradientRadius = state.gradientRadius;
+        useLevel = state.useLevel;
+        useLevelForShape = state.useLevelForShape;
+        opaque = state.opaque;
 
-        mShadowSize = state.mShadowSize;
-        mShadowColor = state.mShadowColor;
-        mShadowOffsetX = state.mShadowOffsetX;
-        mShadowOffsetY = state.mShadowOffsetY;
+        shadowSize = state.shadowSize;
+        shadowColor = state.shadowColor;
+        shadowOffsetX = state.shadowOffsetX;
+        shadowOffsetY = state.shadowOffsetY;
 
-        mLineGravity = state.mLineGravity;
+        lineGravity = state.lineGravity;
     }
 
     @Override
@@ -117,134 +120,123 @@ public class ShapeState extends Drawable.ConstantState {
 
     @Override
     public int getChangingConfigurations() {
-        return mChangingConfigurations;
+        return changingConfigurations;
     }
 
-    public void setShape(int shape) {
-        mShapeType = shape;
+    public void setType(int shape) {
+        shapeType = shape;
         computeOpacity();
     }
 
-    public void setGradientType(int gradientType) {
-        mGradientType = gradientType;
-    }
-
-    public void setGradientCenter(float x, float y) {
-        mCenterX = x;
-        mCenterY = y;
+    public void setSolidGradientType(int gradientType) {
+        this.solidGradientType = gradientType;
     }
 
     public void setSolidColor(int... colors) {
         if (colors == null) {
-            mSolidColor = 0;
-            mHasSolidColor = true;
+            solidColor = 0;
+            hasSolidColor = true;
             computeOpacity();
             return;
         }
 
         if (colors.length == 1) {
-            mHasSolidColor = true;
-            mSolidColor = colors[0];
-            mSolidColors = null;
+            hasSolidColor = true;
+            solidColor = colors[0];
+            solidColors = null;
         } else {
-            mHasSolidColor = false;
-            mSolidColor = 0;
-            mSolidColors = colors;
+            hasSolidColor = false;
+            solidColor = 0;
+            solidColors = colors;
         }
         computeOpacity();
     }
 
     public void setSolidColor(int argb) {
-        mHasSolidColor = true;
-        mSolidColor = argb;
-        mSolidColors = null;
+        hasSolidColor = true;
+        solidColor = argb;
+        solidColors = null;
         computeOpacity();
     }
 
     private void computeOpacity() {
-        if (mShapeType != ShapeType.RECTANGLE) {
-            mOpaque = false;
+        if (shapeType != ShapeType.RECTANGLE) {
+            opaque = false;
             return;
         }
 
-        if (mRadius > 0 || mRadiusArray != null) {
-            mOpaque = false;
+        if (radius > 0 || radiusArray != null) {
+            opaque = false;
             return;
         }
 
-        if (mShadowSize > 0) {
-            mOpaque = false;
+        if (shadowSize > 0) {
+            opaque = false;
             return;
         }
 
-        if (mStrokeWidth > 0 && !isOpaque(mStrokeColor)) {
-            mOpaque = false;
+        if (strokeSize > 0 && !isOpaque(strokeColor)) {
+            opaque = false;
             return;
         }
 
-        if (mHasSolidColor) {
-            mOpaque = isOpaque(mSolidColor);
+        if (hasSolidColor) {
+            opaque = isOpaque(solidColor);
             return;
         }
 
-        if (mSolidColors != null) {
-            for (int color : mSolidColors) {
+        if (solidColors != null) {
+            for (int color : solidColors) {
                 if (!isOpaque(color)) {
-                    mOpaque = false;
+                    opaque = false;
                     return;
                 }
             }
         }
 
-        if (mHasStrokeColor) {
-            mOpaque = isOpaque(mStrokeColor);
+        if (hasStrokeColor) {
+            opaque = isOpaque(strokeColor);
             return;
         }
 
-        if (mStrokeColors != null) {
-            for (int color : mStrokeColors) {
+        if (strokeColors != null) {
+            for (int color : strokeColors) {
                 if (!isOpaque(color)) {
-                    mOpaque = false;
+                    opaque = false;
                     return;
                 }
             }
         }
 
-        mOpaque = true;
+        opaque = true;
     }
 
     private static boolean isOpaque(int color) {
         return ((color >> 24) & 0xff) == 0xff;
     }
 
-    public void setStrokeWidth(int width) {
-        mStrokeWidth = width;
+    public void setStrokeSize(int size) {
+        strokeSize = size;
         computeOpacity();
     }
 
     public void setStrokeColor(int... colors) {
         if (colors == null) {
-            mStrokeColor = 0;
-            mHasStrokeColor = true;
+            strokeColor = 0;
+            hasStrokeColor = true;
             computeOpacity();
             return;
         }
 
         if (colors.length == 1) {
-            mHasStrokeColor = true;
-            mStrokeColor = colors[0];
-            mStrokeColors = null;
+            hasStrokeColor = true;
+            strokeColor = colors[0];
+            strokeColors = null;
         } else {
-            mHasStrokeColor = false;
-            mStrokeColor = 0;
-            mStrokeColors = colors;
+            hasStrokeColor = false;
+            strokeColor = 0;
+            strokeColors = colors;
         }
-        computeOpacity();
-    }
-
-    public void setStrokeDash(float dashWidth, float dashGap) {
-        mStrokeDashWidth = dashWidth;
-        mStrokeDashGap = dashGap;
         computeOpacity();
     }
 
@@ -252,39 +244,14 @@ public class ShapeState extends Drawable.ConstantState {
         if (radius < 0) {
             radius = 0;
         }
-        mRadius = radius;
-        mRadiusArray = null;
+        this.radius = radius;
+        radiusArray = null;
     }
 
     public void setCornerRadii(float[] radii) {
-        mRadiusArray = radii;
+        radiusArray = radii;
         if (radii == null) {
-            mRadius = 0;
+            radius = 0;
         }
-    }
-
-    public void setSize(int width, int height) {
-        mWidth = width;
-        mHeight = height;
-    }
-
-    public void setGradientRadius(float gradientRadius) {
-        mGradientRadius = gradientRadius;
-    }
-
-    public void setShadowColor(int color) {
-        mShadowColor = color;
-    }
-
-    public void setShadowSize(int size) {
-        mShadowSize = size;
-    }
-
-    public void setShadowOffsetX(int offsetX) {
-        mShadowOffsetX = offsetX;
-    }
-
-    public void setShadowOffsetY(int offsetY) {
-        mShadowOffsetY = offsetY;
     }
 }

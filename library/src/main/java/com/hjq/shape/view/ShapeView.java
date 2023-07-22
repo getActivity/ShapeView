@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.styleable.ShapeViewStyleable;
 
 /**
@@ -15,7 +16,7 @@ import com.hjq.shape.styleable.ShapeViewStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 View
  */
-public class ShapeView extends View {
+public class ShapeView extends View implements IGetShapeDrawableBuilder {
 
     private static final ShapeViewStyleable STYLEABLE = new ShapeViewStyleable();
 
@@ -39,6 +40,7 @@ public class ShapeView extends View {
         mShapeDrawableBuilder.intoBackground();
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }

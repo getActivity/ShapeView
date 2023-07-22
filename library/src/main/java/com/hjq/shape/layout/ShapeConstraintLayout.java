@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
+import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.styleable.ShapeConstraintLayoutStyleable;
 
 /**
@@ -15,7 +16,7 @@ import com.hjq.shape.styleable.ShapeConstraintLayoutStyleable;
  *    time   : 2021/07/17
  *    desc   : 支持直接定义 Shape 背景的 ConstraintLayout
  */
-public class ShapeConstraintLayout extends ConstraintLayout {
+public class ShapeConstraintLayout extends ConstraintLayout implements IGetShapeDrawableBuilder {
 
     private static final ShapeConstraintLayoutStyleable STYLEABLE = new ShapeConstraintLayoutStyleable();
 
@@ -39,6 +40,7 @@ public class ShapeConstraintLayout extends ConstraintLayout {
         mShapeDrawableBuilder.intoBackground();
     }
 
+    @Override
     public ShapeDrawableBuilder getShapeDrawableBuilder() {
         return mShapeDrawableBuilder;
     }

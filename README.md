@@ -1,14 +1,14 @@
-# Shape 框架
+# ShapeView 框架
 
 * 项目地址：[Github](https://github.com/getActivity/ShapeView)
 
 * 博客介绍：[震惊，没想到 Shape 也可以这么写](https://www.jianshu.com/p/1288d8873440)
 
-* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/8.5/ShapeView.apk)
+* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/9.0/ShapeView.apk)
 
 ![](picture/demo_code.png)
 
-![](picture/dynamic_figure.jpg)
+![](picture/long_screenshots.jpg)
 
 #### 集成步骤
 
@@ -47,7 +47,7 @@ android {
 
 dependencies {
     // Shape 框架：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:8.5'
+    implementation 'com.github.getActivity:ShapeView:9.0'
 }
 ```
 
@@ -88,13 +88,13 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 });
 ```
 
-* 布局属性大全
+* 布局属性大全，[不同版本的 xml 属性适配请点击这里查看](Adaptive.md)
 
 ```xml
 <resources>
 
   <!-- Shape 形状（默认是矩形） -->
-  <attr name="shape">
+  <attr name="shape_type">
     <!-- 矩形 -->
     <enum name="rectangle" value="0" />
     <!-- 椭圆形 -->
@@ -104,10 +104,37 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
     <!-- 圆环 -->
     <enum name="ring" value="3" />
   </attr>
+
   <!-- Shape 宽度 -->
   <attr name="shape_width" format="dimension" />
   <!-- Shape 高度 -->
   <attr name="shape_height" format="dimension" />
+
+  <!-- Shape 内间距 -->
+  <attr name="shape_padding" format="dimension" />
+  <!-- Shape 左侧内间距 -->
+  <attr name="shape_paddingLeft" format="dimension" />
+  <!-- Shape 开始内间距 -->
+  <attr name="shape_paddingStart" format="dimension" />
+  <!-- Shape 顶部内间距 -->
+  <attr name="shape_paddingTop" format="dimension" />
+  <!-- Shape 右侧内间距 -->
+  <attr name="shape_paddingRight" format="dimension" />
+  <!-- Shape 结束内间距 -->
+  <attr name="shape_paddingEnd" format="dimension" />
+  <!-- Shape 底部内间距 -->
+  <attr name="shape_paddingBottom" format="dimension" />
+
+  <!-- 圆角大小 -->
+  <attr name="shape_radius" format="dimension" />
+  <!-- 左上角的圆角大小 -->
+  <attr name="shape_radiusInTopLeft" format="dimension" />
+  <!-- 右上角的圆角大小 -->
+  <attr name="shape_radiusInTopRight" format="dimension" />
+  <!-- 左下角的圆角大小 -->
+  <attr name="shape_radiusInBottomLeft" format="dimension" />
+  <!-- 右下角的圆角大小 -->
+  <attr name="shape_radiusInBottomRight" format="dimension" />
 
   <!-- 填充色（默认状态） -->
   <attr name="shape_solidColor" format="color" />
@@ -122,37 +149,35 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
   <!-- 填充色（选择状态） -->
   <attr name="shape_solidSelectedColor" format="color" />
 
-  <!-- 圆角大小 -->
-  <attr name="shape_radius" format="dimension" />
-  <!-- 左上角的圆角大小 -->
-  <attr name="shape_topLeftRadius" format="dimension" />
-  <!-- 右上角的圆角大小 -->
-  <attr name="shape_topRightRadius" format="dimension" />
-  <!-- 左下角的圆角大小 -->
-  <attr name="shape_bottomLeftRadius" format="dimension" />
-  <!-- 右下角的圆角大小 -->
-  <attr name="shape_bottomRightRadius" format="dimension" />
+  <!-- 填充色渐变色起始颜色 -->
+  <attr name="shape_solidStartColor" format="color" />
+  <!-- 填充色渐变色中间颜色（可不设置） -->
+  <attr name="shape_solidCenterColor" format="color" />
+  <!-- 填充色渐变色结束颜色 -->
+  <attr name="shape_solidEndColor" format="color" />
 
-  <!-- 渐变色起始颜色 -->
-  <attr name="shape_startColor" format="color" />
-  <!-- 渐变色中间颜色（可不设置） -->
-  <attr name="shape_centerColor" format="color" />
-  <!-- 渐变色结束颜色 -->
-  <attr name="shape_endColor" format="color" />
+  <!-- 填充色渐变方向（仅用于线性渐变。必须是 0-315 范围内的值，并且是 45 的倍数） -->
+  <attr name="shape_solidGradientOrientation" >
+    <!-- 从左到右绘制渐变（0 度） -->
+    <enum name="leftToRight" value="0" />
+    <!-- 从右到左绘制渐变（180 度） -->
+    <enum name="rightToLeft" value="180" />
+    <!-- 从下到上绘制渐变（90 度） -->
+    <enum name="bottomToTop" value="90" />
+    <!-- 从上到下绘制渐变（270 度） -->
+    <enum name="topToBottom" value="270" />
 
-  <!-- 边框渐变色起始颜色 -->
-  <attr name="shape_strokeStartColor" format="color" />
-  <!-- 边框渐变色中间颜色（可不设置） -->
-  <attr name="shape_strokeCenterColor" format="color" />
-  <!-- 边框渐变色结束颜色 -->
-  <attr name="shape_strokeEndColor" format="color" />
-
-  <!-- 是否将用于缩放渐变 -->
-  <attr name="shape_useLevel" format="boolean" />
-  <!-- 渐变角度（仅用于线性渐变。必须是 0-315 范围内的值，并且是 45 的倍数） -->
-  <attr name="shape_angle" format="float" />
-  <!-- 渐变类型（默认类型是线性渐变） -->
-  <attr name="shape_gradientType">
+    <!-- 从左上角到右下角绘制渐变（315 度） -->
+    <enum name="topLeftToBottomRight" value="315" />
+    <!-- 从左下角到右上角绘制渐变（45 度） -->
+    <enum name="bottomLeftToTopRight" value="45" />
+    <!-- 从右上角到左下角绘制渐变（225 度） -->
+    <enum name="topRightToBottomLeft" value="225" />
+    <!-- 从右下角到左上角绘制渐变（135 度） -->
+    <enum name="bottomRightToTopLeft" value="135" />
+  </attr>
+  <!-- 填充色渐变类型（默认类型是线性渐变） -->
+  <attr name="shape_solidGradientType">
     <!-- 线性渐变 -->
     <enum name="linear" value="0" />
     <!-- 径向渐变 -->
@@ -160,12 +185,12 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
     <!-- 扫描渐变 -->
     <enum name="sweep"  value="2" />
   </attr>
-  <!-- 渐变中心 X 点坐标的相对位置（默认值为 0.5）-->
-  <attr name="shape_centerX" format="float|fraction" />
-  <!-- 渐变中心 Y 点坐标的相对位置（默认值为 0.5）-->
-  <attr name="shape_centerY" format="float|fraction" />
-  <!-- 渐变色半径（仅用于径向渐变） -->
-  <attr name="shape_gradientRadius" format="float|fraction|dimension" />
+  <!-- 填充色渐变中心 X 点坐标的相对位置（默认值为 0.5）-->
+  <attr name="shape_solidCenterX" format="float|fraction" />
+  <!-- 填充色渐变中心 Y 点坐标的相对位置（默认值为 0.5）-->
+  <attr name="shape_solidCenterY" format="float|fraction" />
+  <!-- 填充色渐变色半径（仅用于径向渐变） -->
+  <attr name="shape_solidGradientRadius" format="float|fraction|dimension" />
 
   <!-- 边框色（默认状态） -->
   <attr name="shape_strokeColor" format="color" />
@@ -180,12 +205,40 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
   <!-- 边框色（选择状态） -->
   <attr name="shape_strokeSelectedColor" format="color" />
 
-  <!-- 边框宽度 -->
-  <attr name="shape_strokeWidth" format="dimension" />
-  <!-- 边框虚线宽度（为 0 就是实线，大于 0 就是虚线） -->
-  <attr name="shape_dashWidth" format="dimension" />
+  <!-- 边框色渐变色起始颜色 -->
+  <attr name="shape_strokeStartColor" format="color" />
+  <!-- 边框渐变色中间颜色（可不设置） -->
+  <attr name="shape_strokeCenterColor" format="color" />
+  <!-- 边框渐变色结束颜色 -->
+  <attr name="shape_strokeEndColor" format="color" />
+
+  <!-- 边框色渐变方向（必须是 0-315 范围内的值，并且是 45 的倍数） -->
+  <attr name="shape_strokeGradientOrientation" >
+    <!-- 从左到右绘制渐变（0 度） -->
+    <enum name="leftToRight" value="0" />
+    <!-- 从右到左绘制渐变（180 度） -->
+    <enum name="rightToLeft" value="180" />
+    <!-- 从下到上绘制渐变（90 度） -->
+    <enum name="bottomToTop" value="90" />
+    <!-- 从上到下绘制渐变（270 度） -->
+    <enum name="topToBottom" value="270" />
+
+    <!-- 从左上角到右下角绘制渐变（315 度） -->
+    <enum name="topLeftToBottomRight" value="315" />
+    <!-- 从左下角到右上角绘制渐变（45 度） -->
+    <enum name="bottomLeftToTopRight" value="45" />
+    <!-- 从右上角到左下角绘制渐变（225 度） -->
+    <enum name="topRightToBottomLeft" value="225" />
+    <!-- 从右下角到左上角绘制渐变（135 度） -->
+    <enum name="bottomRightToTopLeft" value="135" />
+  </attr>
+
+  <!-- 边框大小 -->
+  <attr name="shape_strokeSize" format="dimension" />
+  <!-- 边框虚线大小（为 0 就是实线，大于 0 就是虚线） -->
+  <attr name="shape_strokeDashSize" format="dimension" />
   <!-- 边框虚线间隔（虚线与虚线之间的间隔） -->
-  <attr name="shape_dashGap" format="dimension" />
+  <attr name="shape_strokeDashGap" format="dimension" />
 
   <!-- 阴影大小 -->
   <attr name="shape_shadowSize" format="dimension" />
@@ -197,13 +250,13 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
   <attr name="shape_shadowOffsetY" format="dimension" />
 
   <!-- 内环的半径（仅在 shape="ring" 生效） -->
-  <attr name="shape_innerRadius" format="dimension" />
+  <attr name="shape_ringInnerRadiusSize" format="dimension" />
   <!-- 内环的半径比率（仅在 shape="ring" 生效），计算公式：整个圆环 / innerRadiusRatio = innerRadius -->
-  <attr name="shape_innerRadiusRatio" format="float" />
+  <attr name="shape_ringInnerRadiusRatio" format="float" />
   <!-- 外环的厚度（仅在 shape="ring" 生效） -->
-  <attr name="shape_thickness" format="dimension" />
+  <attr name="shape_ringThicknessSize" format="dimension" />
   <!-- 外环的厚度比率（仅在 shape="ring" 生效），计算公式：整个圆环 / thicknessRatio = thickness -->
-  <attr name="shape_thicknessRatio" format="float" />
+  <attr name="shape_ringThicknessRatio" format="float" />
 
   <!-- 线条重心（仅在 shape="line" 生效） -->
   <attr name="shape_lineGravity">
@@ -270,9 +323,17 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
     * ViewGroup 的子类：ShapeLinearLayout、ShapeFrameLayout、ShapeRelativeLayout、ShapeConstraintLayout、ShapeRecyclerView、ShapeRadioGroup
 
-#### [常见疑问解答](HelpDoc.md)
+#### 框架混淆规则
 
-#### [使用案例文档](UseDemo.md)
+* 在混淆规则文件 `proguard-rules.pro` 中加入
+
+```text
+-keep class com.hjq.shape.** {*;}
+```
+
+### [常见疑问解答](HelpDoc.md)
+
+### [使用案例文档](UseDemo.md)
 
 #### 框架亮点
 
@@ -296,13 +357,15 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
 * 权限框架：[XXPermissions](https://github.com/getActivity/XXPermissions) ![](https://img.shields.io/github/stars/getActivity/XXPermissions.svg) ![](https://img.shields.io/github/forks/getActivity/XXPermissions.svg)
 
-* 吐司框架：[ToastUtils](https://github.com/getActivity/ToastUtils) ![](https://img.shields.io/github/stars/getActivity/ToastUtils.svg) ![](https://img.shields.io/github/forks/getActivity/ToastUtils.svg)
+* 吐司框架：[Toaster](https://github.com/getActivity/Toaster) ![](https://img.shields.io/github/stars/getActivity/Toaster.svg) ![](https://img.shields.io/github/forks/getActivity/Toaster.svg)
 
 * 网络框架：[EasyHttp](https://github.com/getActivity/EasyHttp) ![](https://img.shields.io/github/stars/getActivity/EasyHttp.svg) ![](https://img.shields.io/github/forks/getActivity/EasyHttp.svg)
 
 * 标题栏框架：[TitleBar](https://github.com/getActivity/TitleBar) ![](https://img.shields.io/github/stars/getActivity/TitleBar.svg) ![](https://img.shields.io/github/forks/getActivity/TitleBar.svg)
 
-* 悬浮窗框架：[XToast](https://github.com/getActivity/XToast) ![](https://img.shields.io/github/stars/getActivity/XToast.svg) ![](https://img.shields.io/github/forks/getActivity/XToast.svg)
+* 悬浮窗框架：[EasyWindow](https://github.com/getActivity/EasyWindow) ![](https://img.shields.io/github/stars/getActivity/EasyWindow.svg) ![](https://img.shields.io/github/forks/getActivity/EasyWindow.svg)
+
+* ShapeDrawable 框架：[ShapeDrawable](https://github.com/getActivity/ShapeDrawable) ![](https://img.shields.io/github/stars/getActivity/ShapeDrawable.svg) ![](https://img.shields.io/github/forks/getActivity/ShapeDrawable.svg)
 
 * 语种切换框架：[MultiLanguages](https://github.com/getActivity/MultiLanguages) ![](https://img.shields.io/github/stars/getActivity/MultiLanguages.svg) ![](https://img.shields.io/github/forks/getActivity/MultiLanguages.svg)
 
@@ -310,9 +373,13 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
 * 日志查看框架：[Logcat](https://github.com/getActivity/Logcat) ![](https://img.shields.io/github/stars/getActivity/Logcat.svg) ![](https://img.shields.io/github/forks/getActivity/Logcat.svg)
 
+* 嵌套滚动布局框架：[NestedScrollLayout](https://github.com/getActivity/NestedScrollLayout) ![](https://img.shields.io/github/stars/getActivity/NestedScrollLayout.svg) ![](https://img.shields.io/github/forks/getActivity/NestedScrollLayout.svg)
+
 * Android 版本适配：[AndroidVersionAdapter](https://github.com/getActivity/AndroidVersionAdapter) ![](https://img.shields.io/github/stars/getActivity/AndroidVersionAdapter.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidVersionAdapter.svg)
 
 * Android 代码规范：[AndroidCodeStandard](https://github.com/getActivity/AndroidCodeStandard) ![](https://img.shields.io/github/stars/getActivity/AndroidCodeStandard.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidCodeStandard.svg)
+
+* Android 资源大汇总：[AndroidIndex](https://github.com/getActivity/AndroidIndex) ![](https://img.shields.io/github/stars/getActivity/AndroidIndex.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidIndex.svg)
 
 * Android 开源排行榜：[AndroidGithubBoss](https://github.com/getActivity/AndroidGithubBoss) ![](https://img.shields.io/github/stars/getActivity/AndroidGithubBoss.svg) ![](https://img.shields.io/github/forks/getActivity/AndroidGithubBoss.svg)
 
@@ -320,7 +387,11 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
 * 表情包大集合：[EmojiPackage](https://github.com/getActivity/EmojiPackage) ![](https://img.shields.io/github/stars/getActivity/EmojiPackage.svg) ![](https://img.shields.io/github/forks/getActivity/EmojiPackage.svg)
 
+* AI 资源大汇总：[AiIndex](https://github.com/getActivity/AiIndex) ![](https://img.shields.io/github/stars/getActivity/AiIndex.svg) ![](https://img.shields.io/github/forks/getActivity/AiIndex.svg)
+
 * 省市区 Json 数据：[ProvinceJson](https://github.com/getActivity/ProvinceJson) ![](https://img.shields.io/github/stars/getActivity/ProvinceJson.svg) ![](https://img.shields.io/github/forks/getActivity/ProvinceJson.svg)
+
+* Markdown 语法文档：[MarkdownDoc](https://github.com/getActivity/MarkdownDoc) ![](https://img.shields.io/github/stars/getActivity/MarkdownDoc.svg) ![](https://img.shields.io/github/forks/getActivity/MarkdownDoc.svg)
 
 #### 微信公众号：Android轮子哥
 
@@ -328,11 +399,21 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
 #### Android 技术 Q 群：10047167
 
-#### 如果您觉得我的开源库帮你节省了大量的开发时间，请扫描下方的二维码随意打赏，要是能打赏个 10.24 :monkey_face:就太:thumbsup:了。您的支持将鼓励我继续创作:octocat:
+#### 如果您觉得我的开源库帮你节省了大量的开发时间，请扫描下方的二维码随意打赏，要是能打赏个 10.24 :monkey_face:就太:thumbsup:了。您的支持将鼓励我继续创作:octocat:（[点击查看捐赠列表](https://github.com/getActivity/Donate)）
 
 ![](https://raw.githubusercontent.com/getActivity/Donate/master/picture/pay_ali.png) ![](https://raw.githubusercontent.com/getActivity/Donate/master/picture/pay_wechat.png)
 
-#### [点击查看捐赠列表](https://github.com/getActivity/Donate)
+#### 广告区
+
+* 我现在任腾讯云服务器推广大使，大家如果有购买服务器的需求，可以通过下面的链接购买
+
+[![](https://upload-dianshi-1255598498.file.myqcloud.com/upload/nodir/345X200-9ae456f58874df499adf7c331c02cb0fed12b81d.jpg)](https://curl.qcloud.com/A6cYskvv)
+
+[【腾讯云】云服务器、云数据库、COS、CDN、短信等云产品特惠热卖中](https://curl.qcloud.com/A6cYskvv)
+
+[![](https://upload-dianshi-1255598498.file.myqcloud.com/345-200-b28f7dee9552f4241ea6a543f15a9798049701d4.jpg)](https://curl.qcloud.com/up4fQsdn)
+
+[【腾讯云】中小企业福利专场，多款刚需产品，满足企业通用场景需求](https://curl.qcloud.com/up4fQsdn)
 
 ## License
 
