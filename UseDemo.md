@@ -79,8 +79,8 @@
     android:textColor="@android:color/black"
     android:textSize="14sp"
     app:shape_radius="20dp"
-    app:shape_solidEndColor="#ED58FF"
-    app:shape_solidStartColor="#49DAFA"
+    app:shape_solidGradientEndColor="#ED58FF"
+    app:shape_solidGradientStartColor="#49DAFA"
     app:shape_strokeColor="#000000"
     app:shape_strokeSize="1dp"
     app:shape_type="rectangle" />
@@ -116,10 +116,10 @@
     android:textColor="@android:color/white"
     android:textSize="14sp"
     app:shape_radius="20dp"
-    app:shape_solidEndColor="#ED58FF"
+    app:shape_solidGradientEndColor="#ED58FF"
     app:shape_solidGradientOrientation="topToBottom"
     app:shape_solidPressedColor="#5A8DDF"
-    app:shape_solidStartColor="#49DAFA"
+    app:shape_solidGradientStartColor="#49DAFA"
     app:shape_type="rectangle" />
 
 <com.hjq.shape.view.ShapeButton
@@ -133,11 +133,11 @@
     android:textColor="@android:color/black"
     android:textSize="14sp"
     app:shape_radius="20dp"
-    app:shape_strokeEndColor="#f08833"
+    app:shape_strokeGradientColor="#f08833"
     app:shape_strokeGradientOrientation="topToBottom"
     app:shape_strokePressedColor="@android:color/black"
     app:shape_strokeSize="2dp"
-    app:shape_strokeStartColor="#fefa54"
+    app:shape_strokeGradientStartColor="#fefa54"
     app:shape_type="rectangle" />
 
 <com.hjq.shape.view.ShapeButton
@@ -151,15 +151,15 @@
     android:textColor="@android:color/white"
     android:textSize="14sp"
     app:shape_radius="20dp"
-    app:shape_solidEndColor="#ED58FF"
+    app:shape_solidGradientEndColor="#ED58FF"
     app:shape_solidGradientOrientation="topToBottom"
     app:shape_solidPressedColor="#5A8DDF"
-    app:shape_solidStartColor="#49DAFA"
-    app:shape_strokeEndColor="#f08833"
+    app:shape_solidGradientStartColor="#49DAFA"
+    app:shape_strokeGradientColor="#f08833"
     app:shape_strokeGradientOrientation="topToBottom"
     app:shape_strokePressedColor="@android:color/black"
     app:shape_strokeSize="2dp"
-    app:shape_strokeStartColor="#fefa54"
+    app:shape_strokeGradientStartColor="#fefa54"
     app:shape_type="rectangle" />
 ```
 
@@ -304,8 +304,8 @@
     app:shape_radius="10dp"
     app:shape_shadowColor="#99000000"
     app:shape_shadowSize="10dp"
-    app:shape_solidEndColor="#f08833"
-    app:shape_solidStartColor="#fefa54"
+    app:shape_solidGradientEndColor="#f08833"
+    app:shape_solidGradientStartColor="#fefa54"
     app:shape_type="rectangle" />
 ```
 
@@ -544,12 +544,12 @@
     android:text="矩形-垂直线性渐变"
     android:textColor="@android:color/black"
     android:textSize="14sp"
-    app:shape_solidCenterColor="#8000ff00"
-    app:shape_solidCenterX="0.5"
-    app:shape_solidCenterY="0.4"
-    app:shape_solidEndColor="#1000ff00"
+    app:shape_solidGradientCenterColor="#8000ff00"
+    app:shape_solidGradientCenterX="0.5"
+    app:shape_solidGradientCenterY="0.4"
+    app:shape_solidGradientEndColor="#1000ff00"
     app:shape_solidGradientOrientation="topToBottom"
-    app:shape_solidStartColor="#ff00ff00"
+    app:shape_solidGradientStartColor="#ff00ff00"
     app:shape_strokeColor="#ffff0000"
     app:shape_strokeSize="1dp"
     app:shape_type="rectangle" />
@@ -563,12 +563,12 @@
     android:text="矩形-水平线性渐变"
     android:textColor="@android:color/black"
     android:textSize="14sp"
-    app:shape_solidCenterColor="#8000ff00"
-    app:shape_solidCenterX="0.5"
-    app:shape_solidCenterY="0.5"
-    app:shape_solidEndColor="#ff00ff00"
+    app:shape_solidGradientCenterColor="#8000ff00"
+    app:shape_solidGradientCenterX="0.5"
+    app:shape_solidGradientCenterY="0.5"
+    app:shape_solidGradientEndColor="#ff00ff00"
     app:shape_solidGradientOrientation="leftToRight"
-    app:shape_solidStartColor="#1000ff00"
+    app:shape_solidGradientStartColor="#1000ff00"
     app:shape_strokeColor="#ffff0000"
     app:shape_strokeSize="1dp"
     app:shape_type="rectangle" />
@@ -582,12 +582,12 @@
     android:text="矩形-对角线线性渐变"
     android:textColor="@android:color/black"
     android:textSize="14sp"
-    app:shape_solidCenterColor="#8000ff00"
-    app:shape_solidCenterX="0.5"
-    app:shape_solidCenterY="0.5"
-    app:shape_solidEndColor="#1000ff00"
+    app:shape_solidGradientCenterColor="#8000ff00"
+    app:shape_solidGradientCenterX="0.5"
+    app:shape_solidGradientCenterY="0.5"
+    app:shape_solidGradientEndColor="#1000ff00"
     app:shape_solidGradientOrientation="bottomLeftToTopRight"
-    app:shape_solidStartColor="#ff00ff00"
+    app:shape_solidGradientStartColor="#ff00ff00"
     app:shape_strokeColor="#ffff0000"
     app:shape_strokeSize="1dp"
     app:shape_type="rectangle" />
@@ -601,13 +601,13 @@
     android:text="矩形-径向渐变"
     android:textColor="@android:color/black"
     android:textSize="14sp"
-    app:shape_solidCenterX="0.5"
-    app:shape_solidCenterY="0.5"
-    app:shape_solidEndColor="#ff00ff00"
+    app:shape_solidGradientCenterX="0.5"
+    app:shape_solidGradientCenterY="0.5"
+    app:shape_solidGradientEndColor="#ff00ff00"
     app:shape_solidGradientOrientation="leftToRight"
     app:shape_solidGradientRadius="20dp"
     app:shape_solidGradientType="radial"
-    app:shape_solidStartColor="#0000ff00"
+    app:shape_solidGradientStartColor="#0000ff00"
     app:shape_strokeColor="#ffff0000"
     app:shape_strokeSize="1dp"
     app:shape_type="rectangle" />
@@ -621,12 +621,12 @@
     android:text="矩形-扫描渐变"
     android:textColor="@android:color/black"
     android:textSize="14sp"
-    app:shape_solidCenterX="0.5"
-    app:shape_solidCenterY="0.5"
-    app:shape_solidEndColor="#0000ff00"
+    app:shape_solidGradientCenterX="0.5"
+    app:shape_solidGradientCenterY="0.5"
+    app:shape_solidGradientEndColor="#0000ff00"
     app:shape_solidGradientOrientation="leftToRight"
     app:shape_solidGradientType="sweep"
-    app:shape_solidStartColor="#ff00ff00"
+    app:shape_solidGradientStartColor="#ff00ff00"
     app:shape_strokeColor="#ffff0000"
     app:shape_strokeSize="1dp"
     app:shape_type="rectangle" />
@@ -683,13 +683,13 @@
     android:text="圆-线性渐变"
     android:textColor="@android:color/black"
     android:textSize="14sp"
-    app:shape_solidCenterColor="#80ff0000"
-    app:shape_solidCenterX="0.5"
-    app:shape_solidCenterY="0.8"
-    app:shape_solidEndColor="#ffff0000"
+    app:shape_solidGradientCenterColor="#80ff0000"
+    app:shape_solidGradientCenterX="0.5"
+    app:shape_solidGradientCenterY="0.8"
+    app:shape_solidGradientEndColor="#ffff0000"
     app:shape_solidGradientOrientation="topToBottom"
     app:shape_solidGradientType="linear"
-    app:shape_solidStartColor="#00ff0000"
+    app:shape_solidGradientStartColor="#00ff0000"
     app:shape_type="oval" />
 
 <com.hjq.shape.view.ShapeTextView
@@ -701,13 +701,13 @@
     android:text="圆-径向渐变"
     android:textColor="@android:color/black"
     android:textSize="14sp"
-    app:shape_solidCenterColor="#80ff0000"
-    app:shape_solidCenterX="0.5"
-    app:shape_solidCenterY="0.5"
-    app:shape_solidEndColor="#10ff0000"
+    app:shape_solidGradientCenterColor="#80ff0000"
+    app:shape_solidGradientCenterX="0.5"
+    app:shape_solidGradientCenterY="0.5"
+    app:shape_solidGradientEndColor="#10ff0000"
     app:shape_solidGradientRadius="80dp"
     app:shape_solidGradientType="radial"
-    app:shape_solidStartColor="#ffff0000"
+    app:shape_solidGradientStartColor="#ffff0000"
     app:shape_type="oval" />
 
 <com.hjq.shape.view.ShapeTextView
@@ -719,13 +719,13 @@
     android:text="圆-扫描渐变"
     android:textColor="@android:color/black"
     android:textSize="14sp"
-    app:shape_solidCenterColor="#80ff0000"
-    app:shape_solidCenterX="0.5"
-    app:shape_solidCenterY="0.6"
-    app:shape_solidEndColor="#20ff0000"
+    app:shape_solidGradientCenterColor="#80ff0000"
+    app:shape_solidGradientCenterX="0.5"
+    app:shape_solidGradientCenterY="0.6"
+    app:shape_solidGradientEndColor="#20ff0000"
     app:shape_solidGradientRadius="20dp"
     app:shape_solidGradientType="sweep"
-    app:shape_solidStartColor="#ffff0000"
+    app:shape_solidGradientStartColor="#ffff0000"
     app:shape_type="oval" />
 ```
 
@@ -788,11 +788,11 @@
     android:textSize="14sp"
     app:shape_ringInnerRadiusRatio="4"
     app:shape_ringThicknessRatio="4"
-    app:shape_solidCenterColor="#80ff0000"
-    app:shape_solidEndColor="#ffff0000"
+    app:shape_solidGradientCenterColor="#80ff0000"
+    app:shape_solidGradientEndColor="#ffff0000"
     app:shape_solidGradientOrientation="bottomLeftToTopRight"
     app:shape_solidGradientType="linear"
-    app:shape_solidStartColor="#00ff0000"
+    app:shape_solidGradientStartColor="#00ff0000"
     app:shape_type="ring" />
 
 <com.hjq.shape.view.ShapeTextView
@@ -806,10 +806,10 @@
     android:textSize="14sp"
     app:shape_ringInnerRadiusRatio="4"
     app:shape_ringThicknessRatio="4"
-    app:shape_solidCenterColor="#80ff0000"
-    app:shape_solidEndColor="#00ff0000"
+    app:shape_solidGradientCenterColor="#80ff0000"
+    app:shape_solidGradientEndColor="#00ff0000"
     app:shape_solidGradientType="sweep"
-    app:shape_solidStartColor="#ffff0000"
+    app:shape_solidGradientStartColor="#ffff0000"
     app:shape_type="ring" />
 ```
 

@@ -46,8 +46,10 @@ android {
 }
 
 dependencies {
-    // Shape 框架：https://github.com/getActivity/ShapeView
+    // ShapeView：https://github.com/getActivity/ShapeView
     implementation 'com.github.getActivity:ShapeView:9.0'
+    // ShapeDrawable：https://github.com/getActivity/ShapeDrawable
+    implementation 'com.github.getActivity:ShapeDrawable:3.0'
 }
 ```
 
@@ -150,11 +152,11 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
   <attr name="shape_solidSelectedColor" format="color" />
 
   <!-- 填充色渐变色起始颜色 -->
-  <attr name="shape_solidStartColor" format="color" />
+  <attr name="shape_solidGradientStartColor" format="color" />
   <!-- 填充色渐变色中间颜色（可不设置） -->
-  <attr name="shape_solidCenterColor" format="color" />
+  <attr name="shape_solidGradientCenterColor" format="color" />
   <!-- 填充色渐变色结束颜色 -->
-  <attr name="shape_solidEndColor" format="color" />
+  <attr name="shape_solidGradientEndColor" format="color" />
 
   <!-- 填充色渐变方向（仅用于线性渐变。必须是 0-315 范围内的值，并且是 45 的倍数） -->
   <attr name="shape_solidGradientOrientation" >
@@ -186,9 +188,9 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
     <enum name="sweep"  value="2" />
   </attr>
   <!-- 填充色渐变中心 X 点坐标的相对位置（默认值为 0.5）-->
-  <attr name="shape_solidCenterX" format="float|fraction" />
+  <attr name="shape_solidGradientCenterX" format="float|fraction" />
   <!-- 填充色渐变中心 Y 点坐标的相对位置（默认值为 0.5）-->
-  <attr name="shape_solidCenterY" format="float|fraction" />
+  <attr name="shape_solidGradientCenterY" format="float|fraction" />
   <!-- 填充色渐变色半径（仅用于径向渐变） -->
   <attr name="shape_solidGradientRadius" format="float|fraction|dimension" />
 
@@ -206,11 +208,11 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
   <attr name="shape_strokeSelectedColor" format="color" />
 
   <!-- 边框色渐变色起始颜色 -->
-  <attr name="shape_strokeStartColor" format="color" />
+  <attr name="shape_strokeGradientStartColor" format="color" />
   <!-- 边框渐变色中间颜色（可不设置） -->
-  <attr name="shape_strokeCenterColor" format="color" />
+  <attr name="shape_strokeGradientCenterColor" format="color" />
   <!-- 边框渐变色结束颜色 -->
-  <attr name="shape_strokeEndColor" format="color" />
+  <attr name="shape_strokeGradientColor" format="color" />
 
   <!-- 边框色渐变方向（必须是 0-315 范围内的值，并且是 45 的倍数） -->
   <attr name="shape_strokeGradientOrientation" >

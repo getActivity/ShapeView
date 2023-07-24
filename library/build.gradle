@@ -23,6 +23,11 @@ android {
     }
 }
 
+dependencies {
+    // ShapeDrawable：https://github.com/getActivity/ShapeDrawable
+    implementation 'com.github.getActivity:ShapeDrawable:3.0'
+}
+
 afterEvaluate {
     // 排除 BuildConfig.class
     generateReleaseBuildConfig.enabled = false

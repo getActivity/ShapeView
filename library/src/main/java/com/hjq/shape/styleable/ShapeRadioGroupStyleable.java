@@ -81,18 +81,18 @@ public final class ShapeRadioGroupStyleable implements IShapeDrawableStyleable {
     }
 
     @Override
-    public int getSolidStartColorStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_solidStartColor;
+    public int getSolidGradientStartColorStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_solidGradientStartColor;
     }
 
     @Override
-    public int getSolidCenterColorStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_solidCenterColor;
+    public int getSolidGradientCenterColorStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_solidGradientCenterColor;
     }
 
     @Override
-    public int getSolidEndColorStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_solidEndColor;
+    public int getSolidGradientEndColorStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_solidGradientEndColor;
     }
 
     @Override
@@ -106,13 +106,13 @@ public final class ShapeRadioGroupStyleable implements IShapeDrawableStyleable {
     }
 
     @Override
-    public int getSolidCenterXStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_solidCenterX;
+    public int getSolidGradientCenterXStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_solidGradientCenterX;
     }
 
     @Override
-    public int getSolidCenterYStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_solidCenterY;
+    public int getSolidGradientCenterYStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_solidGradientCenterY;
     }
 
     @Override
@@ -146,18 +146,18 @@ public final class ShapeRadioGroupStyleable implements IShapeDrawableStyleable {
     }
 
     @Override
-    public int getStrokeStartColorStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_strokeStartColor;
+    public int getStrokeGradientStartColorStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_strokeGradientStartColor;
     }
 
     @Override
-    public int getStrokeCenterColorStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_strokeCenterColor;
+    public int getStrokeGradientCenterColorStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_strokeGradientCenterColor;
     }
 
     @Override
-    public int getStrokeEndColorStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_strokeEndColor;
+    public int getStrokeGradientEndColorStyleable() {
+        return R.styleable.ShapeRadioGroup_shape_strokeGradientColor;
     }
 
     @Override

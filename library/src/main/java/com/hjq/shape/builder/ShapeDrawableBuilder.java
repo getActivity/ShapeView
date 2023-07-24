@@ -111,21 +111,21 @@ public final class ShapeDrawableBuilder {
         mBottomLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomLeftStyleable(), radius);
         mBottomRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomRightStyleable(), radius);
 
-        if (typedArray.hasValue(styleable.getSolidStartColorStyleable()) && typedArray.hasValue(styleable.getSolidEndColorStyleable())) {
-            if (typedArray.hasValue(styleable.getSolidCenterColorStyleable())) {
-                mSolidGradientColors = new int[] {typedArray.getColor(styleable.getSolidStartColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getSolidCenterColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getSolidEndColorStyleable(), NO_COLOR)};
+        if (typedArray.hasValue(styleable.getSolidGradientStartColorStyleable()) && typedArray.hasValue(styleable.getSolidGradientEndColorStyleable())) {
+            if (typedArray.hasValue(styleable.getSolidGradientCenterColorStyleable())) {
+                mSolidGradientColors = new int[] {typedArray.getColor(styleable.getSolidGradientStartColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getSolidGradientCenterColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getSolidGradientEndColorStyleable(), NO_COLOR)};
             } else {
-                mSolidGradientColors = new int[] {typedArray.getColor(styleable.getSolidStartColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getSolidEndColorStyleable(), NO_COLOR)};
+                mSolidGradientColors = new int[] {typedArray.getColor(styleable.getSolidGradientStartColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getSolidGradientEndColorStyleable(), NO_COLOR)};
             }
         }
 
         mSolidGradientOrientation = (int) typedArray.getFloat(styleable.getSolidGradientOrientationStyleable(), 0);
         mSolidGradientType = typedArray.getInt(styleable.getSolidGradientTypeStyleable(), ShapeGradientType.LINEAR_GRADIENT);
-        mSolidGradientCenterX = typedArray.getFloat(styleable.getSolidCenterXStyleable(), 0.5f);
-        mSolidGradientCenterY = typedArray.getFloat(styleable.getSolidCenterYStyleable(), 0.5f);
+        mSolidGradientCenterX = typedArray.getFloat(styleable.getSolidGradientCenterXStyleable(), 0.5f);
+        mSolidGradientCenterY = typedArray.getFloat(styleable.getSolidGradientCenterYStyleable(), 0.5f);
         mSolidGradientRadius = typedArray.getDimensionPixelSize(styleable.getSolidGradientRadiusStyleable(), radius);
 
         mStrokeColor = typedArray.getColor(styleable.getStrokeColorStyleable(), NO_COLOR);
@@ -145,14 +145,14 @@ public final class ShapeDrawableBuilder {
             mStrokeSelectedColor = typedArray.getColor(styleable.getStrokeSelectedColorStyleable(), NO_COLOR);
         }
 
-        if (typedArray.hasValue(styleable.getStrokeStartColorStyleable()) && typedArray.hasValue(styleable.getStrokeEndColorStyleable())) {
-            if (typedArray.hasValue(styleable.getStrokeCenterColorStyleable())) {
-                mStrokeGradientColors = new int[] {typedArray.getColor(styleable.getStrokeStartColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getStrokeCenterColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getStrokeEndColorStyleable(), NO_COLOR)};
+        if (typedArray.hasValue(styleable.getStrokeGradientStartColorStyleable()) && typedArray.hasValue(styleable.getStrokeGradientEndColorStyleable())) {
+            if (typedArray.hasValue(styleable.getStrokeGradientCenterColorStyleable())) {
+                mStrokeGradientColors = new int[] {typedArray.getColor(styleable.getStrokeGradientStartColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getStrokeGradientCenterColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getStrokeGradientEndColorStyleable(), NO_COLOR)};
             } else {
-                mStrokeGradientColors = new int[] {typedArray.getColor(styleable.getStrokeStartColorStyleable(), NO_COLOR),
-                        typedArray.getColor(styleable.getStrokeEndColorStyleable(), NO_COLOR)};
+                mStrokeGradientColors = new int[] {typedArray.getColor(styleable.getStrokeGradientStartColorStyleable(), NO_COLOR),
+                        typedArray.getColor(styleable.getStrokeGradientEndColorStyleable(), NO_COLOR)};
             }
         }
 

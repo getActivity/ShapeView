@@ -82,18 +82,18 @@ public final class ShapeEditTextStyleable implements IShapeDrawableStyleable, IT
     }
 
     @Override
-    public int getSolidStartColorStyleable() {
-        return R.styleable.ShapeEditText_shape_solidStartColor;
+    public int getSolidGradientStartColorStyleable() {
+        return R.styleable.ShapeEditText_shape_solidGradientStartColor;
     }
 
     @Override
-    public int getSolidCenterColorStyleable() {
-        return R.styleable.ShapeEditText_shape_solidCenterColor;
+    public int getSolidGradientCenterColorStyleable() {
+        return R.styleable.ShapeEditText_shape_solidGradientCenterColor;
     }
 
     @Override
-    public int getSolidEndColorStyleable() {
-        return R.styleable.ShapeEditText_shape_solidEndColor;
+    public int getSolidGradientEndColorStyleable() {
+        return R.styleable.ShapeEditText_shape_solidGradientEndColor;
     }
 
     @Override
@@ -107,13 +107,13 @@ public final class ShapeEditTextStyleable implements IShapeDrawableStyleable, IT
     }
 
     @Override
-    public int getSolidCenterXStyleable() {
-        return R.styleable.ShapeEditText_shape_solidCenterX;
+    public int getSolidGradientCenterXStyleable() {
+        return R.styleable.ShapeEditText_shape_solidGradientCenterX;
     }
 
     @Override
-    public int getSolidCenterYStyleable() {
-        return R.styleable.ShapeEditText_shape_solidCenterY;
+    public int getSolidGradientCenterYStyleable() {
+        return R.styleable.ShapeEditText_shape_solidGradientCenterY;
     }
 
     @Override
@@ -147,18 +147,18 @@ public final class ShapeEditTextStyleable implements IShapeDrawableStyleable, IT
     }
 
     @Override
-    public int getStrokeStartColorStyleable() {
-        return R.styleable.ShapeEditText_shape_strokeStartColor;
+    public int getStrokeGradientStartColorStyleable() {
+        return R.styleable.ShapeEditText_shape_strokeGradientStartColor;
     }
 
     @Override
-    public int getStrokeCenterColorStyleable() {
-        return R.styleable.ShapeEditText_shape_strokeCenterColor;
+    public int getStrokeGradientCenterColorStyleable() {
+        return R.styleable.ShapeEditText_shape_strokeGradientCenterColor;
     }
 
     @Override
-    public int getStrokeEndColorStyleable() {
-        return R.styleable.ShapeEditText_shape_strokeEndColor;
+    public int getStrokeGradientEndColorStyleable() {
+        return R.styleable.ShapeEditText_shape_strokeGradientColor;
     }
 
     @Override

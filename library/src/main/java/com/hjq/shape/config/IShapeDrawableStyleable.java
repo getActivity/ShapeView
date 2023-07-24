@@ -38,19 +38,19 @@ public interface IShapeDrawableStyleable {
 
     int getSolidSelectedColorStyleable();
 
-    int getSolidStartColorStyleable();
+    int getSolidGradientStartColorStyleable();
 
-    int getSolidCenterColorStyleable();
+    int getSolidGradientCenterColorStyleable();
 
-    int getSolidEndColorStyleable();
+    int getSolidGradientEndColorStyleable();
 
     int getSolidGradientOrientationStyleable();
 
     int getSolidGradientTypeStyleable();
 
-    int getSolidCenterXStyleable();
+    int getSolidGradientCenterXStyleable();
 
-    int getSolidCenterYStyleable();
+    int getSolidGradientCenterYStyleable();
 
     int getSolidGradientRadiusStyleable();
 
@@ -68,11 +68,11 @@ public interface IShapeDrawableStyleable {
 
     int getStrokeSelectedColorStyleable();
 
-    int getStrokeStartColorStyleable();
+    int getStrokeGradientStartColorStyleable();
 
-    int getStrokeCenterColorStyleable();
+    int getStrokeGradientCenterColorStyleable();
 
-    int getStrokeEndColorStyleable();
+    int getStrokeGradientEndColorStyleable();
 
     int getStrokeGradientOrientationStyleable();
 

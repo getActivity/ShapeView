@@ -24,17 +24,17 @@
 
     * 修改 `app:shape_bottomRightRadius` 属性名，请使用 `app:shape_radiusInBottomRight` 代替
 
-    * 修改 `app:shape_startColor` 属性名，请使用 `app:shape_solidStartColor` 代替
+    * 修改 `app:shape_startColor` 属性名，请使用 `app:shape_solidGradientStartColor` 代替
 
-    * 修改 `app:shape_centerColor` 属性名，请使用 `app:shape_solidStartColor` 代替
+    * 修改 `app:shape_centerColor` 属性名，请使用 `app:shape_solidGradientStartColor` 代替
 
-    * 修改 `app:shape_endColor` 属性名，请使用 `app:shape_solidEndColor` 代替
+    * 修改 `app:shape_endColor` 属性名，请使用 `app:shape_solidGradientEndColor` 代替
 
     * 修改 `app:shape_gradientType` 属性名，请使用 `app:shape_solidGradientType` 代替
 
-    * 修改 `app:shape_centerX` 属性名，请使用 `app:shape_solidCenterX` 代替
+    * 修改 `app:shape_centerX` 属性名，请使用 `app:shape_solidGradientCenterX` 代替
 
-    * 修改 `app:shape_centerY` 属性名，请使用 `app:shape_solidCenterY` 代替
+    * 修改 `app:shape_centerY` 属性名，请使用 `app:shape_solidGradientCenterY` 代替
 
     * 修改 `app:shape_gradientRadius` 属性名，请使用 `app:shape_solidGradientRadius` 代替
 
