@@ -26,7 +26,7 @@
 
     * 修改 `app:shape_startColor` 属性名，请使用 `app:shape_solidGradientStartColor` 代替
 
-    * 修改 `app:shape_centerColor` 属性名，请使用 `app:shape_solidGradientStartColor` 代替
+    * 修改 `app:shape_centerColor` 属性名，请使用 `app:shape_solidGradientCenterColor` 代替
 
     * 修改 `app:shape_endColor` 属性名，请使用 `app:shape_solidGradientEndColor` 代替
 
