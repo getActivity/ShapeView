@@ -90,7 +90,9 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 });
 ```
 
-* 布局属性大全，[不同版本的 xml 属性适配请点击这里查看](Adaptive.md)
+#### 布局属性大全
+
+* [不同版本的 xml 属性适配请点击这里查看](Adaptive.md)
 
 ```xml
 <resources>

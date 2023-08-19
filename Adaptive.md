@@ -54,7 +54,7 @@
 
 * 拆分
 
-    * 拆分 `app:shape_angle` 属性，将原有属性拆分为 `app:shape_solidGradientOrientation` 和 `app:shape_strokeGradientOrientation`，并且修改了值的类型，具体赋值可以参考以下：
+    * 拆分 `app:shape_angle` 属性，将原有属性拆分为 `app:shape_solidGradientOrientation` 和 `app:shape_strokeGradientOrientation`，之前的 `app:shape_angle` 属性等于现在的 `app:shape_solidGradientOrientation` 属性，可以直接搜索替换，另外还修改了值的类型，具体赋值可以参考以下：
 
     ```xml
     <!-- 从左到右绘制渐变（0 度） -->
