@@ -7,10 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
-
 import com.hjq.shape.config.IShapeDrawableStyleable;
 import com.hjq.shape.drawable.ShapeDrawable;
-import com.hjq.shape.drawable.ShapeGradientOrientationLimit;
+import com.hjq.shape.drawable.ShapeGradientOrientation;
 import com.hjq.shape.drawable.ShapeGradientType;
 import com.hjq.shape.drawable.ShapeGradientTypeLimit;
 import com.hjq.shape.drawable.ShapeType;
@@ -47,8 +46,7 @@ public final class ShapeDrawableBuilder {
     private float mBottomRightRadius;
 
     private int[] mSolidGradientColors;
-    @ShapeGradientOrientationLimit
-    private int mSolidGradientOrientation;
+    private ShapeGradientOrientation mSolidGradientOrientation;
     @ShapeGradientTypeLimit
     private int mSolidGradientType;
     private float mSolidGradientCenterX;
@@ -63,8 +61,7 @@ public final class ShapeDrawableBuilder {
     private Integer mStrokeSelectedColor;
 
     private int[] mStrokeGradientColors;
-    @ShapeGradientOrientationLimit
-    private int mStrokeGradientOrientation;
+    private ShapeGradientOrientation mStrokeGradientOrientation;
 
     private int mStrokeSize;
     private int mStrokeDashSize;
@@ -105,11 +102,68 @@ public final class ShapeDrawableBuilder {
             mSolidSelectedColor = typedArray.getColor(styleable.getSolidSelectedColorStyleable(), NO_COLOR);
         }
 
+        int layoutDirection = view.getLayoutDirection();
+
         int radius = typedArray.getDimensionPixelSize(styleable.getRadiusStyleable(), 0);
-        mTopLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopLeftStyleable(), radius);
-        mTopRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopRightStyleable(), radius);
-        mBottomLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomLeftStyleable(), radius);
-        mBottomRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomRightStyleable(), radius);
+        mTopLeftRadius = mTopRightRadius = mBottomLeftRadius = mBottomRightRadius = radius;
+
+        if (typedArray.hasValue(styleable.getRadiusInTopStartStyleable())) {
+            switch (layoutDirection) {
+                case View.LAYOUT_DIRECTION_RTL:
+                    mTopRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopStartStyleable(), radius);
+                    break;
+                case View.LAYOUT_DIRECTION_LTR:
+                default:
+                    mTopLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopStartStyleable(), radius);
+                    break;
+            }
+        }
+        if (typedArray.hasValue(styleable.getRadiusInTopEndStyleable())) {
+            switch (layoutDirection) {
+                case View.LAYOUT_DIRECTION_RTL:
+                    mTopLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopEndStyleable(), radius);
+                    break;
+                case View.LAYOUT_DIRECTION_LTR:
+                default:
+                    mTopRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopEndStyleable(), radius);
+                    break;
+            }
+        }
+        if (typedArray.hasValue(styleable.getRadiusInBottomStartStyleable())) {
+            switch (layoutDirection) {
+                case View.LAYOUT_DIRECTION_RTL:
+                    mBottomRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomStartStyleable(), radius);
+                    break;
+                case View.LAYOUT_DIRECTION_LTR:
+                default:
+                    mBottomLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomStartStyleable(), radius);
+                    break;
+            }
+        }
+        if (typedArray.hasValue(styleable.getRadiusInBottomEndStyleable())) {
+            switch (layoutDirection) {
+                case View.LAYOUT_DIRECTION_RTL:
+                    mBottomLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomEndStyleable(), radius);
+                    break;
+                case View.LAYOUT_DIRECTION_LTR:
+                default:
+                    mBottomRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomEndStyleable(), radius);
+                    break;
+            }
+        }
+
+        if (typedArray.hasValue(styleable.getRadiusInTopLeftStyleable())) {
+            mTopLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopLeftStyleable(), radius);
+        }
+        if (typedArray.hasValue(styleable.getRadiusInTopRightStyleable())) {
+            mTopRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInTopRightStyleable(), radius);
+        }
+        if (typedArray.hasValue(styleable.getRadiusInBottomLeftStyleable())) {
+            mBottomLeftRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomLeftStyleable(), radius);
+        }
+        if (typedArray.hasValue(styleable.getRadiusInBottomRightStyleable())) {
+            mBottomRightRadius = typedArray.getDimensionPixelSize(styleable.getRadiusInBottomRightStyleable(), radius);
+        }
 
         if (typedArray.hasValue(styleable.getSolidGradientStartColorStyleable()) && typedArray.hasValue(styleable.getSolidGradientEndColorStyleable())) {
             if (typedArray.hasValue(styleable.getSolidGradientCenterColorStyleable())) {
@@ -122,7 +176,7 @@ public final class ShapeDrawableBuilder {
             }
         }
 
-        mSolidGradientOrientation = (int) typedArray.getFloat(styleable.getSolidGradientOrientationStyleable(), 0);
+        mSolidGradientOrientation = transformGradientOrientation(typedArray.getInt(styleable.getSolidGradientOrientationStyleable(), 0));
         mSolidGradientType = typedArray.getInt(styleable.getSolidGradientTypeStyleable(), ShapeGradientType.LINEAR_GRADIENT);
         mSolidGradientCenterX = typedArray.getFloat(styleable.getSolidGradientCenterXStyleable(), 0.5f);
         mSolidGradientCenterY = typedArray.getFloat(styleable.getSolidGradientCenterYStyleable(), 0.5f);
@@ -156,7 +210,7 @@ public final class ShapeDrawableBuilder {
             }
         }
 
-        mStrokeGradientOrientation = (int) typedArray.getFloat(styleable.getStrokeGradientOrientationStyleable(), 0);
+        mStrokeGradientOrientation = transformGradientOrientation(typedArray.getInt(styleable.getStrokeGradientOrientationStyleable(), 0));
 
         mStrokeSize = typedArray.getDimensionPixelSize(styleable.getStrokeSizeStyleable(), 0);
         mStrokeDashSize = typedArray.getDimensionPixelSize(styleable.getStrokeDashSizeStyleable(), 0);
@@ -213,6 +267,27 @@ public final class ShapeDrawableBuilder {
         mTopRightRadius = topRightRadius;
         mBottomLeftRadius = bottomLeftRadius;
         mBottomRightRadius = bottomRightRadius;
+        return this;
+    }
+
+    public ShapeDrawableBuilder setRadiusRelative(float topStartRadius, float topEndRadius,
+                                                    float bottomStartRadius, float bottomEndRadius) {
+        int layoutDirection = mView.getLayoutDirection();
+        switch (layoutDirection) {
+            case View.LAYOUT_DIRECTION_RTL:
+                mTopLeftRadius = topEndRadius;
+                mTopRightRadius = topStartRadius;
+                mBottomLeftRadius = bottomEndRadius;
+                mBottomRightRadius = bottomStartRadius;
+                break;
+            case View.LAYOUT_DIRECTION_LTR:
+            default:
+                mTopLeftRadius = topStartRadius;
+                mTopRightRadius = topEndRadius;
+                mBottomLeftRadius = bottomStartRadius;
+                mBottomRightRadius = bottomEndRadius;
+                break;
+        }
         return this;
     }
 
@@ -339,13 +414,12 @@ public final class ShapeDrawableBuilder {
         mSolidGradientColors = null;
     }
 
-    public ShapeDrawableBuilder setSolidGradientOrientation(@ShapeGradientOrientationLimit int orientation) {
+    public ShapeDrawableBuilder setSolidGradientOrientation(ShapeGradientOrientation orientation) {
         mSolidGradientOrientation = orientation;
         return this;
     }
 
-    @ShapeGradientOrientationLimit
-    public int getSolidGradientOrientation() {
+    public ShapeGradientOrientation getSolidGradientOrientation() {
         return mSolidGradientOrientation;
     }
 
@@ -473,13 +547,12 @@ public final class ShapeDrawableBuilder {
         mStrokeGradientColors = null;
     }
 
-    public ShapeDrawableBuilder setStrokeGradientOrientation(@ShapeGradientOrientationLimit int orientation) {
+    public ShapeDrawableBuilder setStrokeGradientOrientation(ShapeGradientOrientation orientation) {
         mStrokeGradientOrientation = orientation;
         return this;
     }
 
-    @ShapeGradientOrientationLimit
-    public int getStrokeGradientOrientation() {
+    public ShapeGradientOrientation getStrokeGradientOrientation() {
         return mStrokeGradientOrientation;
     }
 
@@ -737,5 +810,42 @@ public final class ShapeDrawableBuilder {
             mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         mView.setBackground(drawable);
+    }
+
+    /**
+     * 将 ShapeView 框架中渐变色的 xml 属性值转换成 ShapeDrawable 中的枚举值
+     */
+    private ShapeGradientOrientation transformGradientOrientation(int value) {
+        switch (value) {
+            case 10:
+                return ShapeGradientOrientation.START_TO_END;
+            case 180:
+                return ShapeGradientOrientation.RIGHT_TO_LEFT;
+            case 1800:
+                return ShapeGradientOrientation.END_TO_START;
+            case 90:
+                return ShapeGradientOrientation.BOTTOM_TO_TOP;
+            case 270:
+                return ShapeGradientOrientation.TOP_TO_BOTTOM;
+            case 315:
+                return ShapeGradientOrientation.TOP_LEFT_TO_BOTTOM_RIGHT;
+            case 3150:
+                return ShapeGradientOrientation.TOP_START_TO_BOTTOM_END;
+            case 45:
+                return ShapeGradientOrientation.BOTTOM_LEFT_TO_TOP_RIGHT;
+            case 450:
+                return ShapeGradientOrientation.BOTTOM_START_TO_TOP_END;
+            case 225:
+                return ShapeGradientOrientation.TOP_RIGHT_TO_BOTTOM_LEFT;
+            case 2250:
+                return ShapeGradientOrientation.TOP_END_TO_BOTTOM_START;
+            case 135:
+                return ShapeGradientOrientation.BOTTOM_RIGHT_TO_TOP_LEFT;
+            case 1350:
+                return ShapeGradientOrientation.BOTTOM_END_TO_TOP_START;
+            case 0:
+            default:
+                return ShapeGradientOrientation.LEFT_TO_RIGHT;
+        }
     }
 }

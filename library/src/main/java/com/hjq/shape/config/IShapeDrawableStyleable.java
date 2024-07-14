@@ -18,11 +18,19 @@ public interface IShapeDrawableStyleable {
 
     int getRadiusInTopLeftStyleable();
 
+    int getRadiusInTopStartStyleable();
+
     int getRadiusInTopRightStyleable();
+
+    int getRadiusInTopEndStyleable();
 
     int getRadiusInBottomLeftStyleable();
 
+    int getRadiusInBottomStartStyleable();
+
     int getRadiusInBottomRightStyleable();
+
+    int getRadiusInBottomEndStyleable();
 
     int getSolidColorStyleable();
 

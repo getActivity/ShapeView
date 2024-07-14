@@ -41,8 +41,18 @@ public final class ShapeConstraintLayoutStyleable implements IShapeDrawableStyle
     }
 
     @Override
+    public int getRadiusInTopStartStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_radiusInTopStart;
+    }
+
+    @Override
     public int getRadiusInTopRightStyleable() {
         return R.styleable.ShapeConstraintLayout_shape_radiusInTopRight;
+    }
+
+    @Override
+    public int getRadiusInTopEndStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_radiusInTopEnd;
     }
 
     @Override
@@ -51,8 +61,18 @@ public final class ShapeConstraintLayoutStyleable implements IShapeDrawableStyle
     }
 
     @Override
+    public int getRadiusInBottomStartStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_radiusInBottomStart;
+    }
+
+    @Override
     public int getRadiusInBottomRightStyleable() {
         return R.styleable.ShapeConstraintLayout_shape_radiusInBottomRight;
+    }
+
+    @Override
+    public int getRadiusInBottomEndStyleable() {
+        return R.styleable.ShapeConstraintLayout_shape_radiusInBottomEnd;
     }
 
     @Override

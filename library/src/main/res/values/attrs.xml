@@ -22,12 +22,16 @@
     <attr name="shape_radius" format="dimension" />
     <!-- 左上角的圆角大小 -->
     <attr name="shape_radiusInTopLeft" format="dimension" />
+    <attr name="shape_radiusInTopStart" format="dimension" />
     <!-- 右上角的圆角大小 -->
     <attr name="shape_radiusInTopRight" format="dimension" />
+    <attr name="shape_radiusInTopEnd" format="dimension" />
     <!-- 左下角的圆角大小 -->
     <attr name="shape_radiusInBottomLeft" format="dimension" />
+    <attr name="shape_radiusInBottomStart" format="dimension" />
     <!-- 右下角的圆角大小 -->
     <attr name="shape_radiusInBottomRight" format="dimension" />
+    <attr name="shape_radiusInBottomEnd" format="dimension" />
 
     <!-- 填充色（默认状态） -->
     <attr name="shape_solidColor" format="color" />
@@ -49,12 +53,16 @@
     <!-- 填充色渐变色结束颜色 -->
     <attr name="shape_solidGradientEndColor" format="color" />
 
-    <!-- 填充色渐变方向（仅用于线性渐变。必须是 0-315 范围内的值，并且是 45 的倍数） -->
+    <!-- 填充色渐变方向（仅用于线性渐变） -->
     <attr name="shape_solidGradientOrientation" >
         <!-- 从左到右绘制渐变（0 度） -->
         <enum name="leftToRight" value="0" />
+        <enum name="startToEnd" value="10" />
+
         <!-- 从右到左绘制渐变（180 度） -->
         <enum name="rightToLeft" value="180" />
+        <enum name="endToStart" value="1800" />
+
         <!-- 从下到上绘制渐变（90 度） -->
         <enum name="bottomToTop" value="90" />
         <!-- 从上到下绘制渐变（270 度） -->
@@ -62,12 +70,19 @@
 
         <!-- 从左上角到右下角绘制渐变（315 度） -->
         <enum name="topLeftToBottomRight" value="315" />
+        <enum name="topStartToBottomEnd" value="3150" />
+
         <!-- 从左下角到右上角绘制渐变（45 度） -->
         <enum name="bottomLeftToTopRight" value="45" />
+        <enum name="bottomStartToTopEnd" value="450" />
+
         <!-- 从右上角到左下角绘制渐变（225 度） -->
         <enum name="topRightToBottomLeft" value="225" />
+        <enum name="topEndToBottomStart" value="2250" />
+
         <!-- 从右下角到左上角绘制渐变（135 度） -->
         <enum name="bottomRightToTopLeft" value="135" />
+        <enum name="bottomEndToTopStart" value="1350" />
     </attr>
     <!-- 填充色渐变类型（默认类型是线性渐变） -->
     <attr name="shape_solidGradientType">
@@ -105,12 +120,16 @@
     <!-- 边框渐变色结束颜色 -->
     <attr name="shape_strokeGradientColor" format="color" />
 
-    <!-- 边框色渐变方向（必须是 0-315 范围内的值，并且是 45 的倍数） -->
+    <!-- 边框色渐变方向（仅用于线性渐变） -->
     <attr name="shape_strokeGradientOrientation" >
         <!-- 从左到右绘制渐变（0 度） -->
         <enum name="leftToRight" value="0" />
+        <enum name="startToEnd" value="10" />
+
         <!-- 从右到左绘制渐变（180 度） -->
         <enum name="rightToLeft" value="180" />
+        <enum name="endToStart" value="1800" />
+
         <!-- 从下到上绘制渐变（90 度） -->
         <enum name="bottomToTop" value="90" />
         <!-- 从上到下绘制渐变（270 度） -->
@@ -118,12 +137,19 @@
 
         <!-- 从左上角到右下角绘制渐变（315 度） -->
         <enum name="topLeftToBottomRight" value="315" />
+        <enum name="topStartToBottomEnd" value="3150" />
+
         <!-- 从左下角到右上角绘制渐变（45 度） -->
         <enum name="bottomLeftToTopRight" value="45" />
+        <enum name="bottomStartToTopEnd" value="450" />
+
         <!-- 从右上角到左下角绘制渐变（225 度） -->
         <enum name="topRightToBottomLeft" value="225" />
+        <enum name="topEndToBottomStart" value="2250" />
+
         <!-- 从右下角到左上角绘制渐变（135 度） -->
         <enum name="bottomRightToTopLeft" value="135" />
+        <enum name="bottomEndToTopStart" value="1350" />
     </attr>
 
     <!-- 边框大小 -->
@@ -214,9 +240,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
 
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -279,9 +309,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
 
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -344,9 +378,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
 
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -419,9 +457,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
 
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -494,9 +536,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
 
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -559,9 +605,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
 
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -610,9 +660,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
 
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -661,9 +715,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
 
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -712,9 +770,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
         
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -763,9 +825,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
         
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -814,9 +880,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
         
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -865,9 +935,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
         
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
@@ -916,9 +990,13 @@
 
         <attr name="shape_radius" />
         <attr name="shape_radiusInTopLeft" />
+        <attr name="shape_radiusInTopStart" />
         <attr name="shape_radiusInTopRight" />
+        <attr name="shape_radiusInTopEnd" />
         <attr name="shape_radiusInBottomLeft" />
+        <attr name="shape_radiusInBottomStart" />
         <attr name="shape_radiusInBottomRight" />
+        <attr name="shape_radiusInBottomEnd" />
         
         <attr name="shape_solidColor" />
         <attr name="shape_solidPressedColor" />
