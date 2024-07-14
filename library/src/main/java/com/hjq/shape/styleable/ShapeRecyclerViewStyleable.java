@@ -41,8 +41,18 @@ public final class ShapeRecyclerViewStyleable implements IShapeDrawableStyleable
     }
 
     @Override
+    public int getRadiusInTopStartStyleable() {
+        return R.styleable.ShapeRecyclerView_shape_radiusInTopStart;
+    }
+
+    @Override
     public int getRadiusInTopRightStyleable() {
         return R.styleable.ShapeRecyclerView_shape_radiusInTopRight;
+    }
+
+    @Override
+    public int getRadiusInTopEndStyleable() {
+        return R.styleable.ShapeRecyclerView_shape_radiusInTopEnd;
     }
 
     @Override
@@ -51,8 +61,18 @@ public final class ShapeRecyclerViewStyleable implements IShapeDrawableStyleable
     }
 
     @Override
+    public int getRadiusInBottomStartStyleable() {
+        return R.styleable.ShapeRecyclerView_shape_radiusInBottomStart;
+    }
+
+    @Override
     public int getRadiusInBottomRightStyleable() {
         return R.styleable.ShapeRecyclerView_shape_radiusInBottomRight;
+    }
+
+    @Override
+    public int getRadiusInBottomEndStyleable() {
+        return R.styleable.ShapeRecyclerView_shape_radiusInBottomEnd;
     }
 
     @Override

@@ -2,6 +2,42 @@
 
 * 你好，如果你是刚使用这个库的人可以不必理会，如果你之前使用了 `ShapeView` 这个库，也就是 `9.0` 版本以下的，在升级到 `9.0` 版本后需要进行适配，否则 `Android Studio` 会报错`编译不通过`，对于这个问题我表示十分抱歉，低版本的 `xml` 属性命名得并不是很规范，现在在 `9.0` 版本进行优化，尽管这次的代价比较大，但是我会义无反顾去做，如果你使用了 `ShapeView ` 但是不想进行适配，请不要升级依赖库版本。
 
+#### 从 9.0 版本升级到 9.2 版本适配方案
+
+* 新增属性
+
+    * 新增 `app:shape_radiusInTopStart` 属性
+
+    * 新增 `app:shape_radiusInTopEnd` 属性
+
+    * 新增 `app:shape_radiusInBottomStart` 属性
+
+    * 新增 `app:shape_radiusInBottomEnd` 属性
+
+* 补充属性值
+
+    * 给 `app:shape_solidGradientOrientation` 和 `app:shape_strokeGradientOrientation` 属性补充了几个布局反方向特性适配的属性值
+
+```
+<!-- 从左到右绘制渐变（0 度） -->
+<enum name="startToEnd" value="10" />
+
+<!-- 从右到左绘制渐变（180 度） -->
+<enum name="endToStart" value="1800" />
+
+<!-- 从左上角到右下角绘制渐变（315 度） -->
+<enum name="topStartToBottomEnd" value="3150" />
+
+<!-- 从左下角到右上角绘制渐变（45 度） -->
+<enum name="bottomStartToTopEnd" value="450" />
+
+<!-- 从右上角到左下角绘制渐变（225 度） -->
+<enum name="topEndToBottomStart" value="2250" />
+
+<!-- 从右下角到左上角绘制渐变（135 度） -->
+<enum name="bottomEndToTopStart" value="1350" />
+```
+
 #### 从 8.5 版本升级到 9.0 版本适配方案
 
 * 新增

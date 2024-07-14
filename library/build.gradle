@@ -5,8 +5,8 @@ android {
 
     defaultConfig {
         minSdkVersion 17
-        versionCode 90
-        versionName "9.0"
+        versionCode 920
+        versionName "9.2"
     }
 
     // 支持 Java JDK 8
@@ -15,9 +15,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
     }
 
-    android.libraryVariants.all { variant ->
+    android.libraryVariants.configureEach { variant ->
         // aar 输出文件名配置
-        variant.outputs.all { output ->
+        variant.outputs.configureEach { output ->
             outputFileName = "${rootProject.name}-${android.defaultConfig.versionName}.aar"
         }
     }
@@ -25,7 +25,7 @@ android {
 
 dependencies {
     // ShapeDrawable：https://github.com/getActivity/ShapeDrawable
-    implementation 'com.github.getActivity:ShapeDrawable:3.0'
+    implementation 'com.github.getActivity:ShapeDrawable:3.2'
 }
 
 afterEvaluate {
@@ -42,23 +42,24 @@ dependencies {
 }
 
 // 防止编码问题
-tasks.withType(Javadoc) {
+tasks.withType(Javadoc).configureEach {
     options.addStringOption('Xdoclint:none', '-quiet')
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
 
-task sourcesJar(type: Jar) {
+tasks.register('sourcesJar', Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
 
-task javadoc(type: Javadoc) {
+tasks.register('javadoc', Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
+tasks.register('javadocJar', Jar) {
+    dependsOn javadoc
     classifier = 'javadoc'
     from javadoc.destinationDir
 }

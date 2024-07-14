@@ -8,8 +8,8 @@ android {
         minSdkVersion 17
         // noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
-        versionCode 90
-        versionName "9.0"
+        versionCode 920
+        versionName "9.2"
     }
 
     // 支持 Java JDK 8
@@ -42,9 +42,9 @@ android {
         }
     }
 
-    applicationVariants.all { variant ->
+    applicationVariants.configureEach { variant ->
         // apk 输出文件名配置
-        variant.outputs.all { output ->
+        variant.outputs.configureEach { output ->
             outputFileName = rootProject.getName() + '.apk'
         }
     }
@@ -60,8 +60,8 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
 
     // 标题栏框架：https://github.com/getActivity/TitleBar
-    implementation 'com.github.getActivity:TitleBar:10.0'
+    implementation 'com.github.getActivity:TitleBar:10.5'
 
     // 内存泄漏检测：https://github.com/square/leakcanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.12'
 }
