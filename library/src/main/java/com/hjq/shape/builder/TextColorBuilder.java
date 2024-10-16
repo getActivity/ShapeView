@@ -3,7 +3,7 @@ package com.hjq.shape.builder;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.widget.TextView;
