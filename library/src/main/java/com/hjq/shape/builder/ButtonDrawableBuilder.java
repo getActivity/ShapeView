@@ -3,7 +3,7 @@ package com.hjq.shape.builder;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.support.v4.widget.CompoundButtonCompat;
+import androidx.core.widget.CompoundButtonCompat;
 import android.widget.CompoundButton;
 
 import com.hjq.shape.R;

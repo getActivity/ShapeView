@@ -2,8 +2,9 @@ package com.hjq.shape.layout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;

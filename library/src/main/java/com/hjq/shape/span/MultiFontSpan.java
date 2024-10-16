@@ -2,7 +2,7 @@ package com.hjq.shape.span;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextPaint;
 import android.text.style.ReplacementSpan;
 
