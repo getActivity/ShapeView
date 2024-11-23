@@ -4,11 +4,12 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
-import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.widget.TextView;
-
 import com.hjq.shape.config.ITextColorStyleable;
+import com.hjq.shape.config.ITextViewAttribute;
+import com.hjq.shape.other.TextViewAttribute;
 import com.hjq.shape.span.LinearGradientFontSpan;
 import com.hjq.shape.span.MultiFontSpan;
 import com.hjq.shape.span.StrokeFontSpan;
@@ -22,6 +23,7 @@ import com.hjq.shape.span.StrokeFontSpan;
 public final class TextColorBuilder {
 
     private final TextView mTextView;
+    private final ITextViewAttribute mTextViewAttribute;
 
     private int mTextColor;
     private Integer mTextPressedColor;
@@ -70,12 +72,14 @@ public final class TextColorBuilder {
                 LinearGradientFontSpan.GRADIENT_ORIENTATION_HORIZONTAL);
 
         if (typedArray.hasValue(styleable.getTextStrokeColorStyleable())) {
-            mTextStrokeColor = typedArray.getColor(styleable.getTextStrokeColorStyleable(), 0);
+            mTextStrokeColor = typedArray.getColor(styleable.getTextStrokeColorStyleable(), Color.TRANSPARENT);
         }
 
         if (typedArray.hasValue(styleable.getTextStrokeSizeStyleable())) {
             mTextStrokeSize = typedArray.getDimensionPixelSize(styleable.getTextStrokeSizeStyleable(), 0);
         }
+
+        mTextViewAttribute = new TextViewAttribute(mTextView);
     }
 
     public TextColorBuilder setTextColor(int color) {
@@ -199,32 +203,33 @@ public final class TextColorBuilder {
         mTextView.setText(mTextView.getText().toString());
     }
 
-    public SpannableString buildTextSpannable(CharSequence text) {
-        SpannableString builder = new SpannableString(text);
+    public SpannableStringBuilder buildTextSpannable(CharSequence text) {
+        SpannableStringBuilder builder = new SpannableStringBuilder(text);
 
         LinearGradientFontSpan linearGradientFontSpan = null;
         StrokeFontSpan strokeFontSpan = null;
 
         if (isTextGradientColorsEnable()) {
-            linearGradientFontSpan = new LinearGradientFontSpan()
+            linearGradientFontSpan = new LinearGradientFontSpan(mTextViewAttribute)
                     .setTextGradientColor(mTextGradientColors)
                     .setTextGradientOrientation(mTextGradientOrientation)
                     .setTextGradientPositions(null);
         }
         if (isTextStrokeColorEnable()) {
-            strokeFontSpan = new StrokeFontSpan()
+            strokeFontSpan = new StrokeFontSpan(mTextViewAttribute)
                     .setTextStrokeColor(mTextStrokeColor)
                     .setTextStrokeSize(mTextStrokeSize);
         }
 
         if (linearGradientFontSpan != null && strokeFontSpan != null) {
-            MultiFontSpan multiFontSpan = new MultiFontSpan(strokeFontSpan, linearGradientFontSpan);
+            MultiFontSpan multiFontSpan = new MultiFontSpan(mTextViewAttribute, strokeFontSpan, linearGradientFontSpan);
             builder.setSpan(multiFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else if (linearGradientFontSpan != null) {
             builder.setSpan(linearGradientFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else if (strokeFontSpan != null) {
             builder.setSpan(strokeFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
+
         return builder;
     }
 

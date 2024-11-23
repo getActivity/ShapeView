@@ -5,18 +5,25 @@ import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.text.TextPaint;
 import android.text.style.ReplacementSpan;
-
+import com.hjq.shape.config.ITextViewAttribute;
 import java.util.Arrays;
 import java.util.List;
 
-public class MultiFontSpan extends ReplacementSpan {
+/**
+ *    author : Android 轮子哥
+ *    github : https://github.com/getActivity/ShapeView
+ *    time   : 2022/05/04
+ *    desc   : 支持定义多个类型的 AlignmentReplacementSpan
+ */
+public class MultiFontSpan extends AlignmentReplacementSpan {
 
     /** 测量的文本宽度 */
     private float mMeasureTextWidth;
 
     private final List<ReplacementSpan> mReplacementSpans;
 
-    public MultiFontSpan(ReplacementSpan... replacementSpans) {
+    public MultiFontSpan(ITextViewAttribute textViewAttribute, ReplacementSpan... replacementSpans) {
+        super(textViewAttribute);
         mReplacementSpans = Arrays.asList(replacementSpans);
     }
 

@@ -8,6 +8,9 @@ import android.support.annotation.NonNull;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.hjq.shape.config.ITextViewAttribute;
+import com.hjq.shape.other.TextViewAttribute;
 
 /**
  *    author : Android 轮子哥
@@ -25,9 +28,13 @@ public class LinearGradientFontSpan extends CommonFontSpan {
     /**
      * 构建一个文字渐变色的 Spannable 对象
      */
-    public static SpannableStringBuilder buildLinearGradientSpannable(CharSequence text, int[] colors, float[] positions, int orientation) {
+    public static SpannableStringBuilder buildLinearGradientFontSpannable(TextView textView, CharSequence text, int[] colors, float[] positions, int orientation) {
+        return buildLinearGradientFontSpannable(new TextViewAttribute(textView), text, colors, positions, orientation);
+    }
+
+    public static SpannableStringBuilder buildLinearGradientFontSpannable(ITextViewAttribute textViewAttribute, CharSequence text, int[] colors, float[] positions, int orientation) {
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
-        LinearGradientFontSpan span = new LinearGradientFontSpan()
+        LinearGradientFontSpan span = new LinearGradientFontSpan(textViewAttribute)
                 .setTextGradientColor(colors)
                 .setTextGradientOrientation(orientation)
                 .setTextGradientPositions(positions);
@@ -42,14 +49,19 @@ public class LinearGradientFontSpan extends CommonFontSpan {
     /** 文字渐变位置组 */
     private float[] mTextGradientPositions;
 
+    public LinearGradientFontSpan(ITextViewAttribute textViewAttribute) {
+        super(textViewAttribute);
+    }
+
     @Override
-    public void onDraw(@NonNull Canvas canvas, @NonNull Paint paint, CharSequence text, int start, int end, float x, int top, int y, int bottom) {
+    public void onDraw(@NonNull Canvas canvas, @NonNull Paint paint, CharSequence text, float textWidth,
+                                int start, int end, float x, int top, int y, int bottom) {
         LinearGradient linearGradient;
         if (mTextGradientOrientation == GRADIENT_ORIENTATION_VERTICAL) {
             linearGradient = new LinearGradient(0, 0, 0, paint.descent() - paint.ascent(),
                     mTextGradientColor, mTextGradientPositions, Shader.TileMode.REPEAT);
         } else {
-            linearGradient = new LinearGradient(x, 0, x + getMeasureTextWidth(), 0,
+            linearGradient = new LinearGradient(x, 0, x + textWidth, 0,
                     mTextGradientColor, mTextGradientPositions, Shader.TileMode.REPEAT);
         }
         paint.setShader(linearGradient);
