@@ -227,6 +227,7 @@ public final class TextColorBuilder {
         } else if (linearGradientFontSpan != null) {
             builder.setSpan(linearGradientFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         } else if (strokeFontSpan != null) {
+            strokeFontSpan.setTextSolidColor(mTextColor);
             builder.setSpan(strokeFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 

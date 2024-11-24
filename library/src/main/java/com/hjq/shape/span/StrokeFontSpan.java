@@ -1,7 +1,9 @@
 package com.hjq.shape.span;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -22,6 +24,9 @@ public class StrokeFontSpan extends CommonFontSpan {
 
     private int mTextStrokeColor;
     private int mTextStrokeSize;
+
+    /** 文本颜色 */
+    private int mTextSolidColor;
 
     /**
      * 构建一个文字描边的 Spannable 对象
@@ -58,10 +63,22 @@ public class StrokeFontSpan extends CommonFontSpan {
         // 设置粗体
         //mStrokePaint.setFakeBoldText(true);
         mStrokePaint.setColor(mTextStrokeColor);
+        // 绘制文本描边
         canvas.drawText(text, start, end, x, y, mStrokePaint);
+
+        // 绘制文本内容
+        if (mTextSolidColor != Color.TRANSPARENT) {
+            paint.setColor(mTextSolidColor);
+            canvas.drawText(text, start, end, x, y, paint);
+        }
     }
 
-    public StrokeFontSpan setTextStrokeColor(int color) {
+    public StrokeFontSpan setTextSolidColor(@ColorInt int color) {
+        mTextSolidColor = color;
+        return this;
+    }
+
+    public StrokeFontSpan setTextStrokeColor(@ColorInt int color) {
         mTextStrokeColor = color;
         return this;
     }
