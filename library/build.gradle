@@ -23,11 +23,6 @@ android {
     }
 }
 
-dependencies {
-    // ShapeDrawable：https://github.com/getActivity/ShapeDrawable
-    implementation 'com.github.getActivity:ShapeDrawable:3.2'
-}
-
 afterEvaluate {
     // 排除 BuildConfig.class
     generateReleaseBuildConfig.enabled = false
@@ -39,6 +34,9 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     // noinspection GradleDependency
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // ShapeDrawable：https://github.com/getActivity/ShapeDrawable
+    implementation 'com.github.getActivity:ShapeDrawable:3.3'
 }
 
 // 防止编码问题
