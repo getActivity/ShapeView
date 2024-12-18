@@ -177,7 +177,7 @@ public final class ShapeFrameLayoutStyleable implements IShapeDrawableStyleable 
 
     @Override
     public int getStrokeGradientEndColorStyleable() {
-        return R.styleable.ShapeFrameLayout_shape_strokeGradientColor;
+        return R.styleable.ShapeFrameLayout_shape_strokeGradientEndColor;
     }
 
     @Override

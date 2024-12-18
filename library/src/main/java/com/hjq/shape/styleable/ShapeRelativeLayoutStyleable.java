@@ -177,7 +177,7 @@ public final class ShapeRelativeLayoutStyleable implements IShapeDrawableStyleab
 
     @Override
     public int getStrokeGradientEndColorStyleable() {
-        return R.styleable.ShapeRelativeLayout_shape_strokeGradientColor;
+        return R.styleable.ShapeRelativeLayout_shape_strokeGradientEndColor;
     }
 
     @Override

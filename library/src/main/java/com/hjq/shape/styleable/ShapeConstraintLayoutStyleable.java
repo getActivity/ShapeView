@@ -177,7 +177,7 @@ public final class ShapeConstraintLayoutStyleable implements IShapeDrawableStyle
 
     @Override
     public int getStrokeGradientEndColorStyleable() {
-        return R.styleable.ShapeConstraintLayout_shape_strokeGradientColor;
+        return R.styleable.ShapeConstraintLayout_shape_strokeGradientEndColor;
     }
 
     @Override

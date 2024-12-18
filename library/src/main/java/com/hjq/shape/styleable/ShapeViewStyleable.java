@@ -177,7 +177,7 @@ public final class ShapeViewStyleable implements IShapeDrawableStyleable {
 
     @Override
     public int getStrokeGradientEndColorStyleable() {
-        return R.styleable.ShapeView_shape_strokeGradientColor;
+        return R.styleable.ShapeView_shape_strokeGradientEndColor;
     }
 
     @Override

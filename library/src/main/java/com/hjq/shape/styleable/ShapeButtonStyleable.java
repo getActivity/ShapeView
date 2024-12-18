@@ -178,7 +178,7 @@ public final class ShapeButtonStyleable implements IShapeDrawableStyleable, ITex
 
     @Override
     public int getStrokeGradientEndColorStyleable() {
-        return R.styleable.ShapeButton_shape_strokeGradientColor;
+        return R.styleable.ShapeButton_shape_strokeGradientEndColor;
     }
 
     @Override

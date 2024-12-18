@@ -178,7 +178,7 @@ public final class ShapeEditTextStyleable implements IShapeDrawableStyleable, IT
 
     @Override
     public int getStrokeGradientEndColorStyleable() {
-        return R.styleable.ShapeEditText_shape_strokeGradientColor;
+        return R.styleable.ShapeEditText_shape_strokeGradientEndColor;
     }
 
     @Override

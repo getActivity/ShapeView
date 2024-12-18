@@ -190,7 +190,7 @@ public final class ShapeRadioButtonStyleable implements IShapeDrawableStyleable,
 
     @Override
     public int getStrokeGradientEndColorStyleable() {
-        return R.styleable.ShapeRadioButton_shape_strokeGradientColor;
+        return R.styleable.ShapeRadioButton_shape_strokeGradientEndColor;
     }
 
     @Override

@@ -4,7 +4,7 @@
 
 * 博客介绍：[震惊，没想到 Shape 也可以这么写](https://www.jianshu.com/p/1288d8873440)
 
-* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/9.0/ShapeView.apk)
+* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/9.2/ShapeView.apk)
 
 ![](picture/demo_code.png)
 
@@ -214,7 +214,7 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
     <!-- 边框渐变色中间颜色（可不设置） -->
     <attr name="shape_strokeGradientCenterColor" format="color" />
     <!-- 边框渐变色结束颜色 -->
-    <attr name="shape_strokeGradientColor" format="color" />
+    <attr name="shape_strokeGradientEndColor" format="color" />
 
     <!-- 边框色渐变方向（仅用于线性渐变） -->
     <attr name="shape_strokeGradientOrientation" >

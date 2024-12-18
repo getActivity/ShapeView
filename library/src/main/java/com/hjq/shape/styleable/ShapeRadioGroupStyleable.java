@@ -177,7 +177,7 @@ public final class ShapeRadioGroupStyleable implements IShapeDrawableStyleable {
 
     @Override
     public int getStrokeGradientEndColorStyleable() {
-        return R.styleable.ShapeRadioGroup_shape_strokeGradientColor;
+        return R.styleable.ShapeRadioGroup_shape_strokeGradientEndColor;
     }
 
     @Override
