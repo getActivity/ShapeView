@@ -49,7 +49,7 @@ public abstract class CommonFontSpan extends AlignmentReplacementSpan {
         }
 
         // 获取文本和画布宽度
-         float textWidth = paint.measureText(text, start, end);
+        float textWidth = paint.measureText(text, start, end);
         // 根据对齐方式调整 x 坐标，默认左对齐，不需要额外处理，直接使用 x 作为起点
         float drawX = x;
 
