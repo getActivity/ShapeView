@@ -673,6 +673,8 @@ public final class ShapeDrawableBuilder {
     }
 
     public Drawable buildBackgroundDrawable() {
+        Drawable viewBackground = mView.getBackground();
+
         boolean hasSolidColorState = mSolidPressedColor != null || mSolidCheckedColor != null ||
                 mSolidDisabledColor != null || mSolidFocusedColor != null || mSolidSelectedColor != null;
 
@@ -681,13 +683,13 @@ public final class ShapeDrawableBuilder {
 
         if (!isSolidGradientColorsEnable() && !isStrokeGradientColorsEnable() &&
                 mSolidColor == NO_COLOR && !hasSolidColorState && mStrokeColor == NO_COLOR && !hasStrokeColorState) {
-            // 啥都没有设置，直接 return
-            return null;
+            // 如果什么属性都没有设置，直接返回原先 View 的背景
+            // Github issue 地址：https://github.com/getActivity/ShapeView/issues/104
+            return viewBackground;
         }
 
         ShapeDrawable defaultDrawable;
 
-        Drawable viewBackground = mView.getBackground();
         if (viewBackground instanceof ExtendStateListDrawable) {
             defaultDrawable = convertShapeDrawable(((ExtendStateListDrawable) viewBackground).getDefaultDrawable());
         } else {
