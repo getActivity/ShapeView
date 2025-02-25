@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 28
@@ -65,4 +66,19 @@ tasks.register('javadocJar', Jar) {
 artifacts {
     archives javadocJar
     archives sourcesJar
+}
+
+// Jitpack 构建配置
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.github.getActivity'
+            artifactId = 'ShapeView'
+            version = '9.5'
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
 }
