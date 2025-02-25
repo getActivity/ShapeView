@@ -73,8 +73,8 @@ publishing {
     publications {
         release(MavenPublication) {
             groupId = 'com.github.getActivity'
-            artifactId = 'ShapeView'
-            version = '9.5'
+            artifactId = "${rootProject.name}"
+            version = "${android.defaultConfig.versionName}"
 
             afterEvaluate {
                 from components.release
