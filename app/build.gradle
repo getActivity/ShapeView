@@ -8,8 +8,8 @@ android {
         minSdkVersion 17
         // noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
-        versionCode 950
-        versionName "9.5"
+        versionCode 960
+        versionName "9.6"
     }
 
     // 支持 Java JDK 8
