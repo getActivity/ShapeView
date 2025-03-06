@@ -3,6 +3,7 @@ package com.hjq.shape.span;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Paint.FontMetricsInt;
 import android.graphics.Shader;
 import android.support.annotation.NonNull;
 import android.text.SpannableStringBuilder;
@@ -58,8 +59,9 @@ public class LinearGradientFontSpan extends CommonFontSpan {
                                 int start, int end, float x, int top, int y, int bottom) {
         LinearGradient linearGradient;
         if (mTextGradientOrientation == GRADIENT_ORIENTATION_VERTICAL) {
-            linearGradient = new LinearGradient(0, 0, 0, paint.descent() - paint.ascent(),
-                    mTextGradientColor, mTextGradientPositions, Shader.TileMode.REPEAT);
+            FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+            linearGradient = new LinearGradient(0, 0, 0, fontMetrics.bottom - fontMetrics.top,
+                mTextGradientColor, mTextGradientPositions, Shader.TileMode.MIRROR);
         } else {
             linearGradient = new LinearGradient(x, 0, x + textWidth, 0,
                     mTextGradientColor, mTextGradientPositions, Shader.TileMode.REPEAT);

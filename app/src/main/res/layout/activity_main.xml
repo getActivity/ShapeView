@@ -384,7 +384,7 @@
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="文本垂直渐变效果"
+                android:text="文本垂直渐变效果ypgj"
                 android:textSize="18sp"
                 app:shape_textEndColor="#ED58FF"
                 app:shape_textGradientOrientation="vertical"
