@@ -338,14 +338,6 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
     * ViewGroup 的子类：ShapeLinearLayout、ShapeFrameLayout、ShapeRelativeLayout、ShapeConstraintLayout、ShapeRecyclerView、ShapeRadioGroup
 
-#### 框架混淆规则
-
-* 在混淆规则文件 `proguard-rules.pro` 中加入
-
-```text
--keep class com.hjq.shape.** {*;}
-```
-
 ### [常见疑问解答](HelpDoc.md)
 
 ### [使用案例文档](UseDemo.md)
