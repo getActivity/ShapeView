@@ -2,16 +2,22 @@ package com.hjq.shape.builder;
 
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TextView.BufferType;
 import com.hjq.shape.config.ITextColorStyleable;
 import com.hjq.shape.config.ITextViewAttribute;
 import com.hjq.shape.other.TextViewAttribute;
 import com.hjq.shape.span.LinearGradientFontSpan;
-import com.hjq.shape.span.MultiFontSpan;
 import com.hjq.shape.span.StrokeFontSpan;
 
 /**
@@ -21,6 +27,11 @@ import com.hjq.shape.span.StrokeFontSpan;
  *    desc   : TextColor 构建类
  */
 public final class TextColorBuilder {
+
+    /** 水平渐变方向 */
+    public static final int GRADIENT_ORIENTATION_HORIZONTAL = LinearLayout.HORIZONTAL;
+    /** 垂直渐变方向 */
+    public static final int GRADIENT_ORIENTATION_VERTICAL = LinearLayout.VERTICAL;
 
     private final TextView mTextView;
     private final ITextViewAttribute mTextViewAttribute;
@@ -194,39 +205,37 @@ public final class TextColorBuilder {
         return mTextStrokeColor != Color.TRANSPARENT && mTextStrokeSize > 0;
     }
 
-    public void clearTextSpannable() {
-        mTextStrokeColor = Color.TRANSPARENT;
-        mTextStrokeSize = 0;
+    /**
+     * 清除文本渐变色
+     */
+    public void clearTextGradientColor() {
         if (!isTextGradientColorsEnable()) {
             mTextView.setTextColor(mTextColor);
         }
-        mTextView.setText(mTextView.getText().toString());
+        mTextGradientColors = null;
+        mTextView.postInvalidate();
     }
 
-    public SpannableStringBuilder buildTextSpannable(CharSequence text) {
+    /**
+     * 清除文本边框色
+     */
+    public void clearTextStrokeColor() {
+        mTextStrokeColor = Color.TRANSPARENT;
+        mTextView.setText(mTextView.getText().toString(), BufferType.NORMAL);
+    }
+
+    public SpannableStringBuilder buildStrokeFontSpannable(CharSequence text) {
         SpannableStringBuilder builder = new SpannableStringBuilder(text);
 
-        LinearGradientFontSpan linearGradientFontSpan = null;
         StrokeFontSpan strokeFontSpan = null;
 
-        if (isTextGradientColorsEnable()) {
-            linearGradientFontSpan = new LinearGradientFontSpan(mTextViewAttribute)
-                    .setTextGradientColor(mTextGradientColors)
-                    .setTextGradientOrientation(mTextGradientOrientation)
-                    .setTextGradientPositions(null);
-        }
         if (isTextStrokeColorEnable()) {
             strokeFontSpan = new StrokeFontSpan(mTextViewAttribute)
                     .setTextStrokeColor(mTextStrokeColor)
                     .setTextStrokeSize(mTextStrokeSize);
         }
 
-        if (linearGradientFontSpan != null && strokeFontSpan != null) {
-            MultiFontSpan multiFontSpan = new MultiFontSpan(mTextViewAttribute, strokeFontSpan, linearGradientFontSpan);
-            builder.setSpan(multiFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else if (linearGradientFontSpan != null) {
-            builder.setSpan(linearGradientFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else if (strokeFontSpan != null) {
+        if (strokeFontSpan != null) {
             strokeFontSpan.setTextSolidColor(mTextColor);
             builder.setSpan(strokeFontSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
@@ -294,9 +303,41 @@ public final class TextColorBuilder {
     }
 
     public void intoTextColor() {
+        if (isTextGradientColorsEnable()) {
+            // 如果 TextView 设置了不透明，那么就强制给它设置成不透明的
+            mTextColor = mTextColor | 0xFF000000;
+        }
+
         mTextView.setTextColor(buildColorState());
-        if (isTextGradientColorsEnable() || isTextStrokeColorEnable()) {
-            mTextView.setText(buildTextSpannable(mTextView.getText()));
+
+        if (isTextStrokeColorEnable()) {
+            mTextView.setText(buildStrokeFontSpannable(mTextView.getText().toString()), BufferType.SPANNABLE);
+        }
+
+        mTextView.postInvalidate();
+    }
+
+    public void onDraw(@NonNull Canvas canvas, Paint paint) {
+        if (isTextGradientColorsEnable()) {
+            LinearGradient linearGradient;
+            if (mTextGradientOrientation == GRADIENT_ORIENTATION_VERTICAL) {
+                linearGradient = new LinearGradient(
+                    mTextView.getPaddingLeft(), mTextView.getPaddingTop(), 0,
+                    (float) canvas.getHeight() - mTextView.getPaddingBottom(),
+                    mTextGradientColors, null, Shader.TileMode.CLAMP);
+            } else {
+                linearGradient = new LinearGradient(
+                    mTextView.getPaddingLeft(), mTextView.getPaddingTop(),
+                    (float) canvas.getWidth() - mTextView.getPaddingEnd(),
+                    (float) canvas.getHeight() - mTextView.getPaddingBottom(),
+                    mTextGradientColors, null, Shader.TileMode.CLAMP);
+            }
+            paint.setShader(linearGradient);
+        } else {
+            Shader shader = paint.getShader();
+            if (shader instanceof LinearGradient) {
+                paint.setShader(null);
+            }
         }
     }
 }

@@ -2,9 +2,9 @@ package com.hjq.shape.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
-
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
 import com.hjq.shape.builder.TextColorBuilder;
@@ -43,12 +43,7 @@ public class ShapeButton extends AppCompatButton implements
         typedArray.recycle();
 
         mShapeDrawableBuilder.intoBackground();
-
-        if (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable()) {
-            setText(getText());
-        } else {
-            mTextColorBuilder.intoTextColor();
-        }
+        mTextColorBuilder.intoTextColor();
     }
 
     @Override
@@ -62,12 +57,19 @@ public class ShapeButton extends AppCompatButton implements
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-        if (mTextColorBuilder != null &&
-                (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable())) {
-            super.setText(mTextColorBuilder.buildTextSpannable(text), type);
+        if (type != BufferType.SPANNABLE  &&
+            mTextColorBuilder != null &&
+            mTextColorBuilder.isTextStrokeColorEnable()) {
+            super.setText(mTextColorBuilder.buildStrokeFontSpannable(text), BufferType.SPANNABLE);
         } else {
             super.setText(text, type);
         }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        mTextColorBuilder.onDraw(canvas, getPaint());
+        super.onDraw(canvas);
     }
 
     @Override

@@ -52,6 +52,8 @@ public class StrokeFontSpan extends CommonFontSpan {
     public void onDraw(@NonNull Canvas canvas, @NonNull Paint paint, CharSequence text, float textWidth,
                                 int start, int end, float x, int top, int y, int bottom) {
         mStrokePaint.set(paint);
+        // 这里要把 Shader 清掉，避免把文本渐变色也带进来
+        mStrokePaint.setShader(null);
         // 设置抗锯齿
         mStrokePaint.setAntiAlias(true);
         // 设置防抖动
@@ -66,7 +68,7 @@ public class StrokeFontSpan extends CommonFontSpan {
         // 绘制文本描边
         canvas.drawText(text, start, end, x, y, mStrokePaint);
 
-        // 绘制文本内容
+        // 绘制原文本内容
         if (mTextSolidColor != Color.TRANSPARENT) {
             paint.setColor(mTextSolidColor);
             canvas.drawText(text, start, end, x, y, paint);

@@ -367,38 +367,53 @@
                 android:textStyle="bold" />
 
             <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/tv_main_gradient_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="文本水平渐变效果"
+                android:text="文本水平渐变效果\n文本水平渐变效果\n单击可取消这种效果"
                 android:textSize="18sp"
                 app:shape_textEndColor="#ED58FF"
                 app:shape_textGradientOrientation="horizontal"
                 app:shape_textStartColor="#49DAFA" />
 
             <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/tv_main_gradient_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="文本垂直渐变效果ypgj"
+                android:text="文本垂直渐变效果ypgj\n文本垂直渐变效果ypgj\n单击可取消这种效果"
                 android:textSize="18sp"
                 app:shape_textEndColor="#ED58FF"
                 app:shape_textGradientOrientation="vertical"
                 app:shape_textStartColor="#49DAFA" />
 
             <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/tv_main_stroke"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="文本边框颜色效果"
+                android:text="文本边框颜色效果ypgj\n文本边框颜色效果ypgj\n单击可取消这种效果"
                 android:textSize="18sp"
                 app:shape_textColor="#5A8DDF"
+                app:shape_textStrokeColor="#FF000000"
+                app:shape_textStrokeSize="2sp" />
+
+            <com.hjq.shape.view.ShapeTextView
+                android:id="@+id/tv_main_gradient_and_stroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="文本边框色+渐变色效果ypgj\n文本边框色+渐变色效果ypgj\n单击可取消这种效果"
+                android:textSize="18sp"
                 app:shape_textEndColor="#f08833"
                 app:shape_textGradientOrientation="horizontal"
                 app:shape_textStartColor="#fefa54"

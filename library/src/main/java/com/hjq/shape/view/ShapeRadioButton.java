@@ -2,10 +2,10 @@ package com.hjq.shape.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
-
 import com.hjq.shape.R;
 import com.hjq.shape.builder.ButtonDrawableBuilder;
 import com.hjq.shape.builder.ShapeDrawableBuilder;
@@ -48,13 +48,7 @@ public class ShapeRadioButton extends AppCompatRadioButton implements
         typedArray.recycle();
 
         mShapeDrawableBuilder.intoBackground();
-
-        if (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable()) {
-            setText(getText());
-        } else {
-            mTextColorBuilder.intoTextColor();
-        }
-
+        mTextColorBuilder.intoTextColor();
         mButtonDrawableBuilder.intoButtonDrawable();
     }
 
@@ -68,22 +62,29 @@ public class ShapeRadioButton extends AppCompatRadioButton implements
     }
 
     @Override
-    public void setText(CharSequence text, BufferType type) {
-        if (mTextColorBuilder != null &&
-                (mTextColorBuilder.isTextGradientColorsEnable() || mTextColorBuilder.isTextStrokeColorEnable())) {
-            super.setText(mTextColorBuilder.buildTextSpannable(text), type);
-        } else {
-            super.setText(text, type);
-        }
-    }
-
-    @Override
     public void setButtonDrawable(Drawable drawable) {
         super.setButtonDrawable(drawable);
         if (mButtonDrawableBuilder == null) {
             return;
         }
         mButtonDrawableBuilder.setButtonDrawable(drawable);
+    }
+
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        if (type != BufferType.SPANNABLE  &&
+            mTextColorBuilder != null &&
+            mTextColorBuilder.isTextStrokeColorEnable()) {
+            super.setText(mTextColorBuilder.buildStrokeFontSpannable(text), BufferType.SPANNABLE);
+        } else {
+            super.setText(text, type);
+        }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        mTextColorBuilder.onDraw(canvas, getPaint());
+        super.onDraw(canvas);
     }
 
     @Override
