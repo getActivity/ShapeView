@@ -1,5 +1,8 @@
 package com.hjq.shape.builder;
 
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -102,7 +105,7 @@ public final class ShapeDrawableBuilder {
             mSolidSelectedColor = typedArray.getColor(styleable.getSolidSelectedColorStyleable(), NO_COLOR);
         }
 
-        int layoutDirection = view.getLayoutDirection();
+        int layoutDirection = getLayoutDirection(view);
 
         int radius = typedArray.getDimensionPixelSize(styleable.getRadiusStyleable(), 0);
         mTopLeftRadius = mTopRightRadius = mBottomLeftRadius = mBottomRightRadius = radius;
@@ -812,6 +815,28 @@ public final class ShapeDrawableBuilder {
             mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         mView.setBackground(drawable);
+    }
+
+    /**
+     * 从上下文中获取当前布局方向
+     */
+    private static int getLayoutDirection(View view) {
+        int layoutDirection;
+        Context context = view.getContext();
+        Resources resources = null;
+        Configuration configuration = null;
+        if (context != null) {
+            resources = context.getResources();
+        }
+        if (resources != null) {
+            configuration = resources.getConfiguration();
+        }
+        if (configuration != null) {
+            layoutDirection = configuration.getLayoutDirection();
+        } else {
+            layoutDirection = View.LAYOUT_DIRECTION_LTR;
+        }
+        return layoutDirection;
     }
 
     /**
