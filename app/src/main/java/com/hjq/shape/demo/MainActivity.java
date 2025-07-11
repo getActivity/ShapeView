@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 textColorBuilder.clearTextGradientColor();
                 textColorBuilder.clearTextStrokeColor();
             } else {
-                textColorBuilder.setTextGradientColors(new int[] {0xFF49DAFA, 0xFFED58FF})
+                textColorBuilder.setTextGradientColors(new int[] {0xFFFEFA54, 0xFFF08833})
                     .setTextStrokeColor(0xFF000000)
                     .intoTextColor();
             }
