@@ -179,7 +179,8 @@ public final class ShapeDrawableBuilder {
             }
         }
 
-        mSolidGradientOrientation = transformGradientOrientation(typedArray.getInt(styleable.getSolidGradientOrientationStyleable(), 0));
+        mSolidGradientOrientation = transformGradientOrientation(typedArray.getInt(styleable.getSolidGradientOrientationStyleable(),
+                                                                    getDefaultGradientOrientation()));
         mSolidGradientType = typedArray.getInt(styleable.getSolidGradientTypeStyleable(), ShapeGradientType.LINEAR_GRADIENT);
         mSolidGradientCenterX = typedArray.getFloat(styleable.getSolidGradientCenterXStyleable(), 0.5f);
         mSolidGradientCenterY = typedArray.getFloat(styleable.getSolidGradientCenterYStyleable(), 0.5f);
@@ -213,7 +214,8 @@ public final class ShapeDrawableBuilder {
             }
         }
 
-        mStrokeGradientOrientation = transformGradientOrientation(typedArray.getInt(styleable.getStrokeGradientOrientationStyleable(), 0));
+        mStrokeGradientOrientation = transformGradientOrientation(typedArray.getInt(styleable.getStrokeGradientOrientationStyleable(),
+                                                                    getDefaultGradientOrientation()));
 
         mStrokeSize = typedArray.getDimensionPixelSize(styleable.getStrokeSizeStyleable(), 0);
         mStrokeDashSize = typedArray.getDimensionPixelSize(styleable.getStrokeDashSizeStyleable(), 0);
@@ -859,12 +861,20 @@ public final class ShapeDrawableBuilder {
     }
 
     /**
+     * 获取默认的渐变色方向
+     */
+    private int getDefaultGradientOrientation() {
+        // Github issue 地址：https://github.com/getActivity/ShapeView/issues/109
+        return 10;
+    }
+
+    /**
      * 将 ShapeView 框架中渐变色的 xml 属性值转换成 ShapeDrawable 中的枚举值
      */
     private ShapeGradientOrientation transformGradientOrientation(int value) {
         switch (value) {
-            case 10:
-                return ShapeGradientOrientation.START_TO_END;
+            case 0:
+                return ShapeGradientOrientation.LEFT_TO_RIGHT;
             case 180:
                 return ShapeGradientOrientation.RIGHT_TO_LEFT;
             case 1800:
@@ -889,9 +899,9 @@ public final class ShapeDrawableBuilder {
                 return ShapeGradientOrientation.BOTTOM_RIGHT_TO_TOP_LEFT;
             case 1350:
                 return ShapeGradientOrientation.BOTTOM_END_TO_TOP_START;
-            case 0:
+            case 10:
             default:
-                return ShapeGradientOrientation.LEFT_TO_RIGHT;
+                return ShapeGradientOrientation.START_TO_END;
         }
     }
 }
