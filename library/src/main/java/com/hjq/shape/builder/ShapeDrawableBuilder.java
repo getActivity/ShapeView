@@ -675,9 +675,8 @@ public final class ShapeDrawableBuilder {
         return this;
     }
 
+    @Nullable
     public Drawable buildBackgroundDrawable() {
-        Drawable viewBackground = mView.getBackground();
-
         boolean hasSolidColorState = mSolidPressedColor != null || mSolidCheckedColor != null ||
                 mSolidDisabledColor != null || mSolidFocusedColor != null || mSolidSelectedColor != null;
 
@@ -686,13 +685,11 @@ public final class ShapeDrawableBuilder {
 
         if (!isSolidGradientColorsEnable() && !isStrokeGradientColorsEnable() &&
                 mSolidColor == NO_COLOR && !hasSolidColorState && mStrokeColor == NO_COLOR && !hasStrokeColorState) {
-            // 如果什么属性都没有设置，直接返回原先 View 的背景
-            // Github issue 地址：https://github.com/getActivity/ShapeView/issues/104
-            return viewBackground;
+            return null;
         }
 
         ShapeDrawable defaultDrawable;
-
+        Drawable viewBackground = mView.getBackground();
         if (viewBackground instanceof ExtendStateListDrawable) {
             defaultDrawable = convertShapeDrawable(((ExtendStateListDrawable) viewBackground).getDefaultDrawable());
         } else {
@@ -814,7 +811,29 @@ public final class ShapeDrawableBuilder {
             // https://developer.android.com/guide/topics/graphics/hardware-accel?hl=zh-cn
             mView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
-        mView.setBackground(drawable);
+        if (drawable != null) {
+            mView.setBackground(drawable);
+        }
+    }
+
+    public void clearBackground() {
+        mSolidColor = NO_COLOR;
+        mSolidGradientColors = null;
+        mSolidPressedColor = null;
+        mSolidCheckedColor = null;
+        mSolidDisabledColor = null;
+        mSolidFocusedColor = null;
+        mSolidSelectedColor = null;
+
+        mStrokeColor = NO_COLOR;
+        mStrokeGradientColors = null;
+        mStrokePressedColor = null;
+        mStrokeCheckedColor = null;
+        mStrokeDisabledColor = null;
+        mStrokeFocusedColor = null;
+        mStrokeSelectedColor = null;
+
+        mView.setBackground(null);
     }
 
     /**
