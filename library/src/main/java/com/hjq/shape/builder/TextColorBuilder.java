@@ -1,6 +1,9 @@
 package com.hjq.shape.builder;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
@@ -317,21 +321,16 @@ public final class TextColorBuilder {
         mTextView.postInvalidate();
     }
 
-    public void onDraw(@NonNull Canvas canvas, Paint paint) {
+    public void onDraw(@NonNull View view, @NonNull Canvas canvas, Paint paint) {
         if (isTextGradientColorsEnable()) {
-            LinearGradient linearGradient;
-            if (mTextGradientOrientation == GRADIENT_ORIENTATION_VERTICAL) {
-                linearGradient = new LinearGradient(
-                    mTextView.getPaddingLeft(), mTextView.getPaddingTop(), 0,
-                    (float) canvas.getHeight() - mTextView.getPaddingBottom(),
-                    mTextGradientColors, null, Shader.TileMode.CLAMP);
+            int[] textGradientColors;
+            if (mTextGradientOrientation == GRADIENT_ORIENTATION_HORIZONTAL &&
+                getLayoutDirectionByContext(view.getContext()) == View.LAYOUT_DIRECTION_RTL) {
+                textGradientColors = reverseArray(mTextGradientColors);
             } else {
-                linearGradient = new LinearGradient(
-                    mTextView.getPaddingLeft(), mTextView.getPaddingTop(),
-                    (float) canvas.getWidth() - mTextView.getPaddingEnd(),
-                    (float) canvas.getHeight() - mTextView.getPaddingBottom(),
-                    mTextGradientColors, null, Shader.TileMode.CLAMP);
+                textGradientColors = mTextGradientColors;
             }
+            LinearGradient linearGradient = getLinearGradient(view, canvas, mTextGradientOrientation, textGradientColors);
             paint.setShader(linearGradient);
         } else {
             Shader shader = paint.getShader();
@@ -339,5 +338,60 @@ public final class TextColorBuilder {
                 paint.setShader(null);
             }
         }
+    }
+
+    /**
+     * 获取线性渐变对象
+     */
+    private static LinearGradient getLinearGradient(@NonNull View view, @NonNull Canvas canvas,
+                                                    int textGradientOrientation,
+                                                    @Nullable int[] textGradientColors) {
+        LinearGradient linearGradient;
+        if (textGradientOrientation == GRADIENT_ORIENTATION_VERTICAL) {
+            linearGradient = new LinearGradient(
+                view.getPaddingLeft(), view.getPaddingTop(), 0,
+                (float) canvas.getHeight() - view.getPaddingBottom(),
+                textGradientColors, null, Shader.TileMode.CLAMP);
+        } else {
+            linearGradient = new LinearGradient(
+                view.getPaddingLeft(), view.getPaddingTop(),
+                (float) canvas.getWidth() - view.getPaddingEnd(),
+                (float) canvas.getHeight() - view.getPaddingBottom(),
+                textGradientColors, null, Shader.TileMode.CLAMP);
+        }
+        return linearGradient;
+    }
+
+    /**
+     * 从 Context 中获取当前布局方向
+     */
+    private static int getLayoutDirectionByContext(@Nullable Context context) {
+        int layoutDirection;
+        Resources resources = null;
+        Configuration configuration = null;
+        if (context != null) {
+            resources = context.getResources();
+        }
+        if (resources != null) {
+            configuration = resources.getConfiguration();
+        }
+        if (configuration != null) {
+            layoutDirection = configuration.getLayoutDirection();
+        } else {
+            layoutDirection = View.LAYOUT_DIRECTION_LTR;
+        }
+        return layoutDirection;
+    }
+
+    /**
+     * 反转 int 数组
+     */
+    public static int[] reverseArray(@NonNull int[] originalArray) {
+        int length = originalArray.length;
+        int[] newArray = new int[length];
+        for (int i = 0; i < length; i++) {
+            newArray[i] = originalArray[length - 1 - i];
+        }
+        return newArray;
     }
 }

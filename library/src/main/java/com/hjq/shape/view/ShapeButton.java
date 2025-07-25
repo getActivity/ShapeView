@@ -68,7 +68,7 @@ public class ShapeButton extends AppCompatButton implements
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mTextColorBuilder.onDraw(canvas, getPaint());
+        mTextColorBuilder.onDraw(this, canvas, getPaint());
         super.onDraw(canvas);
     }
 
