@@ -6,7 +6,7 @@
 
 * 博客介绍：[震惊，没想到 Shape 也可以这么写](https://www.jianshu.com/p/1288d8873440)
 
-* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/9.8/ShapeView.apk)
+* 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/10.0/ShapeView.apk)
 
 ![](picture/zh/demo_code.png)
 
@@ -49,7 +49,7 @@ android {
 
 dependencies {
     // ShapeView：https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:9.8'
+    implementation 'com.github.getActivity:ShapeView:10.0'
     // ShapeDrawable：https://github.com/getActivity/ShapeDrawable
     implementation 'com.github.getActivity:ShapeDrawable:3.3'
 }
