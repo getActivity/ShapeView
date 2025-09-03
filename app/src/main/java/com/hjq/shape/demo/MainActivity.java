@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     .setTextColor(0xFFFFFFFF)
                     .intoTextColor();
 
-            shapeButton.setText("颜色已经改变啦");
+            shapeButton.setText(getString(R.string.demo_color_changed));
         });
 
         ShapeTextView gradientHorizontalTextView = findViewById(R.id.tv_main_gradient_horizontal);

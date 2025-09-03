@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ShapeView</string>
+
+    <string name="demo_set_selector">设置状态选择器</string>
+    <string name="demo_solid_press_effect">填充色按压效果</string>
+    <string name="demo_solid_disable_effect">填充色禁用效果</string>
+    <string name="demo_stroke_press_effect">边框色按压效果</string>
+    <string name="demo_stroke_disable_effect">边框色禁用效果</string>
+    <string name="demo_dynamic_color_change">点我动态改变颜色</string>
+    <string name="demo_transparent_solid_press_effect">透明填充色按压效果</string>
+    <string name="demo_set_gradient_effect">设置渐变色效果</string>
+    <string name="demo_solid_gradient_effect">填充色渐变效果</string>
+    <string name="demo_stroke_gradient_effect">边框色渐变效果</string>
+    <string name="demo_combo_gradient_effect">组合渐变效果</string>
+    <string name="demo_set_shadow_effect">设置阴影效果</string>
+    <string name="demo_default_shadow_color">默认阴影颜色</string>
+    <string name="demo_rect_shadow_effect">直角阴影效果</string>
+    <string name="demo_change_shadow_color">修改阴影颜色</string>
+    <string name="demo_shadow_offset_right_bottom">阴影偏移效果（右下）</string>
+    <string name="demo_shadow_offset_left_top">阴影偏移效果（左上）</string>
+    <string name="demo_shadow_offset_irregular">阴影偏移效果（不规则圆角）</string>
+    <string name="demo_stroke_and_shadow_effect">边框和阴影效果</string>
+    <string name="demo_gradient_and_shadow_effect">渐变色和阴影效果</string>
+    <string name="demo_text_gradient_effect">文本渐变色效果</string>
+    <string name="demo_text_gradient_horizontal">文本水平渐变效果文本水平渐变效果文本水平渐变效果文本水平渐变效果文本水平渐变效果文本水平渐变效果\n文本水平渐变效果\n单击可取消这种效果</string>
+    <string name="demo_text_gradient_vertical">文本垂直渐变效果ypgj文本垂直渐变效果ypgj文本垂直渐变效果ypgj文本垂直渐变效果ypgj文本垂直渐变效果ypgj\n文本垂直渐变效果ypgj\n单击可取消这种效果</string>
+    <string name="demo_text_stroke_effect">文本边框颜色效果ypgj\n文本边框颜色效果ypgj\n单击可取消这种效果</string>
+    <string name="demo_text_stroke_and_gradient">文本边框色+渐变色效果ypgj\n文本边框色+渐变色效果ypgj\n单击可取消这种效果</string>
+    <string name="demo_check_icon_state">Check 控件图标状态</string>
+    <string name="demo_custom_checkbox">我是自定义按钮样式的 CheckBox</string>
+    <string name="demo_custom_radiobutton">我是自定义按钮样式的 RadioButton</string>
+    <string name="demo_rect_stroke_fill">矩形（边框+填充）</string>
+    <string name="demo_rect_solid_no_fill">矩形-实线边框内部无填充</string>
+    <string name="demo_rect_dash_no_fill">矩形-虚线边框内部无填充</string>
+    <string name="demo_rect_solid_fill">矩形-实线边框-内部填充</string>
+    <string name="demo_rect_dash_fill">矩形-虚线边框-内部填充</string>
+    <string name="demo_round_rect">圆角矩形</string>
+    <string name="demo_round_rect_stroke">圆角矩形-只有边框</string>
+    <string name="demo_round_rect_fill">圆角矩形-只有内部填充</string>
+    <string name="demo_round_rect_stroke_fill">圆角矩形-有边框有填充</string>
+    <string name="demo_round_rect_left_half">圆角矩形-左边圆角为一个半圆弧</string>
+    <string name="demo_round_rect_left_right_half">圆角矩形-左右两边都是半圆弧</string>
+    <string name="demo_round_rect_left_right_half_stroke">圆角矩形-左右两边都是半圆弧-带边框</string>
+    <string name="demo_gradient_rect_example">渐变效果（以矩形为例）</string>
+    <string name="demo_rect_vertical_gradient">矩形-垂直线性渐变</string>
+    <string name="demo_rect_horizontal_gradient">矩形-水平线性渐变</string>
+    <string name="demo_rect_diagonal_gradient">矩形-对角线线性渐变</string>
+    <string name="demo_rect_radial_gradient">矩形-径向渐变</string>
+    <string name="demo_rect_sweep_gradient">矩形-扫描渐变</string>
+    <string name="demo_oval_stroke_fill_gradient">圆（边框+填充+渐变）</string>
+    <string name="demo_oval_stroke">圆-边框</string>
+    <string name="demo_oval_fill">圆-填充</string>
+    <string name="demo_oval_stroke_fill">圆-边框填充</string>
+    <string name="demo_oval_linear_gradient">圆-线性渐变</string>
+    <string name="demo_oval_radial_gradient">圆-径向渐变</string>
+    <string name="demo_oval_sweep_gradient">圆-扫描渐变</string>
+    <string name="demo_ring_stroke_fill_gradient">圆环（边框+填充+渐变）</string>
+    <string name="demo_ring_fill">圆环-环内填充</string>
+    <string name="demo_ring_stroke">圆环-圆环边框</string>
+    <string name="demo_ring_stroke_fill">圆环-圆环边框</string>
+    <string name="demo_ring_linear_gradient">圆环-线性渐变</string>
+    <string name="demo_ring_sweep_gradient">圆环-扫描渐变</string>
+    <string name="demo_line_solid_dash">线（实线+虚线）</string>
+    <string name="demo_line_solid">实线</string>
+    <string name="demo_line_dash">虚线</string>
+    <string name="demo_line_under_text">线在字的下面</string>
+    <string name="demo_line_size_color">改变线的大小和颜色</string>
+
+    <string name="demo_color_changed">颜色已经改变啦</string>
+
+</resources>

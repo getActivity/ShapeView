@@ -1,3 +1,5 @@
+# [English Doc](README-en.md)
+
 # ShapeView 框架
 
 * 项目地址：[Github](https://github.com/getActivity/ShapeView)
@@ -6,9 +8,9 @@
 
 * 可以扫码下载 Demo 进行演示或者测试，如果扫码下载不了的，[点击此处可直接下载](https://github.com/getActivity/ShapeView/releases/download/9.8/ShapeView.apk)
 
-![](picture/demo_code.png)
+![](picture/zh/demo_code.png)
 
-![](picture/long_screenshots.jpg)
+![](picture/zh/long_screenshots.jpg)
 
 #### 集成步骤
 
@@ -342,8 +344,6 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 
 ### [常见疑问解答](HelpDoc.md)
 
-### [使用案例文档](UseDemo.md)
-
 #### 框架亮点
 
 * 功能强大：支持设置阴影、边框渐变色、文本渐变色
@@ -373,6 +373,8 @@ shapeButton.setOnClickListener(new View.OnClickListener() {
 * 标题栏框架：[TitleBar](https://github.com/getActivity/TitleBar) ![](https://img.shields.io/github/stars/getActivity/TitleBar.svg) ![](https://img.shields.io/github/forks/getActivity/TitleBar.svg)
 
 * 悬浮窗框架：[EasyWindow](https://github.com/getActivity/EasyWindow) ![](https://img.shields.io/github/stars/getActivity/EasyWindow.svg) ![](https://img.shields.io/github/forks/getActivity/EasyWindow.svg)
+
+* 设备兼容框架：[DeviceCompat](https://github.com/getActivity/DeviceCompat) ![](https://img.shields.io/github/stars/getActivity/DeviceCompat.svg) ![](https://img.shields.io/github/forks/getActivity/DeviceCompat.svg)
 
 * ShapeDrawable 框架：[ShapeDrawable](https://github.com/getActivity/ShapeDrawable) ![](https://img.shields.io/github/stars/getActivity/ShapeDrawable.svg) ![](https://img.shields.io/github/forks/getActivity/ShapeDrawable.svg)
 

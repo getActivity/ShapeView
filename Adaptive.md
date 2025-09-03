@@ -24,7 +24,7 @@
 
     * 给 `app:shape_solidGradientOrientation` 和 `app:shape_strokeGradientOrientation` 属性补充了几个布局反方向特性适配的属性值
 
-```
+```xml
 <!-- 从左到右绘制渐变（0 度） -->
 <enum name="startToEnd" value="10" />
 
@@ -98,22 +98,22 @@
 
     * 拆分 `app:shape_angle` 属性，将原有属性拆分为 `app:shape_solidGradientOrientation` 和 `app:shape_strokeGradientOrientation`，之前的 `app:shape_angle` 属性等于现在的 `app:shape_solidGradientOrientation` 属性，可以直接搜索替换，另外还修改了值的类型，具体赋值可以参考以下：
 
-    ```xml
-    <!-- 从左到右绘制渐变（0 度） -->
-    <enum name="leftToRight" value="0" />
-    <!-- 从右到左绘制渐变（180 度） -->
-    <enum name="rightToLeft" value="180" />
-    <!-- 从下到上绘制渐变（90 度） -->
-    <enum name="bottomToTop" value="90" />
-    <!-- 从上到下绘制渐变（270 度） -->
-    <enum name="topToBottom" value="270" />
+```xml
+<!-- 从左到右绘制渐变（0 度） -->
+<enum name="leftToRight" value="0" />
+<!-- 从右到左绘制渐变（180 度） -->
+<enum name="rightToLeft" value="180" />
+<!-- 从下到上绘制渐变（90 度） -->
+<enum name="bottomToTop" value="90" />
+<!-- 从上到下绘制渐变（270 度） -->
+<enum name="topToBottom" value="270" />
 
-    <!-- 从左上角到右下角绘制渐变（315 度） -->
-    <enum name="topLeftToBottomRight" value="315" />
-    <!-- 从左下角到右上角绘制渐变（45 度） -->
-    <enum name="bottomLeftToTopRight" value="45" />
-    <!-- 从右上角到左下角绘制渐变（225 度） -->
-    <enum name="topRightToBottomLeft" value="225" />
-    <!-- 从右下角到左上角绘制渐变（135 度） -->
-    <enum name="bottomRightToTopLeft" value="135" />
-    ```
+<!-- 从左上角到右下角绘制渐变（315 度） -->
+<enum name="topLeftToBottomRight" value="315" />
+<!-- 从左下角到右上角绘制渐变（45 度） -->
+<enum name="bottomLeftToTopRight" value="45" />
+<!-- 从右上角到左下角绘制渐变（225 度） -->
+<enum name="topRightToBottomLeft" value="225" />
+<!-- 从右下角到左上角绘制渐变（135 度） -->
+<enum name="bottomRightToTopLeft" value="135" />
+```

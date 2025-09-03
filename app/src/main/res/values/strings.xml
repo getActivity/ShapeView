@@ -1,4 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ShapeView</string>
+
+    <string name="demo_set_selector">Set State Selector</string>
+    <string name="demo_solid_press_effect">Solid Press Effect</string>
+    <string name="demo_solid_disable_effect">Solid Disabled Effect</string>
+    <string name="demo_stroke_press_effect">Stroke Press Effect</string>
+    <string name="demo_stroke_disable_effect">Stroke Disabled Effect</string>
+    <string name="demo_dynamic_color_change">Click Me to Change Color Dynamically</string>
+    <string name="demo_transparent_solid_press_effect">Transparent Solid Press Effect</string>
+    <string name="demo_set_gradient_effect">Set Gradient Effect</string>
+    <string name="demo_solid_gradient_effect">Solid Gradient Effect</string>
+    <string name="demo_stroke_gradient_effect">Stroke Gradient Effect</string>
+    <string name="demo_combo_gradient_effect">Combined Gradient Effect</string>
+    <string name="demo_set_shadow_effect">Set Shadow Effect</string>
+    <string name="demo_default_shadow_color">Default Shadow Color</string>
+    <string name="demo_rect_shadow_effect">Rectangular Shadow Effect</string>
+    <string name="demo_change_shadow_color">Change Shadow Color</string>
+    <string name="demo_shadow_offset_right_bottom">Shadow Offset Effect (Bottom Right)</string>
+    <string name="demo_shadow_offset_left_top">Shadow Offset Effect (Top Left)</string>
+    <string name="demo_shadow_offset_irregular">Shadow Offset Effect (Irregular Corners)</string>
+    <string name="demo_stroke_and_shadow_effect">Stroke and Shadow Effect</string>
+    <string name="demo_gradient_and_shadow_effect">Gradient and Shadow Effect</string>
+    <string name="demo_text_gradient_effect">Text Gradient Effect</string>
+    <string name="demo_text_gradient_horizontal">Text Horizontal Gradient Effect Text Horizontal Gradient Effect Text Horizontal Gradient Effect Text Horizontal Gradient Effect Text Horizontal Gradient Effect Text Horizontal Gradient Effect\nText Horizontal Gradient Effect\nClick to cancel this effect</string>
+    <string name="demo_text_gradient_vertical">Text Vertical Gradient Effect ypgj Text Vertical Gradient Effect ypgj Text Vertical Gradient Effect ypgj Text Vertical Gradient Effect ypgj Text Vertical Gradient Effect ypgj\nText Vertical Gradient Effect ypgj\nClick to cancel this effect</string>
+    <string name="demo_text_stroke_effect">Text Stroke Color Effect ypgj\nText Stroke Color Effect ypgj\nClick to cancel this effect</string>
+    <string name="demo_text_stroke_and_gradient">Text Stroke + Gradient Effect ypgj\nText Stroke + Gradient Effect ypgj\nClick to cancel this effect</string>
+    <string name="demo_check_icon_state">Check Icon State</string>
+    <string name="demo_custom_checkbox">Custom Style CheckBox</string>
+    <string name="demo_custom_radiobutton">Custom Style RadioButton</string>
+    <string name="demo_rect_stroke_fill">Rectangle (Stroke + Fill)</string>
+    <string name="demo_rect_solid_no_fill">Rectangle - Solid Stroke, No Fill</string>
+    <string name="demo_rect_dash_no_fill">Rectangle - Dashed Stroke, No Fill</string>
+    <string name="demo_rect_solid_fill">Rectangle - Solid Stroke, With Fill</string>
+    <string name="demo_rect_dash_fill">Rectangle - Dashed Stroke, With Fill</string>
+    <string name="demo_round_rect">Rounded Rectangle</string>
+    <string name="demo_round_rect_stroke">Rounded Rectangle - Stroke Only</string>
+    <string name="demo_round_rect_fill">Rounded Rectangle - Fill Only</string>
+    <string name="demo_round_rect_stroke_fill">Rounded Rectangle - Stroke and Fill</string>
+    <string name="demo_round_rect_left_half">Rounded Rectangle - Left Side is a Half Arc</string>
+    <string name="demo_round_rect_left_right_half">Rounded Rectangle - Both Sides are Half Arcs</string>
+    <string name="demo_round_rect_left_right_half_stroke">Rounded Rectangle - Both Sides are Half Arcs with Stroke</string>
+    <string name="demo_gradient_rect_example">Gradient Example (Rectangle)</string>
+    <string name="demo_rect_vertical_gradient">Rectangle - Vertical Linear Gradient</string>
+    <string name="demo_rect_horizontal_gradient">Rectangle - Horizontal Linear Gradient</string>
+    <string name="demo_rect_diagonal_gradient">Rectangle - Diagonal Linear Gradient</string>
+    <string name="demo_rect_radial_gradient">Rectangle - Radial Gradient</string>
+    <string name="demo_rect_sweep_gradient">Rectangle - Sweep Gradient</string>
+    <string name="demo_oval_stroke_fill_gradient">Oval (Stroke + Fill + Gradient)</string>
+    <string name="demo_oval_stroke">Oval - Stroke</string>
+    <string name="demo_oval_fill">Oval - Fill</string>
+    <string name="demo_oval_stroke_fill">Oval - Stroke and Fill</string>
+    <string name="demo_oval_linear_gradient">Oval - Linear Gradient</string>
+    <string name="demo_oval_radial_gradient">Oval - Radial Gradient</string>
+    <string name="demo_oval_sweep_gradient">Oval - Sweep Gradient</string>
+    <string name="demo_ring_stroke_fill_gradient">Ring (Stroke + Fill + Gradient)</string>
+    <string name="demo_ring_fill">Ring - Inner Fill</string>
+    <string name="demo_ring_stroke">Ring - Stroke</string>
+    <string name="demo_ring_stroke_fill">Ring - Stroke</string>
+    <string name="demo_ring_linear_gradient">Ring - Linear Gradient</string>
+    <string name="demo_ring_sweep_gradient">Ring - Sweep Gradient</string>
+    <string name="demo_line_solid_dash">Line (Solid + Dashed)</string>
+    <string name="demo_line_solid">Solid Line</string>
+    <string name="demo_line_dash">Dashed Line</string>
+    <string name="demo_line_under_text">Line Under Text</string>
+    <string name="demo_line_size_color">Change Line Size and Color</string>
+
+    <string name="demo_color_changed">Color Changed!</string>
+
 </resources>
