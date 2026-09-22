@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *    author : Android 轮子哥
@@ -20,7 +21,7 @@ public class ExtendStateListDrawable extends StateListDrawable {
    private static final int[] STATE_FOCUSED = new int[]{android.R.attr.state_focused};
    private static final int[] STATE_SELECTED = new int[]{android.R.attr.state_selected};
 
-   private final HashMap<int[], Drawable> mDrawableMap = new HashMap<>();
+   private final Map<int[], Drawable> mDrawableMap = new HashMap<>();
 
    @Override
    public void addState(int[] stateSet, Drawable drawable) {
