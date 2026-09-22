@@ -1,8 +1,14 @@
 package com.hjq.shape.demo;
 
 import android.content.Intent;
+import android.graphics.Insets;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnApplyWindowInsetsListener;
+import android.view.WindowInsets;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hjq.bar.OnTitleBarListener;
 import com.hjq.bar.TitleBar;
@@ -26,6 +32,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 适配 Android 15 EdgeToEdge 特性
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            titleBar.setOnApplyWindowInsetsListener(new OnApplyWindowInsetsListener()  {
+
+                @NonNull
+                @Override
+                public WindowInsets onApplyWindowInsets(@NonNull View v, @NonNull WindowInsets insets) {
+                    Insets systemBars = insets.getInsets(WindowInsets.Type.systemBars());
+                    // v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+                    v.setPadding(0, systemBars.top, 0, 0);
+                    return insets;
+                }
+            });
+        }
 
         ShapeButton shapeButton = findViewById(R.id.btn_main_test);
         shapeButton.setOnClickListener(v -> {
