@@ -35,7 +35,7 @@ public class ShapeRadioButton extends AppCompatRadioButton implements
     }
 
     public ShapeRadioButton(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.radioButtonStyle);
+        this(context, attrs, android.R.attr.radioButtonStyle);
     }
 
     public ShapeRadioButton(Context context, AttributeSet attrs, int defStyleAttr) {

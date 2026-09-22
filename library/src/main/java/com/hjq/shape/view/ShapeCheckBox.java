@@ -35,7 +35,7 @@ public class ShapeCheckBox extends AppCompatCheckBox implements
     }
 
     public ShapeCheckBox(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.checkboxStyle);
+        this(context, attrs, android.R.attr.checkboxStyle);
     }
 
     public ShapeCheckBox(Context context, AttributeSet attrs, int defStyleAttr) {

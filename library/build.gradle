@@ -1,19 +1,22 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply from : '../common.gradle'
 
 android {
-    compileSdkVersion 28
+
+    namespace 'com.hjq.shape'
 
     defaultConfig {
         minSdkVersion 17
-        versionCode 1100
-        versionName "11.0"
     }
 
-    // 支持 Java JDK 8
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
+    libraryVariants.configureEach { variant ->
+        variant.packageLibraryProvider.configure { packageLib ->
+            // 剔除 META-INF 目录
+            packageLib.exclude 'META-INF/'
+            // 剔除 R.txt 文件
+            packageLib.exclude 'R.txt'
+        }
     }
 
     android.libraryVariants.configureEach { variant ->
@@ -22,12 +25,6 @@ android {
             outputFileName = "${rootProject.name}-${android.defaultConfig.versionName}.aar"
         }
     }
-}
-
-afterEvaluate {
-    // 排除 BuildConfig.class
-    generateReleaseBuildConfig.enabled = false
-    generateDebugBuildConfig.enabled = false
 }
 
 dependencies {
@@ -39,44 +36,29 @@ dependencies {
     implementation 'com.github.getActivity:ShapeDrawable:5.0'
 }
 
-// 防止编码问题
-tasks.withType(Javadoc).configureEach {
-    options.addStringOption('Xdoclint:none', '-quiet')
-    options.addStringOption('encoding', 'UTF-8')
-    options.addStringOption('charSet', 'UTF-8')
-}
-
-tasks.register('sourcesJar', Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-tasks.register('javadoc', Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-tasks.register('javadocJar', Jar) {
-    dependsOn javadoc
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-// Jitpack 构建配置
 publishing {
     publications {
         release(MavenPublication) {
             groupId = 'com.github.getActivity'
-            artifactId = "${rootProject.name}"
-            version = "${android.defaultConfig.versionName}"
-
+            artifactId = 'XXPermissions'
+            version = android.defaultConfig.versionName
+            // 指定 aar 文件的确切路径：https://cloud.tencent.com/developer/ask/sof/106381154
             afterEvaluate {
-                from components.release
+                artifact(bundleReleaseAar)
+            }
+
+            // 修正 Maven 插件在生成的 pom 文件没有携带 dependencies 信息的问题
+            // 用于测试 Gradle 命令：./gradlew publishToMavenLocal
+            // 相关 Github 地址：https://github.com/getActivity/XXPermissions/issues/371#issuecomment-3018735968
+            pom.withXml {
+                def dependencies = asNode().appendNode('dependencies')
+                configurations.implementation.allDependencies.each {
+                    def dependency = dependencies.appendNode('dependency')
+                    dependency.appendNode('groupId', it.group)
+                    dependency.appendNode('artifactId', it.name)
+                    dependency.appendNode('version', it.version)
+                    dependency.appendNode('scope', 'runtime')
+                }
             }
         }
     }
