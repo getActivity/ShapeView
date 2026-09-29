@@ -36,11 +36,12 @@ dependencies {
     implementation 'com.github.getActivity:ShapeDrawable:5.0'
 }
 
+// Jitpack 构建配置
 publishing {
     publications {
         release(MavenPublication) {
             groupId = 'com.github.getActivity'
-            artifactId = 'XXPermissions'
+            artifactId = rootProject.name
             version = android.defaultConfig.versionName
             // 指定 aar 文件的确切路径：https://cloud.tencent.com/developer/ask/sof/106381154
             afterEvaluate {
