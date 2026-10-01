@@ -6,8 +6,8 @@ android {
     defaultConfig {
         // Android 版本适配指南：https://github.com/getActivity/AndroidVersionAdapter
         targetSdk 37
-        versionCode 1100
-        versionName "11.0"
+        versionCode 1120
+        versionName "11.2"
     }
 
     // 支持 Java JDK 8

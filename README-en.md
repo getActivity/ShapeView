@@ -6,7 +6,7 @@
 
 * [Click here to download demo apk directly](https://www.jianshu.com/p/1288d8873440)
 
-* You can scan the code to download the Demo for demonstration or testing. If you can't download it by scanning, [click here to download directly](https://github.com/getActivity/ShapeView/releases/download/11.0/ShapeView.apk)
+* You can scan the code to download the Demo for demonstration or testing. If you can't download it by scanning, [click here to download directly](https://github.com/getActivity/ShapeView/releases/download/11.2/ShapeView.apk)
 
 ![](picture/en/long_screenshots.jpg)
 
@@ -47,7 +47,7 @@ android {
 
 dependencies {
     // ShapeView: https://github.com/getActivity/ShapeView
-    implementation 'com.github.getActivity:ShapeView:11.0'
+    implementation 'com.github.getActivity:ShapeView:11.2'
     // ShapeDrawable: https://github.com/getActivity/ShapeDrawable
     implementation 'com.github.getActivity:ShapeDrawable:5.0'
 }
