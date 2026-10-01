@@ -10,6 +10,7 @@ import com.hjq.shape.builder.ShapeDrawableBuilder;
 import com.hjq.shape.builder.TextColorBuilder;
 import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.config.IGetTextColorBuilder;
+import com.hjq.shape.other.StateSelectorUtils;
 import com.hjq.shape.styleable.ShapeButtonStyleable;
 
 /**
@@ -25,6 +26,7 @@ public class ShapeButton extends AppCompatButton implements
 
     private final ShapeDrawableBuilder mShapeDrawableBuilder;
     private final TextColorBuilder mTextColorBuilder;
+    private boolean mDefaultState = true;
 
     public ShapeButton(Context context) {
         this(context, null);
@@ -65,8 +67,14 @@ public class ShapeButton extends AppCompatButton implements
     }
 
     @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        mDefaultState = StateSelectorUtils.isDefaultState(this);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
-        mTextColorBuilder.onDraw(this, canvas, getPaint());
+        mTextColorBuilder.onDraw(this, canvas, getPaint(), mDefaultState);
         super.onDraw(canvas);
     }
 

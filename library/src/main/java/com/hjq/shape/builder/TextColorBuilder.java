@@ -321,8 +321,8 @@ public final class TextColorBuilder {
         mTextView.postInvalidate();
     }
 
-    public void onDraw(@NonNull View view, @NonNull Canvas canvas, Paint paint) {
-        if (isTextGradientColorsEnable()) {
+    public void onDraw(@NonNull View view, @NonNull Canvas canvas, Paint paint, boolean defaultState) {
+        if (isTextGradientColorsEnable() && defaultState) {
             int[] textGradientColors;
             if (mTextGradientOrientation == GRADIENT_ORIENTATION_HORIZONTAL &&
                 getLayoutDirectionByContext(view.getContext()) == View.LAYOUT_DIRECTION_RTL) {

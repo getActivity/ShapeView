@@ -13,6 +13,7 @@ import com.hjq.shape.builder.TextColorBuilder;
 import com.hjq.shape.config.IGetButtonDrawableBuilder;
 import com.hjq.shape.config.IGetShapeDrawableBuilder;
 import com.hjq.shape.config.IGetTextColorBuilder;
+import com.hjq.shape.other.StateSelectorUtils;
 import com.hjq.shape.styleable.ShapeRadioButtonStyleable;
 
 /**
@@ -29,6 +30,7 @@ public class ShapeRadioButton extends AppCompatRadioButton implements
     private final ShapeDrawableBuilder mShapeDrawableBuilder;
     private final TextColorBuilder mTextColorBuilder;
     private final ButtonDrawableBuilder mButtonDrawableBuilder;
+    private boolean mDefaultState = true;
 
     public ShapeRadioButton(Context context) {
         this(context, null);
@@ -80,8 +82,14 @@ public class ShapeRadioButton extends AppCompatRadioButton implements
     }
 
     @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        mDefaultState = StateSelectorUtils.isDefaultState(this);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
-        mTextColorBuilder.onDraw(this, canvas, getPaint());
+        mTextColorBuilder.onDraw(this, canvas, getPaint(), mDefaultState);
         super.onDraw(canvas);
     }
 
